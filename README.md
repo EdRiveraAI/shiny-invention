@@ -43,16 +43,26 @@ Before handing the tablet over:
 
 ---
 
-## The four games
+## The six games
 
 | | Game | What your child does |
 |---|---|---|
 | 🔤 | **Tap the Letters** | 26 chunky letter tiles. Tap one — it pops, confetti bursts, and a big card says "**E** is for Elephant 🐘". Each new letter earns a ⭐. |
 | 🔎 | **Find the Letter** | "Can you find **B**?" — three big choices (four once they're on a roll). Right answers cheer and celebrate; wrong ones get a gentle "try again", never a fail. |
+| 🖍️ | **Trace a Letter** | A big dotted letter to scribble over with a finger. The crayon draws in rainbow colours and sparkles as it goes; colour in enough of the letter and it celebrates. Accuracy is not required — enthusiasm is. |
+| 🧩 | **What Starts With?** | A picture card (🍊 Orange) and three letters. Which one does the word start with? Tap the picture to hear it again. |
 | 🎈 | **Pop the Balloons** | Letter balloons drift up the screen. Tap to pop them with a satisfying *bloop* and hear the letter. |
 | 🎵 | **Sing the ABCs** | The board sings itself A→Z, lighting up each letter in turn, and finishes with a confetti shower. Tap anywhere to stop. |
 
-Every ⭐ is saved on the device. Every 10 stars triggers a full-screen party.
+### 📖 My ABC Book
+
+Every letter your child plays with unlocks a sticker in their ABC Book — a
+26-slot album with a rainbow progress bar across the top. Locked letters show a
+padlock; unlocked ones show the letter and its picture, and tapping one says it
+again. The home screen shows the running count, and it's all still there
+tomorrow.
+
+Every ⭐ is saved on the device too. Every 10 stars triggers a full-screen party.
 
 ## Grown-up settings
 
@@ -61,16 +71,19 @@ that a toddler won't land on it by accident.
 
 - **Letter style** — `A B C` (uppercase), `a b c` (lowercase), or `Aa Bb` (both)
 - **Talking voice** — on/off (uses the voice already built into the device)
+- **Letter sounds** — adds the phonic sound ("**A** says *ah*") to the letter
+  name. On by default; turn it off if you'd rather teach names first
 - **Sound effects** — on/off
 - **Gentle music** — a soft background arpeggio, off by default
-- **Stars** — see the total, or reset it back to zero
+- **Stars & book** — see the totals, or reset both back to zero
 
 ## Toddler-proofing built in
 
 - No links out, no menus to get lost in, no in-app purchases, no ads
 - Nothing loads from the internet — the whole game is in the one file
-- No data collection; the only thing stored is the star count and your settings,
-  in the browser's local storage on that device
+- No data collection; the only things stored are the star count, which letters
+  have been unlocked, and your settings — all in the browser's local storage on
+  that device
 - Pinch-zoom and double-tap-zoom are disabled so stray taps can't scramble the layout
 - Wrong answers are never punished — there's no losing, no timer, no game over
 - Speech and animations stop automatically when the screen is locked or the tab
@@ -85,8 +98,13 @@ Plain HTML, CSS and JavaScript in a single file — no build step, no dependenci
 - Sound effects and music are synthesised live with the Web Audio API, so there
   are no audio files to download. Audio unlocks on the first tap (a mobile
   browser requirement).
-- The letter board measures the screen and picks the tile size and column count
-  that fill it best, so it looks right on a phone, a tablet, or a laptop.
+- The letter board and the ABC Book measure the screen and pick the tile size and
+  column count that fill it best, so they look right on a phone, a tablet, or a
+  laptop.
+- Tracing uses three stacked canvases — the letter beneath, the child's crayon in
+  the middle, the dotted outline on top so the shape stays visible while they
+  colour. Completion is measured by sampling the glyph into a grid of points and
+  counting how many the crayon passed over (60% is a win).
 
 Tested in Chromium on desktop and phone-sized viewports.
 

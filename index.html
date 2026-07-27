@@ -76,7 +76,8 @@ body{
 @keyframes popin{from{transform:scale(0) rotate(-25deg)}to{transform:none}}
 
 /* ---------- home screen ---------- */
-#home{justify-content:center;align-items:center;gap:clamp(10px,2.4vmin,22px);text-align:center;}
+#home{justify-content:center;align-items:center;gap:clamp(8px,2vmin,20px);text-align:center;overflow-y:auto;scrollbar-width:none;}
+#home::-webkit-scrollbar{display:none}
 #logo{
   font-size:clamp(34px,8.4vmin,74px);font-weight:900;line-height:1.05;
   color:#fff;text-shadow:0 5px 0 rgba(0,0,0,.2),0 0 24px rgba(255,255,255,.55);
@@ -100,6 +101,17 @@ body{
 .b2{background:linear-gradient(135deg,#39c5f3,#7b2ff7)}
 .b3{background:linear-gradient(135deg,#5ddb6b,#00c9a7)}
 .b4{background:linear-gradient(135deg,#ff5fd2,#ffd23f)}
+.b5{background:linear-gradient(135deg,#ffb03d,#ff4d6d)}
+.b6{background:linear-gradient(135deg,#00c9a7,#39c5f3)}
+.b7{background:linear-gradient(135deg,#7b2ff7,#ff5fd2)}
+.b7 b{background:rgba(255,255,255,.28);border-radius:999px;padding:2px 12px;margin-left:8px;font-size:.72em}
+.menu{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));
+  width:min(920px,94vw);align-items:stretch;
+}
+.menu .big{font-size:clamp(19px,3.4vmin,30px);padding:clamp(12px,2.2vmin,20px) clamp(14px,2.4vmin,22px)}
+.menu .big .emo{font-size:clamp(26px,5vmin,44px)}
+.b7{grid-column:1/-1;justify-content:center}
 #hint{color:#5b3b8c;font-weight:800;font-size:clamp(12px,2.2vmin,17px);opacity:.85;max-width:90vw;}
 
 /* ---------- letters grid ---------- */
@@ -187,6 +199,66 @@ body{
 .balloon .string{width:2px;height:calc(var(--w)*.5);background:rgba(255,255,255,.75);}
 @keyframes sway{0%,100%{transform:translateX(-8px) rotate(-4deg)}50%{transform:translateX(8px) rotate(4deg)}}
 
+/* ---------- trace the letter ---------- */
+#traceWrap{
+  flex:1;min-height:0;position:relative;border-radius:28px;
+  background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 5px rgba(255,255,255,.7);
+  touch-action:none;overflow:hidden;
+}
+#traceWrap canvas{position:absolute;inset:0;width:100%;height:100%;}
+#traceOutline{pointer-events:none;z-index:2}
+#traceTools{
+  position:absolute;right:10px;bottom:10px;display:flex;gap:10px;z-index:3;
+}
+#traceHint{
+  position:absolute;left:0;right:0;top:10px;text-align:center;pointer-events:none;
+  font-weight:900;font-size:clamp(15px,2.8vmin,22px);color:#5b3b8c;opacity:.75;
+}
+
+/* ---------- what starts with / picture card ---------- */
+#matchWrap{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(8px,2.2vmin,22px);}
+#picCard{
+  background:#fff;border-radius:32px;padding:clamp(10px,2.2vmin,22px) clamp(20px,4vmin,44px);
+  box-shadow:0 10px 0 rgba(0,0,0,.14),0 16px 30px rgba(0,0,0,.16);
+  display:flex;flex-direction:column;align-items:center;cursor:pointer;transition:transform .1s;
+}
+#picCard:active{transform:scale(.97)}
+#picEmoji{font-size:clamp(58px,17vmin,150px);line-height:1;animation:bob 2.2s ease-in-out infinite;}
+#picWord{font-weight:900;font-size:clamp(22px,4.6vmin,42px);color:var(--ink);}
+#matchAsk{
+  font-weight:900;font-size:clamp(17px,3.4vmin,30px);color:#fff;
+  text-shadow:0 3px 0 rgba(0,0,0,.2);background:rgba(123,47,247,.75);
+  padding:8px 22px;border-radius:999px;
+}
+
+/* ---------- my abc book ---------- */
+#bookWrap{
+  flex:1;min-height:0;overflow-y:auto;display:grid;gap:clamp(6px,1.4vmin,14px);
+  grid-template-columns:repeat(auto-fit,minmax(clamp(72px,13vmin,130px),1fr));
+  align-content:center;justify-content:center;padding:4px;scrollbar-width:none;
+}
+#bookWrap::-webkit-scrollbar{display:none}
+.sticker{
+  aspect-ratio:1/1;border-radius:20px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;font-weight:900;color:#fff;line-height:1;
+  border:none;font:inherit;font-weight:900;cursor:pointer;
+  box-shadow:0 6px 0 rgba(0,0,0,.16),0 8px 14px rgba(0,0,0,.12);
+}
+.sticker{border-radius:var(--tileRadius,20px)}
+.sticker .l{font-size:var(--tileFont,clamp(22px,5vmin,44px));text-shadow:0 3px 0 rgba(0,0,0,.18)}
+.sticker .e{font-size:calc(var(--tileFont,clamp(18px,4vmin,36px)) * .78)}
+.sticker.locked{
+  background:rgba(255,255,255,.45);color:#a99cc4;box-shadow:inset 0 0 0 4px rgba(255,255,255,.6);
+}
+.sticker.locked .l{text-shadow:none}
+.sticker.new{animation:popin .5s cubic-bezier(.2,1.6,.4,1) both}
+#bookBar{
+  flex:0 0 auto;height:18px;border-radius:999px;background:rgba(255,255,255,.6);
+  margin:0 4px 10px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.12);
+}
+#bookFill{height:100%;width:0;border-radius:999px;transition:width .5s cubic-bezier(.2,1.4,.4,1);
+  background:linear-gradient(90deg,#ff4d6d,#ff8b3d,#ffd23f,#5ddb6b,#39c5f3,#7b2ff7);}
+
 /* ---------- toast / settings ---------- */
 #sheet{
   position:fixed;inset:0;z-index:60;display:none;place-items:center;background:rgba(43,16,85,.55);
@@ -239,8 +311,11 @@ body{
     <div class="menu">
       <button class="big b1" data-go="letters"><span class="emo">🔤</span><span>Tap the Letters</span></button>
       <button class="big b2" data-go="find"><span class="emo">🔎</span><span>Find the Letter</span></button>
+      <button class="big b5" data-go="trace"><span class="emo">🖍️</span><span>Trace a Letter</span></button>
+      <button class="big b6" data-go="match"><span class="emo">🧩</span><span>What Starts With?</span></button>
       <button class="big b3" data-go="pop"><span class="emo">🎈</span><span>Pop the Balloons</span></button>
       <button class="big b4" data-go="sing"><span class="emo">🎵</span><span>Sing the ABCs</span></button>
+      <button class="big b7" data-go="book"><span class="emo">📖</span><span>My ABC Book <b id="bookCount">0/26</b></span></button>
     </div>
     <p id="hint">Grown-ups: press and hold the ⚙️ gear for settings. Tap ⛶ for full screen.</p>
     <div class="topbar" style="width:min(560px,92vw);justify-content:center">
@@ -270,6 +345,54 @@ body{
       <div id="ask" role="button">🔊 <span id="askText">Find A</span></div>
       <div id="choices"></div>
     </div>
+  </section>
+
+  <!-- ============ TRACE ============ -->
+  <section id="trace" class="screen">
+    <div class="topbar">
+      <button class="round back" title="Back">🏠</button>
+      <div class="title">Trace It!</div>
+      <div id="starsT" class="starbox">⭐ <span class="sc">0</span></div>
+    </div>
+    <div id="traceWrap">
+      <canvas id="traceGuide"></canvas>
+      <canvas id="traceInk"></canvas>
+      <canvas id="traceOutline"></canvas>
+      <div id="traceHint">Draw on the letter with your finger!</div>
+      <div id="traceTools">
+        <button class="round" id="traceSay" title="Say it">🔊</button>
+        <button class="round" id="traceClear" title="Start over">🔄</button>
+        <button class="round" id="traceNext" title="Next letter">➡️</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT STARTS WITH ============ -->
+  <section id="match" class="screen">
+    <div class="topbar">
+      <button class="round back" title="Back">🏠</button>
+      <div class="title">What Starts With?</div>
+      <div id="starsM" class="starbox">⭐ <span class="sc">0</span></div>
+    </div>
+    <div id="matchWrap">
+      <div id="picCard" role="button">
+        <div id="picEmoji">🍎</div>
+        <div id="picWord">Apple</div>
+      </div>
+      <div id="matchAsk">🔊 Which letter does it start with?</div>
+      <div id="choices2" style="display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(8px,2.4vmin,24px)"></div>
+    </div>
+  </section>
+
+  <!-- ============ MY ABC BOOK ============ -->
+  <section id="book" class="screen">
+    <div class="topbar">
+      <button class="round back" title="Back">🏠</button>
+      <div class="title" id="bookTitle">My ABC Book</div>
+      <div id="starsB" class="starbox">⭐ <span class="sc">0</span></div>
+    </div>
+    <div id="bookBar"><div id="bookFill"></div></div>
+    <div id="bookWrap"></div>
   </section>
 
   <!-- ============ BALLOONS ============ -->
@@ -304,10 +427,12 @@ body{
     </div>
   </div>
   <div class="row"><span>🗣️ Talking voice</span><button class="toggle" id="tVoice"></button></div>
+  <div class="row"><span>🔤 Letter sounds ("A says ah")</span><button class="toggle" id="tPhonics"></button></div>
   <div class="row"><span>🔔 Sound effects</span><button class="toggle" id="tSfx"></button></div>
   <div class="row"><span>🎵 Gentle music</span><button class="toggle" id="tMusic"></button></div>
   <div class="row"><span>⭐ Stars earned</span><b id="starTotal">0</b></div>
-  <div class="row"><span>Reset stars</span><button class="round" id="resetStars" style="width:48px;height:48px;font-size:22px">🔄</button></div>
+  <div class="row"><span>📖 Letters in the book</span><b id="bookTotal">0/26</b></div>
+  <div class="row"><span>Reset stars &amp; book</span><button class="round" id="resetStars" style="width:48px;height:48px;font-size:22px">🔄</button></div>
   <p class="gate">Tip: turn on <b>Guided Access</b> (iPad) or <b>Screen Pinning</b> (Android) so little fingers stay in the game.</p>
   <button id="closeSheet">Done — back to playing!</button>
 </div></div>
@@ -330,12 +455,19 @@ var WORDS = {
   Z:["Zebra","🦓"]
 };
 var LETTERS = Object.keys(WORDS);
+/* Rough spoken letter sounds. Written the way they need to be spelled for a
+   text-to-speech voice to pronounce them, not the way a phonics book spells them. */
+var SOUNDS = {
+  A:"ah", B:"buh", C:"kuh", D:"duh", E:"eh", F:"fff", G:"guh", H:"huh", I:"ih",
+  J:"juh", K:"kuh", L:"lll", M:"mmm", N:"nnn", O:"oh", P:"puh", Q:"kwuh", R:"rrr",
+  S:"sss", T:"tuh", U:"uh", V:"vvv", W:"wuh", X:"ks", Y:"yuh", Z:"zzz"
+};
 var COLORS = ["#ff4d6d","#ff8b3d","#ffd23f","#5ddb6b","#39c5f3","#7b2ff7","#ff5fd2","#00c9a7","#ff6b6b","#3ad29f"];
 var CHEERS = ["Yay!","Great job!","Woohoo!","Awesome!","You did it!","Super!","Hooray!","Nice one!","Wow!","Amazing!"];
 var color = function(i){ return COLORS[i % COLORS.length]; };
 
 /* ---------------- settings (saved locally) ---------------- */
-var S = { case:"upper", voice:true, sfx:true, music:false, stars:0 };
+var S = { case:"upper", voice:true, sfx:true, music:false, phonics:true, stars:0, learned:{} };
 try{
   var saved = JSON.parse(localStorage.getItem("ttla") || "null");
   if(saved) for(var k in S) if(k in saved) S[k] = saved[k];
@@ -440,7 +572,20 @@ function say(text, rate){
     speechSynthesis.speak(u);
   }catch(e){}
 }
-function sayLetter(L){ say(L + ". " + L + " is for " + WORDS[L][0] + ".", 0.8); }
+function sayLetter(L){
+  var line = L + ". ";
+  if(S.phonics) line += L + " says " + SOUNDS[L] + ". ";
+  say(line + L + " is for " + WORDS[L][0] + ".", 0.8);
+}
+
+/* A letter counts as "learned" the first time the child does anything with it;
+   it unlocks a sticker in My ABC Book. */
+var freshStickers = {};
+function markLearned(L){
+  if(S.learned[L]) return false;
+  S.learned[L] = 1; freshStickers[L] = 1; save(); paintBookCount();
+  return true;
+}
 
 /* ---------------- confetti / particles ---------------- */
 var fx = document.getElementById("fx"), ctx = fx.getContext("2d"), parts = [], raf = null;
@@ -527,13 +672,16 @@ function addStar(x, y){
 }
 
 /* ---------------- navigation ---------------- */
-var screens = { home:1, letters:1, find:1, pop:1 };
+var screens = { home:1, letters:1, find:1, trace:1, match:1, book:1, pop:1 };
 var current = "home";
 function go(name){
   audio(); // unlock audio on any navigation tap
   if(name === "sing"){ show("letters"); setTimeout(singAll, 350); return; }
   show(name);
-  if(name === "find") nextRound();
+  if(name === "find")  nextRound();
+  if(name === "match") nextMatch();
+  if(name === "trace") startTrace();
+  if(name === "book"){ buildBook(); layoutBook(); }
   if(name === "pop") startPop(); else stopPop();
   if(name !== "letters") stopSing();
 }
@@ -541,6 +689,8 @@ function show(name){
   for(var k in screens) document.getElementById(k).classList.toggle("on", k === name);
   current = name;
   if(name === "letters") layoutGrid();   // grid has no size until its screen is visible
+  if(name === "book") layoutBook();
+  if(name === "home") paintBookCount();
 }
 document.addEventListener("click", function(e){
   var b = e.target.closest("[data-go]");
@@ -585,6 +735,7 @@ function buildGrid(){
     b.dataset.letter = L;
     b.style.background = "linear-gradient(150deg," + color(i) + "," + shade(color(i), -30) + ")";
     b.textContent = shown(L);
+    if(S.learned[L]) b.classList.add("done");   // letters found in earlier sessions stay ticked
     b.addEventListener("pointerdown", function(ev){
       ev.preventDefault();
       tapLetter(L, color(i), ev.clientX, ev.clientY, b);
@@ -595,26 +746,37 @@ function buildGrid(){
 /* Pick the column count that makes the 26 tiles as big as possible in the
    space we actually have — phones end up 4-wide, tablets 6-9 wide, and the
    board fills the screen instead of leaving a lonely last row. */
-function layoutGrid(){
-  var box = grid.getBoundingClientRect();
-  var gap = parseFloat(getComputedStyle(grid).gap) || 10;
+function fitGrid(el, count, maxSize, fontRatio){
+  var box = el.getBoundingClientRect();
+  var gap = parseFloat(getComputedStyle(el).gap) || 10;
   var w = box.width - 8, h = box.height - 8;
-  if(w < 40 || h < 40) return;
+  if(w < 40 || h < 40) return 0;
   var best = 0, bestCols = 5;
   for(var cols = 3; cols <= 13; cols++){
-    var rows = Math.ceil(LETTERS.length / cols);
+    var rows = Math.ceil(count / cols);
     var size = Math.min((w - gap * (cols - 1)) / cols, (h - gap * (rows - 1)) / rows);
     if(size > best){ best = size; bestCols = cols; }
   }
-  best = Math.min(best, 170);                     // don't get comically huge on a TV
-  grid.style.gridTemplateColumns = "repeat(" + bestCols + "," + best + "px)";
-  grid.style.setProperty("--tileFont", (best * (S.case === "both" ? 0.38 : 0.56)) + "px");
-  grid.style.setProperty("--tileRadius", (best * 0.2) + "px");
+  best = Math.min(best, maxSize);                 // don't get comically huge on a TV
+  el.style.gridTemplateColumns = "repeat(" + bestCols + "," + best + "px)";
+  el.style.setProperty("--tileFont", (best * fontRatio) + "px");
+  el.style.setProperty("--tileRadius", (best * 0.2) + "px");
+  return best;
+}
+function layoutGrid(){
+  fitGrid(grid, LETTERS.length, 170, S.case === "both" ? 0.38 : 0.56);
+}
+function layoutBook(){
+  fitGrid(bookWrap, LETTERS.length, 150, S.case === "both" ? 0.26 : 0.36);
 }
 var layoutPending = null;
 function relayout(){
   clearTimeout(layoutPending);
-  layoutPending = setTimeout(layoutGrid, 60);
+  layoutPending = setTimeout(function(){
+    layoutGrid();
+    if(current === "book") layoutBook();
+    if(current === "trace"){ setupTrace(); clearInk(); }
+  }, 60);
 }
 addEventListener("resize", relayout);
 addEventListener("orientationchange", relayout);
@@ -624,6 +786,7 @@ function tapLetter(L, c, x, y, el){
   tone(400 + LETTERS.indexOf(L) * 22, 0.3, "sine", 0.18, 0.03);
   burst(x, y, 22, 8);
   if(el && !el.classList.contains("done")){ el.classList.add("done"); addStar(); }
+  markLearned(L);
   showCard(L, c);
   sayLetter(L);
 }
@@ -696,7 +859,7 @@ function guess(L, el, x, y){
   if(L === target){
     locked = true; streak++;
     el.classList.add("right");
-    sfxWin(); burst(x, y, 34, 11); addStar();
+    sfxWin(); burst(x, y, 34, 11); addStar(); markLearned(target);
     var cheer = CHEERS[Math.floor(Math.random()*CHEERS.length)];
     showCheer(cheer);
     say(cheer + " " + target + " is for " + WORDS[target][0] + "!", 0.85);
@@ -707,6 +870,248 @@ function guess(L, el, x, y){
     sfxOops();
     say("That is " + L + ". Try again! Find " + target + ".", 0.85);
   }
+}
+
+/* ---------------- trace the letter ----------------
+   Two stacked canvases: a pale guide letter underneath, the child's rainbow
+   crayon on top. We sample the glyph into a grid of points and count how many
+   the crayon has passed over — no accuracy demanded, just enthusiasm. */
+var traceWrap = document.getElementById("traceWrap"),
+    gCan = document.getElementById("traceGuide"),   gCtx = gCan.getContext("2d"),
+    iCan = document.getElementById("traceInk"),     iCtx = iCan.getContext("2d"),
+    oCan = document.getElementById("traceOutline"), oCtx = oCan.getContext("2d"),
+    traceHint = document.getElementById("traceHint");
+var traceLetter = "A", traceIdx = 0, maskPts = [], maskHit = null, maskDone = 0,
+    drawing = false, lastPt = null, hue = 0, traceWon = false, traceColor = COLORS[0];
+
+function traceFont(px){ return "900 " + px + "px " + getComputedStyle(document.body).fontFamily; }
+
+function setupTrace(){
+  var box = traceWrap.getBoundingClientRect();
+  if(box.width < 30 || box.height < 30) return;
+  traceBox = { w:box.width, h:box.height };
+  var d = Math.min(window.devicePixelRatio || 1, 2);
+  [gCan, iCan, oCan].forEach(function(c){
+    c.width = Math.round(box.width * d); c.height = Math.round(box.height * d);
+    c.getContext("2d").setTransform(d, 0, 0, d, 0, 0);
+  });
+  drawGuide(box.width, box.height);
+}
+
+function drawGuide(w, h){
+  var ch = S.case === "lower" ? traceLetter.toLowerCase() : traceLetter;
+  var size = Math.min(h * 1.02, w * 0.8);   // ~0.72 of the font size is the cap height
+  gCtx.clearRect(0, 0, w, h);
+  gCtx.save();
+  gCtx.textAlign = "center"; gCtx.textBaseline = "middle";
+  gCtx.font = traceFont(size);
+  gCtx.fillStyle = "rgba(255,255,255,.92)";
+  gCtx.fillText(ch, w/2, h/2);
+  gCtx.restore();
+
+  oCtx.clearRect(0, 0, w, h);
+  oCtx.save();
+  oCtx.textAlign = "center"; oCtx.textBaseline = "middle";
+  oCtx.font = traceFont(size);
+  oCtx.lineWidth = Math.max(3, size * 0.035);
+  oCtx.setLineDash([size * 0.07, size * 0.05]);
+  oCtx.lineJoin = "round";
+  oCtx.strokeStyle = traceColor;
+  oCtx.strokeText(ch, w/2, h/2);
+  oCtx.restore();
+
+  buildMask(w, h, ch, size);
+}
+
+/* sample the glyph so we know which spots still need colouring in */
+function buildMask(w, h, ch, size){
+  var step = 7;
+  var off = document.createElement("canvas");
+  off.width = Math.max(1, Math.round(w)); off.height = Math.max(1, Math.round(h));
+  var o = off.getContext("2d");
+  o.textAlign = "center"; o.textBaseline = "middle";
+  o.font = traceFont(size);
+  o.fillStyle = "#000";
+  o.fillText(ch, w/2, h/2);
+  var data = o.getImageData(0, 0, off.width, off.height).data;
+  maskPts = [];
+  for(var y = step/2; y < h; y += step){
+    for(var x = step/2; x < w; x += step){
+      var idx = ((Math.floor(y) * off.width) + Math.floor(x)) * 4 + 3;
+      if(data[idx] > 100) maskPts.push(x, y);
+    }
+  }
+  maskHit = new Uint8Array(maskPts.length / 2);
+  maskDone = 0;
+}
+
+var traceBox = { w:0, h:0 };
+function traceBrush(){ return Math.max(14, Math.min(traceBox.w, traceBox.h) * 0.075); }
+
+function paintSegment(x0, y0, x1, y1){
+  if(!maskHit) return;
+  var r = traceBrush();
+  hue = (hue + 7) % 360;
+  iCtx.strokeStyle = "hsl(" + hue + ",95%,58%)";
+  iCtx.lineWidth = r; iCtx.lineCap = "round"; iCtx.lineJoin = "round";
+  iCtx.beginPath(); iCtx.moveTo(x0, y0); iCtx.lineTo(x1, y1); iCtx.stroke();
+  // mark every glyph sample the crayon just covered
+  var reach = r * 0.75, before = maskDone;
+  for(var i = 0; i < maskHit.length; i++){
+    if(maskHit[i]) continue;
+    var px = maskPts[i*2], py = maskPts[i*2+1];
+    if(distToSeg(px, py, x0, y0, x1, y1) < reach){ maskHit[i] = 1; maskDone++; }
+  }
+  if(maskDone !== before && !traceWon && maskHit.length && maskDone / maskHit.length >= 0.6) winTrace();
+}
+function distToSeg(px, py, x0, y0, x1, y1){
+  var dx = x1 - x0, dy = y1 - y0, len = dx*dx + dy*dy;
+  var t = len ? Math.max(0, Math.min(1, ((px-x0)*dx + (py-y0)*dy) / len)) : 0;
+  var ax = px - (x0 + t*dx), ay = py - (y0 + t*dy);
+  return Math.sqrt(ax*ax + ay*ay);
+}
+
+function winTrace(){
+  traceWon = true;
+  var box = traceWrap.getBoundingClientRect();
+  rain(70); sfxWin();
+  burst(box.left + box.width/2, box.top + box.height/2, 40, 12);
+  addStar(); markLearned(traceLetter);
+  var cheer = CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  showCheer(cheer);
+  say(cheer + " You traced " + traceLetter + "! " + traceLetter + " is for " + WORDS[traceLetter][0] + ".", 0.85);
+  traceHint.textContent = "🎉 You traced " + traceLetter + "!";
+  setTimeout(function(){ if(current === "trace") nextTrace(); }, 2400);
+}
+
+function clearInk(){
+  iCtx.clearRect(0, 0, traceBox.w || iCan.width, traceBox.h || iCan.height);
+  if(maskHit) maskHit.fill(0);
+  maskDone = 0; traceWon = false;
+  traceHint.textContent = "Draw on the letter with your finger!";
+}
+function nextTrace(){
+  traceIdx = (traceIdx + 1) % LETTERS.length;
+  loadTrace(LETTERS[traceIdx]);
+}
+function loadTrace(L){
+  traceLetter = L;
+  traceColor = color(LETTERS.indexOf(L));
+  clearInk(); setupTrace();
+  say("Let's trace " + L + ".", 0.85);
+}
+function startTrace(){
+  // start on the first letter they have not unlocked yet, so it feels fresh
+  var i = 0;
+  while(i < LETTERS.length - 1 && S.learned[LETTERS[i]]) i++;
+  traceIdx = i;
+  traceLetter = LETTERS[i]; traceColor = color(i);
+  clearInk(); setupTrace();
+  setTimeout(function(){ say("Trace the letter " + traceLetter + " with your finger.", 0.85); }, 300);
+}
+
+traceWrap.addEventListener("pointerdown", function(e){
+  if(e.target.closest("#traceTools")) return;
+  e.preventDefault(); audio();
+  var r = traceWrap.getBoundingClientRect();
+  drawing = true; lastPt = { x:e.clientX - r.left, y:e.clientY - r.top };
+  paintSegment(lastPt.x, lastPt.y, lastPt.x + 0.01, lastPt.y);
+  if(traceWrap.setPointerCapture) try{ traceWrap.setPointerCapture(e.pointerId); }catch(err){}
+});
+traceWrap.addEventListener("pointermove", function(e){
+  if(!drawing) return;
+  e.preventDefault();
+  var r = traceWrap.getBoundingClientRect();
+  var p = { x:e.clientX - r.left, y:e.clientY - r.top };
+  paintSegment(lastPt.x, lastPt.y, p.x, p.y);
+  if(Math.random() < 0.22) burst(e.clientX, e.clientY, 3, 4);   // sparkle trail
+  lastPt = p;
+});
+["pointerup","pointercancel","pointerleave"].forEach(function(ev){
+  traceWrap.addEventListener(ev, function(){ drawing = false; });
+});
+document.getElementById("traceClear").addEventListener("click", function(){ audio(); sfxPop(); clearInk(); });
+document.getElementById("traceNext").addEventListener("click", function(){ audio(); tone(660,0.2,"triangle",0.2); nextTrace(); });
+document.getElementById("traceSay").addEventListener("click", function(){ audio(); sayLetter(traceLetter); });
+
+/* ---------------- what starts with? ---------------- */
+var picEmoji = document.getElementById("picEmoji"), picWord = document.getElementById("picWord"),
+    choices2 = document.getElementById("choices2"), picCard = document.getElementById("picCard");
+var mTarget = "A", mLocked = false;
+
+function nextMatch(){
+  mLocked = false;
+  var pool = LETTERS.slice(), picks = [];
+  for(var i = 0; i < 3; i++) picks.push(pool.splice(Math.floor(Math.random()*pool.length), 1)[0]);
+  mTarget = picks[Math.floor(Math.random()*picks.length)];
+  picEmoji.textContent = WORDS[mTarget][1];
+  picWord.textContent = WORDS[mTarget][0];
+  choices2.innerHTML = "";
+  picks.forEach(function(L, i){
+    var b = document.createElement("button");
+    b.className = "choice";
+    b.textContent = shown(L);
+    b.style.background = "linear-gradient(150deg," + color(i) + "," + shade(color(i), -30) + ")";
+    b.addEventListener("pointerdown", function(ev){ ev.preventDefault(); guessMatch(L, b, ev.clientX, ev.clientY); });
+    choices2.appendChild(b);
+  });
+  setTimeout(matchPrompt, 250);
+}
+function matchPrompt(){
+  say(WORDS[mTarget][0] + ". Which letter does " + WORDS[mTarget][0] + " start with?", 0.85);
+}
+picCard.addEventListener("pointerdown", function(e){ e.preventDefault(); audio(); matchPrompt(); });
+document.getElementById("matchAsk").addEventListener("pointerdown", function(e){ e.preventDefault(); audio(); matchPrompt(); });
+
+function guessMatch(L, el, x, y){
+  if(mLocked) return;
+  audio();
+  if(L === mTarget){
+    mLocked = true;
+    el.classList.add("right");
+    sfxWin(); burst(x, y, 34, 11); addStar(); markLearned(mTarget);
+    var cheer = CHEERS[Math.floor(Math.random()*CHEERS.length)];
+    showCheer(cheer);
+    say(cheer + " " + WORDS[mTarget][0] + " starts with " + mTarget + ".", 0.85);
+    setTimeout(function(){ if(current === "match") nextMatch(); }, 2200);
+  }else{
+    el.classList.remove("wrong"); void el.offsetWidth; el.classList.add("wrong");
+    sfxOops();
+    say("That is " + L + ". " + WORDS[mTarget][0] + " starts with a different letter. Try again!", 0.85);
+  }
+}
+
+/* ---------------- my abc book ---------------- */
+var bookWrap = document.getElementById("bookWrap"), bookFill = document.getElementById("bookFill"),
+    bookTitle = document.getElementById("bookTitle"), bookCount = document.getElementById("bookCount");
+function learnedCount(){
+  var n = 0;
+  for(var i = 0; i < LETTERS.length; i++) if(S.learned[LETTERS[i]]) n++;
+  return n;
+}
+function paintBookCount(){
+  var n = learnedCount();
+  if(bookCount) bookCount.textContent = n + "/26";
+  if(bookFill) bookFill.style.width = (n / LETTERS.length * 100) + "%";
+  if(bookTitle) bookTitle.textContent = n === LETTERS.length ? "🏆 All 26 Letters!" : "My ABC Book — " + n + " of 26";
+}
+function buildBook(){
+  bookWrap.innerHTML = "";
+  LETTERS.forEach(function(L, i){
+    var b = document.createElement("button");
+    var got = !!S.learned[L];
+    b.className = "sticker" + (got ? "" : " locked") + (freshStickers[L] ? " new" : "");
+    if(got) b.style.background = "linear-gradient(150deg," + color(i) + "," + shade(color(i), -30) + ")";
+    b.innerHTML = '<span class="l">' + (got ? shown(L) : "?") + '</span><span class="e">' + (got ? WORDS[L][1] : "🔒") + "</span>";
+    b.addEventListener("pointerdown", function(ev){
+      ev.preventDefault(); audio();
+      if(got){ tone(520 + i * 18, 0.25, "sine", 0.18); burst(ev.clientX, ev.clientY, 14, 7); sayLetter(L); }
+      else { sfxOops(); say("Play a game to find " + L + "!", 0.9); }
+    });
+    bookWrap.appendChild(b);
+  });
+  freshStickers = {};
+  paintBookCount();
 }
 
 /* ---------------- balloon popping ---------------- */
@@ -761,7 +1166,7 @@ function spawn(){
     b.dataset.gone = "1";
     sfxPop();
     burst(ev.clientX, ev.clientY, 26, 9);
-    addStar();
+    addStar(); markLearned(L);
     say(L + "! " + L + " is for " + WORDS[L][0] + ".", 0.9);
     b.remove();
   });
@@ -796,14 +1201,18 @@ function paintSettings(){
   var segs = document.querySelectorAll("#caseSeg button");
   for(var i = 0; i < segs.length; i++) segs[i].classList.toggle("sel", segs[i].dataset.case === S.case);
   document.getElementById("tVoice").classList.toggle("on", S.voice);
+  document.getElementById("tPhonics").classList.toggle("on", S.phonics);
+  document.getElementById("bookTotal").textContent = learnedCount() + "/26";
   document.getElementById("tSfx").classList.toggle("on", S.sfx);
   document.getElementById("tMusic").classList.toggle("on", S.music);
   paintStars();
 }
 document.getElementById("caseSeg").addEventListener("click", function(e){
   var b = e.target.closest("button"); if(!b) return;
-  S.case = b.dataset.case; save(); paintSettings(); buildGrid(); layoutGrid();
+  S.case = b.dataset.case; save(); paintSettings(); buildGrid(); layoutGrid(); buildBook();
   if(current === "find") nextRound();
+  if(current === "match") nextMatch();
+  if(current === "trace") setupTrace();
 });
 function bindToggle(id, key, after){
   document.getElementById(id).addEventListener("click", function(){
@@ -812,9 +1221,10 @@ function bindToggle(id, key, after){
 }
 bindToggle("tVoice", "voice", function(){ if(!S.voice && window.speechSynthesis) speechSynthesis.cancel(); });
 bindToggle("tSfx", "sfx");
+bindToggle("tPhonics", "phonics");
 bindToggle("tMusic", "music", function(){ S.music ? musicOn() : musicOff(); });
 document.getElementById("resetStars").addEventListener("click", function(){
-  S.stars = 0; save(); paintStars();
+  S.stars = 0; S.learned = {}; save(); paintStars(); paintSettings(); buildBook();
   var t = grid.querySelectorAll(".tile.done");
   for(var i = 0; i < t.length; i++) t[i].classList.remove("done");
 });
@@ -853,7 +1263,7 @@ document.getElementById("full").addEventListener("click", function(){
     var ch = text[i] === " " ? "&nbsp;" : text[i];
     html += '<span style="color:' + color(i) + ';animation-delay:' + (i * 0.12) + 's">' + ch + "</span>";
   }
-  el.innerHTML = html + '<div style="font-size:.42em;color:#fff;margin-top:.1em">Tap &amp; Learn!</div>';
+  el.innerHTML = html + '<div style="font-size:.4em;color:#fff;margin-top:.42em;line-height:1">Tap &amp; Learn!</div>';
 })();
 
 /* ---------------- housekeeping ---------------- */
@@ -884,7 +1294,9 @@ document.addEventListener("pointerdown", function once(){
 });
 
 buildGrid();
+buildBook();
 paintStars();
+paintBookCount();
 })();
 </script>
 </body>
