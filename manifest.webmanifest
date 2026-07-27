@@ -1,0 +1,19 @@
+{
+  "name": "Toddler Tap & Learn Alphabet",
+  "short_name": "Tap & Learn ABC",
+  "description": "A colorful, offline ABC game for toddlers: tap letters, find letters, pop balloons and sing the alphabet.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#ffe97a",
+  "theme_color": "#7b2ff7",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
