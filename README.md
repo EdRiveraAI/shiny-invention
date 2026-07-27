@@ -72,7 +72,12 @@ Press and **hold** the ⚙️ gear on the home screen for 1.5 seconds — long e
 that a toddler won't land on it by accident.
 
 - **Letter style** — `A B C` (uppercase), `a b c` (lowercase), or `Aa Bb` (both)
-- **Talking voice** — on/off (uses the voice already built into the device)
+- **Talking voice** — on/off (uses the voices already on the device)
+- **Which voice** — pick from every English voice your device has, with a 🔊
+  preview button. The game auto-picks the most natural one it can find, but
+  quality varies by device; if they all sound robotic, most devices can
+  download better ones (iPad: Settings → Accessibility → Spoken Content →
+  Voices)
 - **Letter sounds** — adds the phonic sound ("**A** says *ah*") to the letter
   name. On by default; turn it off if you'd rather teach names first
 - **Sound effects** — on/off
@@ -85,7 +90,9 @@ that a toddler won't land on it by accident.
 - Nothing loads from the internet — the whole game is in the one file
 - No data collection; the only things stored are the star count, which letters
   have been unlocked, and your settings — all in the browser's local storage on
-  that device
+  that device. Where a browser blocks storage entirely (a sandboxed preview
+  frame, or Safari with all cookies blocked) the game plays normally but says
+  so in the settings panel instead of silently losing progress
 - Pinch-zoom and double-tap-zoom are disabled so stray taps can't scramble the layout
 - Wrong answers are never punished — there's no losing, no timer, no game over
 - Speech and animations stop automatically when the screen is locked or the tab
@@ -95,8 +102,17 @@ that a toddler won't land on it by accident.
 
 Plain HTML, CSS and JavaScript in a single file — no build step, no dependencies.
 
-- Speech uses the browser's built-in `SpeechSynthesis`. If a device has no voices
-  installed the game still works; it just plays the sounds without the narration.
+- Speech uses the browser's built-in `SpeechSynthesis`. Voices are ranked by
+  quality — cloud/neural voices first, novelty voices last — and the grown-up
+  can override the pick. If a device has no voices the game still works; it
+  just plays the sounds without narration.
+- The voice is never interrupted twice in quick succession. Cancelling and
+  speaking in the same moment wedges the speech queue on iOS and some Android
+  engines, after which nothing speaks for the rest of the session, so repeat
+  taps wait their turn instead.
+- The alphabet song speaks one phrase per musical phrase rather than 26
+  separate letters, which is both more natural and the reason the queue stays
+  intact.
 - Sound effects and music are synthesised live with the Web Audio API, so there
   are no audio files to download. Audio unlocks on the first tap (a mobile
   browser requirement).

@@ -252,6 +252,13 @@ body{
 }
 .sticker.locked .l{text-shadow:none}
 .sticker.new{animation:popin .5s cubic-bezier(.2,1.6,.4,1) both}
+.sticker.wiggle{animation:shake .45s ease both}
+#bookEmpty{
+  flex:0 0 auto;margin:0 0 8px;text-align:center;font-weight:800;
+  font-size:clamp(14px,2.6vmin,21px);color:#5b3b8c;
+  background:rgba(255,255,255,.75);border-radius:999px;padding:10px 18px;
+  align-self:center;max-width:94%;
+}
 #bookBar{
   flex:0 0 auto;height:18px;border-radius:999px;background:rgba(255,255,255,.6);
   margin:0 4px 10px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.12);
@@ -269,7 +276,11 @@ body{
   background:#fff;border-radius:28px;padding:clamp(18px,3.4vmin,30px);
   width:min(480px,92vw);box-shadow:0 20px 50px rgba(0,0,0,.35);
   display:flex;flex-direction:column;gap:14px;
+  max-height:92dvh;overflow-y:auto;      /* the panel outgrew a small phone */
+  overscroll-behavior:contain;
 }
+#voiceRow{flex-wrap:wrap}
+#voiceRow > span:last-child{flex:1 1 190px;justify-content:flex-end}
 #sheetCard h2{margin:0;font-size:clamp(20px,3.6vmin,28px)}
 .row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:800;font-size:clamp(15px,2.6vmin,20px)}
 .seg{display:flex;gap:6px;background:#eee;padding:5px;border-radius:999px}
@@ -278,6 +289,11 @@ body{
   background:transparent;color:#666;font-size:clamp(13px,2.2vmin,17px);
 }
 .seg button.sel{background:var(--c6);color:#fff}
+#voiceSel{
+  font:inherit;font-weight:700;font-size:clamp(12px,2.1vmin,16px);
+  padding:8px 10px;border-radius:12px;border:2px solid #ddd;background:#fff;color:var(--ink);
+  flex:1 1 auto;max-width:260px;min-width:0;
+}
 .toggle{width:64px;height:36px;border-radius:999px;border:none;cursor:pointer;background:#ccc;position:relative;transition:background .2s}
 .toggle::after{content:"";position:absolute;top:3px;left:3px;width:30px;height:30px;border-radius:50%;background:#fff;transition:transform .2s}
 .toggle.on{background:var(--c8)}
@@ -398,6 +414,7 @@ body{
       <div id="starsB" class="starbox">⭐ <span class="sc">0</span></div>
     </div>
     <div id="bookBar"><div id="bookFill"></div></div>
+    <p id="bookEmpty">Play any game and the letters you find appear here! ✨</p>
     <div id="bookWrap"></div>
   </section>
 
@@ -433,12 +450,20 @@ body{
     </div>
   </div>
   <div class="row"><span>🗣️ Talking voice</span><button class="toggle" id="tVoice"></button></div>
+  <div class="row" id="voiceRow"><span>🎙️ Which voice</span>
+    <span style="display:flex;gap:8px;align-items:center;min-width:0">
+      <select id="voiceSel"></select>
+      <button class="round" id="voiceTry" title="Hear it" style="width:44px;height:44px;font-size:20px">🔊</button>
+    </span>
+  </div>
+  <p id="voiceNote" class="gate" style="margin:-6px 0 0">Voices come from this device. If they all sound robotic, your device may have better ones to download — on iPad: Settings → Accessibility → Spoken Content → Voices.</p>
   <div class="row"><span>🔤 Letter sounds ("A says ah")</span><button class="toggle" id="tPhonics"></button></div>
   <div class="row"><span>🔔 Sound effects</span><button class="toggle" id="tSfx"></button></div>
   <div class="row"><span>🎵 Gentle music</span><button class="toggle" id="tMusic"></button></div>
   <div class="row"><span>⭐ Stars earned</span><b id="starTotal">0</b></div>
   <div class="row"><span>📖 Letters in the book</span><b id="bookTotal">0/26</b></div>
   <div class="row"><span>Reset stars &amp; book</span><button class="round" id="resetStars" style="width:48px;height:48px;font-size:22px">🔄</button></div>
+  <p class="gate" id="saveWarn" style="display:none;color:#b4460a">⚠️ This browser is blocking saved data, so stars and the ABC Book will reset when the page reloads. Download the game file and open it directly to keep progress.</p>
   <p class="gate">Tip: turn on <b>Guided Access</b> (iPad) or <b>Screen Pinning</b> (Android) so little fingers stay in the game.</p>
   <button id="closeSheet">Done — back to playing!</button>
 </div></div>
@@ -480,17 +505,46 @@ var SONG = {
   T:[E4,560], U:[E4,560], V:[D4,940],
   W:[G4,560], X:[G4,560], Y:[F4,560], Z:[E4,1100]
 };
+/* The voice sings a whole phrase at a time, the way the song actually goes.
+   Speaking 26 separate letters meant cancelling the previous one every time. */
+var PHRASES = [
+  { first:"A", text:"A, B, C, D, E, F, G." },
+  { first:"H", text:"H, I, J, K, L, M, N, O, P." },
+  { first:"Q", text:"Q, R, S." },
+  { first:"T", text:"T, U, V." },
+  { first:"W", text:"W, X, Y, and Z." }
+];
+var PHRASE_AT = {};
+PHRASES.forEach(function(ph){ PHRASE_AT[ph.first] = ph; });
+
 var COLORS = ["#ff4d6d","#ff8b3d","#ffd23f","#5ddb6b","#39c5f3","#7b2ff7","#ff5fd2","#00c9a7","#ff6b6b","#3ad29f"];
 var CHEERS = ["Yay!","Great job!","Woohoo!","Awesome!","You did it!","Super!","Hooray!","Nice one!","Wow!","Amazing!"];
 var color = function(i){ return COLORS[i % COLORS.length]; };
 
 /* ---------------- settings (saved locally) ---------------- */
-var S = { case:"upper", voice:true, sfx:true, music:false, phonics:true, stars:0, learned:{} };
-try{
-  var saved = JSON.parse(localStorage.getItem("ttla") || "null");
-  if(saved) for(var k in S) if(k in saved) S[k] = saved[k];
-}catch(e){}
-function save(){ try{ localStorage.setItem("ttla", JSON.stringify(S)); }catch(e){} }
+var S = { case:"upper", voice:true, sfx:true, music:false, phonics:true, voiceURI:"", stars:0, learned:{} };
+
+/* Some places block storage outright — a sandboxed preview frame, Safari with
+   cookies fully blocked. localStorage.setItem throws there, so progress would
+   silently vanish on every reload. Detect it up front, keep playing from
+   memory, and tell the grown-up rather than pretending it saved. */
+var canSave = (function(){
+  try{
+    localStorage.setItem("ttla-probe", "1");
+    localStorage.removeItem("ttla-probe");
+    return true;
+  }catch(e){ return false; }
+})();
+if(canSave){
+  try{
+    var saved = JSON.parse(localStorage.getItem("ttla") || "null");
+    if(saved) for(var k in S) if(k in saved) S[k] = saved[k];
+  }catch(e){}
+}
+function save(){
+  if(!canSave) return;                 // in-memory only; the session still works
+  try{ localStorage.setItem("ttla", JSON.stringify(S)); }catch(e){}
+}
 
 function shown(L){
   if(S.case === "lower") return L.toLowerCase();
@@ -561,39 +615,99 @@ function musicOff(){
   if(musicGain){ try{ musicGain.disconnect(); }catch(e){} musicGain = null; }
 }
 
-/* ---------------- speech ---------------- */
-var voice = null;
+/* ---------------- speech ----------------
+   The device supplies the voice, and their quality varies enormously, so we
+   rank what is installed rather than taking the first match. Cloud/neural
+   voices (localService false) are far more natural than the built-in compact
+   ones, and the novelty macOS voices are actively bad for this. A parent can
+   override the pick in settings. */
+var synth = window.speechSynthesis || null;
+var voice = null, voices = [];
+
+var VOICE_GOOD = /(neural|natural|enhanced|premium|wavenet|journey|studio|siri|google|samantha|karen|moira|tessa|serena|allison|ava|nicky|aaron|zoe|joana|fiona)/i;
+var VOICE_BAD  = /(compact|espeak|zarvox|albert|bad news|good news|bahh|bells|boing|bubbles|cellos|deranged|jester|organ|superstar|trinoids|whisper|wobble|hysterical|fred|junior|ralph|princess|bruce|agnes|kathy|eddy|flo|grandma|grandpa|reed|rocko|sandy|shelley|robot)/i;
+
+function voiceScore(v){
+  var n = v.name || "", score = 0;
+  if(v.localService === false) score += 5;      // cloud/neural: the most natural
+  if(VOICE_GOOD.test(n)) score += 4;
+  if(VOICE_BAD.test(n))  score -= 9;
+  if(/^en[-_]US/i.test(v.lang)) score += 2;
+  else if(/^en/i.test(v.lang))  score += 1;
+  else score -= 8;                              // a non-English voice mangles the letters
+  return score;
+}
+function englishVoices(){
+  return voices.filter(function(v){ return /^en/i.test(v.lang); });
+}
 function pickVoice(){
-  if(!window.speechSynthesis) return;
-  var vs = speechSynthesis.getVoices() || [];
-  if(!vs.length) return;
-  var pref = ["samantha","karen","google us english","zira","female","victoria","moira","tessa"];
-  for(var p = 0; p < pref.length; p++){
-    for(var i = 0; i < vs.length; i++){
-      if((vs[i].name || "").toLowerCase().indexOf(pref[p]) > -1 && /^en/i.test(vs[i].lang)){ voice = vs[i]; return; }
+  if(!synth) return;
+  voices = synth.getVoices() || [];
+  if(!voices.length) return;
+  if(S.voiceURI){                               // honour the grown-up's choice
+    for(var i = 0; i < voices.length; i++){
+      if(voices[i].voiceURI === S.voiceURI){ voice = voices[i]; return; }
     }
   }
-  for(var j = 0; j < vs.length; j++) if(/^en/i.test(vs[j].lang)){ voice = vs[j]; return; }
-  voice = vs[0];
+  var best = null, bestScore = -1e9;
+  for(var j = 0; j < voices.length; j++){
+    var sc = voiceScore(voices[j]);
+    if(sc > bestScore){ bestScore = sc; best = voices[j]; }
+  }
+  voice = best;
+  if(typeof paintVoiceList === "function") paintVoiceList();
 }
-if(window.speechSynthesis){
+if(synth){
   pickVoice();
-  speechSynthesis.onvoiceschanged = pickVoice;
+  synth.onvoiceschanged = pickVoice;             // voices arrive late on most browsers
 }
-function say(text, rate){
-  if(!S.voice || !window.speechSynthesis) return;
-  try{
-    speechSynthesis.cancel();
-    var u = new SpeechSynthesisUtterance(text);
-    u.rate = rate || 0.85; u.pitch = 1.25; u.volume = 1;
-    if(voice) u.voice = voice;
-    speechSynthesis.speak(u);
-  }catch(e){}
+
+function makeUtterance(text, rate, pitch){
+  var u = new SpeechSynthesisUtterance(text);
+  u.rate = rate || 0.95;                         // 0.8 dragged and sounded mechanical
+  u.pitch = pitch || 1.08;                       // 1.25 was chipmunk territory
+  u.volume = 1;
+  if(voice) u.voice = voice;
+  return u;
+}
+
+/* Cancelling and speaking in the same tick is what wedges the speech queue on
+   iOS and some Android engines — after that nothing speaks again. Cancel only
+   when something is actually talking, then let the engine breathe. */
+var sayTimer = null, lastCancelAt = 0;
+function say(text, rate, pitch){
+  if(!S.voice || !synth) return;
+  clearTimeout(sayTimer);                  // only the most recent tap gets a voice
+  var fire = function(){
+    try{ synth.speak(makeUtterance(text, rate, pitch)); }catch(e){}
+  };
+  var busy = false;
+  try{ busy = synth.speaking || synth.pending; }catch(e){}
+  if(!busy){ fire(); return; }
+
+  // A toddler mashing tiles must not turn into a cancel per tap. If we
+  // interrupted the voice a moment ago, wait for it instead of cancelling
+  // again — the taps still pop and chime, so nothing feels unresponsive.
+  var since = Date.now() - lastCancelAt;
+  if(since < 400){ sayTimer = setTimeout(fire, 400 - since + 90); return; }
+
+  lastCancelAt = Date.now();
+  try{ synth.cancel(); }catch(e){}
+  sayTimer = setTimeout(fire, 90);
+}
+/* Queued: never cancels, so a sequence (the song) stays intact. */
+function sayQueued(text, rate, pitch){
+  if(!S.voice || !synth) return;
+  try{ synth.speak(makeUtterance(text, rate, pitch)); }catch(e){}
+}
+function hushSpeech(){
+  clearTimeout(sayTimer);
+  if(synth){ try{ synth.cancel(); }catch(e){} }
 }
 function sayLetter(L){
-  var line = L + ". ";
-  if(S.phonics) line += L + " says " + SOUNDS[L] + ". ";
-  say(line + L + " is for " + WORDS[L][0] + ".", 0.8);
+  var line = L + "! ";
+  if(S.phonics) line += L + " says, " + SOUNDS[L] + ". ";
+  say(line + L + " is for " + WORDS[L][0].toLowerCase() + ".", 0.95);
 }
 
 /* A letter counts as "learned" the first time the child does anything with it;
@@ -828,9 +942,12 @@ function singAll(){
   step();
   function step(){
     if(singIdx >= LETTERS.length){
-      stopSing(); rain(110); sfxBig();
+      singTimer = null; singTile = null;
+      var lit = grid.querySelectorAll(".tile.sing");
+      for(var i = 0; i < lit.length; i++) lit[i].classList.remove("sing");
+      rain(110); sfxBig();
       showCheer("🎉 A to Z! 🎉", true);
-      say("Now I know my A B Cs! Next time won't you sing with me!", 0.9);
+      sayQueued("Now I know my A B Cs. Next time won't you sing with me?", 0.95);
       return;
     }
     var L = LETTERS[singIdx];
@@ -846,16 +963,18 @@ function singAll(){
     }
     tone(note[0], note[1] / 1000 * 0.92, "triangle", 0.2);
     tone(note[0] * 2, note[1] / 1000 * 0.5, "sine", 0.06);   // a little shimmer on top
-    say(L, note[1] < 400 ? 1.4 : 1);
+    if(PHRASE_AT[L]) sayQueued(PHRASE_AT[L].text, 0.92);     // one utterance per phrase
     singIdx++;
     singTimer = setTimeout(step, note[1]);
   }
 }
 function stopSing(){
+  var wasSinging = !!singTimer;
   if(singTimer){ clearTimeout(singTimer); singTimer = null; }
   var lit = grid.querySelectorAll(".tile.sing");
   for(var i = 0; i < lit.length; i++) lit[i].classList.remove("sing");
   singTile = null;
+  if(wasSinging) hushSpeech();          // drop the queued phrases
 }
 grid.addEventListener("pointerdown", stopSing);
 
@@ -1120,7 +1239,8 @@ function guessMatch(L, el, x, y){
 
 /* ---------------- my abc book ---------------- */
 var bookWrap = document.getElementById("bookWrap"), bookFill = document.getElementById("bookFill"),
-    bookTitle = document.getElementById("bookTitle"), bookCount = document.getElementById("bookCount");
+    bookTitle = document.getElementById("bookTitle"), bookCount = document.getElementById("bookCount"),
+    bookEmpty = document.getElementById("bookEmpty");
 function learnedCount(){
   var n = 0;
   for(var i = 0; i < LETTERS.length; i++) if(S.learned[LETTERS[i]]) n++;
@@ -1134,6 +1254,7 @@ function paintBookCount(){
 }
 function buildBook(){
   bookWrap.innerHTML = "";
+  bookEmpty.style.display = learnedCount() ? "none" : "";
   LETTERS.forEach(function(L, i){
     var b = document.createElement("button");
     var got = !!S.learned[L];
@@ -1143,7 +1264,11 @@ function buildBook(){
     b.addEventListener("pointerdown", function(ev){
       ev.preventDefault(); audio();
       if(got){ tone(520 + i * 18, 0.25, "sine", 0.18); burst(ev.clientX, ev.clientY, 14, 7); sayLetter(L); }
-      else { sfxOops(); say("Play a game to find " + L + "!", 0.9); }
+      else {
+        sfxOops();
+        b.classList.remove("wiggle"); void b.offsetWidth; b.classList.add("wiggle");
+        say("Play a game to find " + L + "!", 0.95);
+      }
     });
     bookWrap.appendChild(b);
   });
@@ -1234,12 +1359,45 @@ gear.addEventListener("pointerdown", function(e){ e.preventDefault(); audio(); b
 function openSheet(){ paintSettings(); sheet.classList.add("on"); }
 document.getElementById("closeSheet").addEventListener("click", function(){ sheet.classList.remove("on"); });
 
+/* Let the grown-up audition every voice the device has and keep their pick. */
+var voiceSel = document.getElementById("voiceSel");
+function paintVoiceList(){
+  if(!voiceSel) return;
+  var list = englishVoices();
+  if(!list.length){
+    voiceSel.innerHTML = '<option>No voices on this device</option>';
+    voiceSel.disabled = true;
+    return;
+  }
+  voiceSel.disabled = false;
+  list.sort(function(a, b){ return voiceScore(b) - voiceScore(a); });
+  var html = "";
+  for(var i = 0; i < list.length; i++){
+    var sel = voice && list[i].voiceURI === voice.voiceURI ? " selected" : "";
+    html += '<option value="' + list[i].voiceURI.replace(/"/g, "&quot;") + '"' + sel + ">" +
+            list[i].name.replace(/</g, "") + (i === 0 ? " (best here)" : "") + "</option>";
+  }
+  voiceSel.innerHTML = html;
+}
+if(voiceSel){
+  voiceSel.addEventListener("change", function(){
+    S.voiceURI = voiceSel.value; save();
+    for(var i = 0; i < voices.length; i++) if(voices[i].voiceURI === S.voiceURI) voice = voices[i];
+    say("Hello! A is for apple.", 0.95);
+  });
+  document.getElementById("voiceTry").addEventListener("click", function(){
+    audio(); say("Hello! I am ready to play. A is for apple.", 0.95);
+  });
+}
+
 function paintSettings(){
   var segs = document.querySelectorAll("#caseSeg button");
   for(var i = 0; i < segs.length; i++) segs[i].classList.toggle("sel", segs[i].dataset.case === S.case);
   document.getElementById("tVoice").classList.toggle("on", S.voice);
   document.getElementById("tPhonics").classList.toggle("on", S.phonics);
   document.getElementById("bookTotal").textContent = learnedCount() + "/26";
+  document.getElementById("saveWarn").style.display = canSave ? "none" : "";
+  paintVoiceList();
   document.getElementById("tSfx").classList.toggle("on", S.sfx);
   document.getElementById("tMusic").classList.toggle("on", S.music);
   paintStars();
@@ -1256,7 +1414,7 @@ function bindToggle(id, key, after){
     S[key] = !S[key]; save(); paintSettings(); if(after) after();
   });
 }
-bindToggle("tVoice", "voice", function(){ if(!S.voice && window.speechSynthesis) speechSynthesis.cancel(); });
+bindToggle("tVoice", "voice", function(){ if(!S.voice) hushSpeech(); });
 bindToggle("tSfx", "sfx");
 bindToggle("tPhonics", "phonics");
 bindToggle("tMusic", "music", function(){ S.music ? musicOn() : musicOff(); });
@@ -1308,7 +1466,7 @@ document.getElementById("full").addEventListener("click", function(){
 document.addEventListener("visibilitychange", function(){
   if(document.hidden){
     stopSing(); stopPop(); musicOff();
-    if(window.speechSynthesis) speechSynthesis.cancel();
+    hushSpeech();
   }else{
     if(S.music) musicOn();
     if(current === "pop") startPop();
