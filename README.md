@@ -31,7 +31,8 @@ on the tablet:
 - **Android:** browser menu → *Install app* / *Add to Home screen*
 
 It then launches full screen with no browser bars — much harder for little
-fingers to escape.
+fingers to escape — and a service worker caches the whole game on first visit,
+so it keeps working with no signal at all: on a plane, in the car, anywhere.
 
 ### Keep them in the game
 
@@ -52,7 +53,7 @@ Before handing the tablet over:
 | 🖍️ | **Trace a Letter** | A big dotted letter to scribble over with a finger. The crayon draws in rainbow colours and sparkles as it goes; colour in enough of the letter and it celebrates. Accuracy is not required — enthusiasm is. |
 | 🧩 | **What Starts With?** | A picture card (🍊 Orange) and three letters. Which one does the word start with? Tap the picture to hear it again. |
 | 🎈 | **Pop the Balloons** | Letter balloons drift up the screen. Tap to pop them with a satisfying *bloop* and hear the letter. |
-| 🎵 | **Sing the ABCs** | The board sings itself A→Z, lighting up each letter in turn, and finishes with a confetti shower. Tap anywhere to stop. |
+| 🎵 | **Sing the ABCs** | The real ABC song — the Twinkle Twinkle tune, held notes and all — plays while the board lights up each letter in turn, finishing with a confetti shower. Tap anywhere to stop. |
 
 ### 📖 My ABC Book
 
@@ -62,7 +63,8 @@ padlock; unlocked ones show the letter and its picture, and tapping one says it
 again. The home screen shows the running count, and it's all still there
 tomorrow.
 
-Every ⭐ is saved on the device too. Every 10 stars triggers a full-screen party.
+Every ⭐ is saved on the device too. Every 10 stars triggers a full-screen party,
+and unlocking the 26th letter sets off a trophy celebration.
 
 ## Grown-up settings
 
@@ -106,7 +108,13 @@ Plain HTML, CSS and JavaScript in a single file — no build step, no dependenci
   colour. Completion is measured by sampling the glyph into a grid of points and
   counting how many the crayon passed over (60% is a win).
 
-Tested in Chromium on desktop and phone-sized viewports.
+- `sw.js` caches the game for offline use, and only registers when the page is
+  served over http(s) — opening the file directly skips it entirely.
+
+Tested in Chromium across tablet, phone and desktop viewports: every mode in all
+three letter-case settings, the song's order and rhythm, the trophy at 26
+letters, saved progress surviving a reload, and an offline reload after the
+service worker installs.
 
 ## License
 

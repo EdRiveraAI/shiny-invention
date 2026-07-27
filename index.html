@@ -291,12 +291,18 @@ body{
 #cheer{
   position:fixed;left:50%;top:34%;transform:translate(-50%,-50%) scale(0);z-index:55;
   font-weight:900;font-size:clamp(34px,9vmin,90px);color:#fff;pointer-events:none;
-  text-shadow:0 6px 0 rgba(0,0,0,.22),0 0 30px rgba(255,255,255,.7);white-space:nowrap;
+  text-shadow:0 4px 0 rgba(0,0,0,.35);white-space:nowrap;
+  padding:.14em .5em;border-radius:999px;max-width:96vw;
+  background:linear-gradient(160deg,rgba(123,47,247,.92),rgba(255,95,210,.92));
+  box-shadow:0 10px 0 rgba(0,0,0,.16),0 16px 40px rgba(0,0,0,.3);
 }
-#cheer.go{animation:cheer 1.25s cubic-bezier(.2,1.5,.4,1) both}
-@keyframes cheer{0%{transform:translate(-50%,-50%) scale(0) rotate(-12deg)}
-  25%{transform:translate(-50%,-50%) scale(1.15) rotate(3deg)}
-  70%{transform:translate(-50%,-50%) scale(1) rotate(0)}
+#cheer.go{animation:cheer 1.4s cubic-bezier(.2,1.5,.4,1) both}
+#cheer.go.big{animation-duration:2.6s;font-size:clamp(30px,7.6vmin,76px)}
+@keyframes cheer{
+  0%{transform:translate(-50%,-50%) scale(0) rotate(-12deg);opacity:1}
+  20%{transform:translate(-50%,-50%) scale(1.15) rotate(3deg);opacity:1}
+  60%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}
+  80%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}
   100%{transform:translate(-50%,-90%) scale(.9);opacity:0}}
 </style>
 </head>
@@ -462,6 +468,18 @@ var SOUNDS = {
   J:"juh", K:"kuh", L:"lll", M:"mmm", N:"nnn", O:"oh", P:"puh", Q:"kwuh", R:"rrr",
   S:"sss", T:"tuh", U:"uh", V:"vvv", W:"wuh", X:"ks", Y:"yuh", Z:"zzz"
 };
+/* The ABC song on the Twinkle Twinkle tune: [frequency, milliseconds].
+   The held notes (G, P, S, V, Z) and the quick L-M-N-O run are what make it
+   sound like the song rather than a list of letters. */
+var C4=261.63, D4=293.66, E4=329.63, F4=349.23, G4=392.00, A4=440.00;
+var SONG = {
+  A:[C4,560], B:[C4,560], C:[G4,560], D:[G4,560], E:[A4,560], F:[A4,560], G:[G4,940],
+  H:[F4,560], I:[F4,560], J:[E4,560], K:[E4,560],
+  L:[D4,320], M:[D4,320], N:[D4,320], O:[D4,320], P:[C4,940],
+  Q:[G4,560], R:[G4,560], S:[F4,940],
+  T:[E4,560], U:[E4,560], V:[D4,940],
+  W:[G4,560], X:[G4,560], Y:[F4,560], Z:[E4,1100]
+};
 var COLORS = ["#ff4d6d","#ff8b3d","#ffd23f","#5ddb6b","#39c5f3","#7b2ff7","#ff5fd2","#00c9a7","#ff6b6b","#3ad29f"];
 var CHEERS = ["Yay!","Great job!","Woohoo!","Awesome!","You did it!","Super!","Hooray!","Nice one!","Wow!","Amazing!"];
 var color = function(i){ return COLORS[i % COLORS.length]; };
@@ -584,7 +602,16 @@ var freshStickers = {};
 function markLearned(L){
   if(S.learned[L]) return false;
   S.learned[L] = 1; freshStickers[L] = 1; save(); paintBookCount();
+  if(learnedCount() === LETTERS.length) setTimeout(finishTheBook, 900);
   return true;
+}
+/* the whole alphabet, at last */
+function finishTheBook(){
+  clearTimeout(cardTimer); hideCard();      // give the finale the whole screen
+  rain(200); sfxBig();
+  showCheer("🏆 All 26 Letters! 🏆", true);
+  say("You found every letter in the alphabet! You know your A B Cs!", 0.9);
+  setTimeout(function(){ rain(120); }, 900);
 }
 
 /* ---------------- confetti / particles ---------------- */
@@ -646,10 +673,11 @@ function tick(){
 
 /* ---------------- stars & cheering ---------------- */
 var cheerEl = document.getElementById("cheer");
-function showCheer(text){
+function showCheer(text, big){
   cheerEl.textContent = text;
-  cheerEl.classList.remove("go");
+  cheerEl.classList.remove("go", "big");
   void cheerEl.offsetWidth;
+  if(big) cheerEl.classList.add("big");
   cheerEl.classList.add("go");
 }
 function paintStars(){
@@ -666,7 +694,7 @@ function addStar(x, y){
   }
   if(S.stars % 10 === 0){         // every 10 stars = party time
     rain(120); sfxBig();
-    showCheer("⭐ " + S.stars + " Stars! ⭐");
+    showCheer("⭐ " + S.stars + " Stars! ⭐", true);
     say("Wow! " + S.stars + " stars! You are amazing!", 0.9);
   }
 }
@@ -792,7 +820,7 @@ function tapLetter(L, c, x, y, el){
 }
 
 /* sing the ABCs — walks the grid A→Z */
-var singTimer = null, singIdx = 0;
+var singTimer = null, singIdx = 0, singTile = null;
 function singAll(){
   stopSing();
   singIdx = 0;
@@ -801,25 +829,34 @@ function singAll(){
   function step(){
     if(singIdx >= LETTERS.length){
       stopSing(); rain(110); sfxBig();
-      showCheer("🎉 A to Z! 🎉");
+      showCheer("🎉 A to Z! 🎉", true);
       say("Now I know my A B Cs! Next time won't you sing with me!", 0.9);
       return;
     }
     var L = LETTERS[singIdx];
+    var note = SONG[L];
     var tile = grid.querySelector('[data-letter="' + L + '"]');
+    if(singTile && singTile !== tile) singTile.classList.remove("sing");
     if(tile){
+      singTile = tile;
       tile.classList.remove("sing"); void tile.offsetWidth; tile.classList.add("sing");
       tile.scrollIntoView({block:"nearest", behavior:"smooth"});
       var r = tile.getBoundingClientRect();
       burst(r.left + r.width/2, r.top + r.height/2, 8, 5);
     }
-    tone(392 + singIdx * 14, 0.22, "triangle", 0.16);
-    say(L, 0.95);
+    tone(note[0], note[1] / 1000 * 0.92, "triangle", 0.2);
+    tone(note[0] * 2, note[1] / 1000 * 0.5, "sine", 0.06);   // a little shimmer on top
+    say(L, note[1] < 400 ? 1.4 : 1);
     singIdx++;
-    singTimer = setTimeout(step, 900);
+    singTimer = setTimeout(step, note[1]);
   }
 }
-function stopSing(){ if(singTimer){ clearTimeout(singTimer); singTimer = null; } }
+function stopSing(){
+  if(singTimer){ clearTimeout(singTimer); singTimer = null; }
+  var lit = grid.querySelectorAll(".tile.sing");
+  for(var i = 0; i < lit.length; i++) lit[i].classList.remove("sing");
+  singTile = null;
+}
 grid.addEventListener("pointerdown", stopSing);
 
 /* ---------------- find the letter ---------------- */
@@ -1292,6 +1329,14 @@ document.addEventListener("pointerdown", function once(){
   audio(); if(S.music) musicOn();
   document.removeEventListener("pointerdown", once);
 });
+
+/* Offline support, only when served over http(s) — opening the file directly
+   works without it, and registering from file:// just throws. */
+if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)){
+  addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  });
+}
 
 buildGrid();
 buildBook();
