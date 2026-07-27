@@ -14,7 +14,7 @@ no internet connection, no ads, and nothing is ever sent anywhere.
 ### The quick way (any computer or tablet)
 
 1. Download `index.html` from this repository
-   ([direct link](../../raw/main/index.html) — right-click → *Save link as…*).
+   ([direct link](../../raw/HEAD/index.html) — right-click → *Save link as…*).
 2. Double-tap the file. It opens in your browser and the game starts.
 3. Tap the **⛶** button on the home screen for full screen.
 
