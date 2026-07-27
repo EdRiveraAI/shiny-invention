@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe97a"/>
+      <stop offset=".4" stop-color="#ffb3d9"/>
+      <stop offset=".75" stop-color="#a8e6ff"/>
+      <stop offset="1" stop-color="#c6ffd6"/>
+    </linearGradient>
+    <linearGradient id="a" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff4d6d"/><stop offset="1" stop-color="#c4234a"/>
+    </linearGradient>
+    <linearGradient id="b" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#39c5f3"/><stop offset="1" stop-color="#7b2ff7"/>
+    </linearGradient>
+    <linearGradient id="c" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5ddb6b"/><stop offset="1" stop-color="#00a883"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="110" fill="url(#bg)"/>
+  <g font-family="Verdana,Geneva,sans-serif" font-weight="bold" text-anchor="middle">
+    <g transform="translate(150 170) rotate(-10)">
+      <rect x="-70" y="-70" width="140" height="140" rx="34" fill="url(#a)"/>
+      <text y="36" font-size="112" fill="#fff">A</text>
+    </g>
+    <g transform="translate(350 190) rotate(9)">
+      <rect x="-70" y="-70" width="140" height="140" rx="34" fill="url(#b)"/>
+      <text y="36" font-size="112" fill="#fff">B</text>
+    </g>
+    <g transform="translate(250 350) rotate(-4)">
+      <rect x="-70" y="-70" width="140" height="140" rx="34" fill="url(#c)"/>
+      <text y="36" font-size="112" fill="#fff">C</text>
+    </g>
+  </g>
+  <g fill="#ffd23f" stroke="#e6a800" stroke-width="6" stroke-linejoin="round">
+    <path d="M62 402l14 30 33 5-24 23 6 33-29-16-29 16 6-33-24-23 33-5z"/>
+    <path d="M452 96l11 24 26 4-19 18 5 26-23-12-23 12 5-26-19-18 26-4z"/>
+  </g>
+</svg>

@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#7b2ff7">
+<meta name="description" content="Toddler Tap & Learn Alphabet — a colorful, offline ABC game for little hands.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Toddler Tap &amp; Learn Alphabet</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔤</text></svg>">
+<!-- Optional: only used when the game is served over http(s) so it can be installed to a home screen.
+     Opening index.html straight from a folder (file://) works fine without it. -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon.svg">
+<style>
+/* ---------------------------------------------------------------
+   Toddler Tap & Learn Alphabet — all styles
+   Designed for chunky fingers: huge targets, no tiny text, no scroll traps.
+   --------------------------------------------------------------- */
+:root{
+  --c1:#ff4d6d; --c2:#ff8b3d; --c3:#ffd23f; --c4:#5ddb6b;
+  --c5:#39c5f3; --c6:#7b2ff7; --c7:#ff5fd2; --c8:#00c9a7;
+  --ink:#2b1055;
+  --pad: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{height:100%;margin:0;overflow:hidden;}
+body{
+  font-family:"Baloo 2","Comic Sans MS","Chalkboard SE",-apple-system,"Segoe UI",system-ui,sans-serif;
+  color:var(--ink);
+  background:linear-gradient(160deg,#ffe97a 0%,#ffb3d9 35%,#a8e6ff 70%,#c6ffd6 100%);
+  background-attachment:fixed;
+  user-select:none; -webkit-user-select:none;
+  touch-action:manipulation;
+  overscroll-behavior:none;
+}
+/* floating background bubbles */
+#bubbles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;}
+.bub{position:absolute;bottom:-15vh;border-radius:50%;opacity:.35;
+     background:radial-gradient(circle at 32% 30%,#fff,rgba(255,255,255,0) 62%),var(--bc,#fff);
+     animation:rise linear infinite;}
+@keyframes rise{to{transform:translateY(-125vh) rotate(360deg);}}
+
+#app{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;padding:var(--pad);}
+.screen{flex:1;min-height:0;display:none;flex-direction:column;}
+.screen.on{display:flex;animation:fadeUp .35s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+
+/* ---------- shared bits ---------- */
+.topbar{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex:0 0 auto;}
+.round{
+  border:none;cursor:pointer;flex:0 0 auto;
+  width:clamp(48px,9vmin,66px);height:clamp(48px,9vmin,66px);
+  border-radius:50%;font-size:clamp(22px,4.4vmin,32px);line-height:1;
+  background:#fff;color:var(--ink);
+  box-shadow:0 5px 0 rgba(0,0,0,.16),0 8px 18px rgba(0,0,0,.14);
+  display:grid;place-items:center;transition:transform .08s;
+}
+.round:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.16);}
+.title{
+  flex:1;text-align:center;font-weight:900;
+  font-size:clamp(20px,4.6vmin,38px);
+  color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.22),0 0 16px rgba(255,255,255,.5);
+  letter-spacing:.5px;
+}
+/* star counter */
+#stars,.starbox{
+  display:flex;align-items:center;gap:4px;font-weight:900;
+  font-size:clamp(18px,3.6vmin,30px);
+  background:#fff;border-radius:999px;padding:6px 16px 6px 12px;
+  box-shadow:0 5px 0 rgba(0,0,0,.14);
+}
+.pop-in{animation:popin .4s cubic-bezier(.2,1.6,.4,1) both;}
+@keyframes popin{from{transform:scale(0) rotate(-25deg)}to{transform:none}}
+
+/* ---------- home screen ---------- */
+#home{justify-content:center;align-items:center;gap:clamp(10px,2.4vmin,22px);text-align:center;}
+#logo{
+  font-size:clamp(34px,8.4vmin,74px);font-weight:900;line-height:1.05;
+  color:#fff;text-shadow:0 5px 0 rgba(0,0,0,.2),0 0 24px rgba(255,255,255,.55);
+}
+#logo span{display:inline-block;animation:bob 2.4s ease-in-out infinite;}
+#logo span:nth-child(odd){color:#fff;}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-12px) rotate(3deg)}}
+.menu{display:flex;flex-direction:column;gap:clamp(10px,2.2vmin,18px);width:min(560px,92vw);}
+.big{
+  border:none;cursor:pointer;border-radius:26px;
+  padding:clamp(14px,2.8vmin,26px) clamp(16px,3vmin,28px);
+  font:inherit;font-weight:900;font-size:clamp(21px,4.4vmin,38px);color:#fff;
+  display:flex;align-items:center;gap:clamp(10px,2.4vmin,20px);
+  text-shadow:0 3px 0 rgba(0,0,0,.18);
+  box-shadow:0 8px 0 rgba(0,0,0,.2),0 14px 26px rgba(0,0,0,.18);
+  transition:transform .09s;
+}
+.big:active{transform:translateY(6px);box-shadow:0 2px 0 rgba(0,0,0,.2);}
+.big .emo{font-size:clamp(30px,6.4vmin,54px);text-shadow:none;filter:drop-shadow(0 3px 3px rgba(0,0,0,.2));}
+.b1{background:linear-gradient(135deg,#ff4d6d,#ff8b3d)}
+.b2{background:linear-gradient(135deg,#39c5f3,#7b2ff7)}
+.b3{background:linear-gradient(135deg,#5ddb6b,#00c9a7)}
+.b4{background:linear-gradient(135deg,#ff5fd2,#ffd23f)}
+#hint{color:#5b3b8c;font-weight:800;font-size:clamp(12px,2.2vmin,17px);opacity:.85;max-width:90vw;}
+
+/* ---------- letters grid ---------- */
+#grid{
+  flex:1;min-height:0;display:grid;gap:clamp(6px,1.4vmin,14px);
+  grid-template-columns:repeat(auto-fit,minmax(clamp(64px,12vmin,128px),1fr));
+  align-content:center;justify-content:center;overflow-y:auto;padding:4px;
+  scrollbar-width:none;
+}
+#grid::-webkit-scrollbar{display:none}
+.tile{
+  border:none;cursor:pointer;font:inherit;color:#fff;font-weight:900;
+  aspect-ratio:1/1;border-radius:var(--tileRadius,22px);
+  font-size:var(--tileFont,clamp(26px,6.6vmin,60px));line-height:1;
+  display:grid;place-items:center;
+  text-shadow:0 4px 0 rgba(0,0,0,.18);
+  box-shadow:0 7px 0 rgba(0,0,0,.18),0 10px 18px rgba(0,0,0,.14);
+  transition:transform .1s;
+}
+.tile:active{transform:translateY(5px) scale(.96);box-shadow:0 2px 0 rgba(0,0,0,.18);}
+.tile.done{outline:4px solid rgba(255,255,255,.9);outline-offset:-4px;}
+.tile.sing{animation:singpop .55s ease both;z-index:2;}
+@keyframes singpop{0%{transform:none}40%{transform:scale(1.22) rotate(-6deg)}100%{transform:none}}
+
+/* ---------- big letter card ---------- */
+#card{
+  position:fixed;inset:0;z-index:40;display:none;place-items:center;
+  background:rgba(43,16,85,.35);backdrop-filter:blur(4px);
+}
+#card.on{display:grid;}
+#cardInner{
+  width:min(84vw,84vh);aspect-ratio:1/1;border-radius:14%;
+  display:grid;place-items:center;grid-template-rows:1fr auto;
+  padding:3vmin;color:#fff;text-align:center;
+  box-shadow:0 18px 0 rgba(0,0,0,.2),0 30px 60px rgba(0,0,0,.3);
+  animation:cardIn .45s cubic-bezier(.2,1.5,.4,1) both;
+}
+@keyframes cardIn{from{transform:scale(.3) rotate(-12deg);opacity:0}to{transform:none;opacity:1}}
+#cardLetter{font-size:min(34vw,34vh);font-weight:900;line-height:.95;text-shadow:0 8px 0 rgba(0,0,0,.18);}
+#cardWord{font-size:min(7.5vw,7.5vh);font-weight:900;text-shadow:0 4px 0 rgba(0,0,0,.18);}
+#cardWord .e{font-size:min(11vw,11vh);display:block;animation:bob 1.6s ease-in-out infinite;text-shadow:none;}
+
+/* ---------- find-it game ---------- */
+#findWrap{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,2.6vmin,26px);}
+#ask{
+  font-weight:900;font-size:clamp(24px,5.6vmin,50px);color:#fff;text-align:center;
+  text-shadow:0 4px 0 rgba(0,0,0,.2);display:flex;align-items:center;gap:14px;
+  background:rgba(123,47,247,.75);padding:10px 24px;border-radius:999px;
+  cursor:pointer;transition:transform .1s;
+}
+#ask:active{transform:scale(.96)}
+#choices{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(8px,2.4vmin,24px);width:100%;}
+.choice{
+  border:none;cursor:pointer;font:inherit;color:#fff;font-weight:900;
+  width:clamp(88px,22vmin,190px);aspect-ratio:1/1;border-radius:26px;
+  font-size:clamp(42px,12vmin,108px);display:grid;place-items:center;line-height:1;
+  text-shadow:0 5px 0 rgba(0,0,0,.18);
+  box-shadow:0 9px 0 rgba(0,0,0,.18),0 14px 22px rgba(0,0,0,.14);
+  transition:transform .1s;
+}
+.choice:active{transform:translateY(6px)}
+.choice.right{animation:rightPop .6s ease both}
+.choice.wrong{animation:shake .45s ease both}
+@keyframes rightPop{0%{transform:none}35%{transform:scale(1.3) rotate(8deg)}100%{transform:scale(1)}}
+@keyframes shake{10%,90%{transform:translateX(-8px)}30%,70%{transform:translateX(10px)}50%{transform:translateX(-10px)}}
+
+/* ---------- balloons ---------- */
+#sky{flex:1;min-height:0;position:relative;overflow:hidden;border-radius:24px;}
+.balloon{
+  position:absolute;bottom:-30vh;width:var(--w);cursor:pointer;
+  display:grid;place-items:center;will-change:transform;
+  animation:float var(--dur) linear forwards;
+}
+@keyframes float{to{transform:translateY(calc(-100vh - 30vh))}}
+.balloon .body{
+  width:100%;aspect-ratio:.82/1;border-radius:50% 50% 46% 46%;
+  background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.9),rgba(255,255,255,0) 42%),
+             linear-gradient(160deg,var(--bg),var(--bg2,var(--bg)));
+  display:grid;place-items:center;color:#fff;font-weight:900;
+  font-size:calc(var(--w) * .52);line-height:1;
+  text-shadow:0 4px 0 rgba(0,0,0,.3),0 0 12px rgba(0,0,0,.28);
+  box-shadow:inset -8px -12px 24px rgba(0,0,0,.16);
+  animation:sway 3.2s ease-in-out infinite;
+}
+.balloon .string{width:2px;height:calc(var(--w)*.5);background:rgba(255,255,255,.75);}
+@keyframes sway{0%,100%{transform:translateX(-8px) rotate(-4deg)}50%{transform:translateX(8px) rotate(4deg)}}
+
+/* ---------- toast / settings ---------- */
+#sheet{
+  position:fixed;inset:0;z-index:60;display:none;place-items:center;background:rgba(43,16,85,.55);
+  backdrop-filter:blur(3px);
+}
+#sheet.on{display:grid}
+#sheetCard{
+  background:#fff;border-radius:28px;padding:clamp(18px,3.4vmin,30px);
+  width:min(480px,92vw);box-shadow:0 20px 50px rgba(0,0,0,.35);
+  display:flex;flex-direction:column;gap:14px;
+}
+#sheetCard h2{margin:0;font-size:clamp(20px,3.6vmin,28px)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:800;font-size:clamp(15px,2.6vmin,20px)}
+.seg{display:flex;gap:6px;background:#eee;padding:5px;border-radius:999px}
+.seg button{
+  border:none;cursor:pointer;font:inherit;font-weight:800;padding:8px 14px;border-radius:999px;
+  background:transparent;color:#666;font-size:clamp(13px,2.2vmin,17px);
+}
+.seg button.sel{background:var(--c6);color:#fff}
+.toggle{width:64px;height:36px;border-radius:999px;border:none;cursor:pointer;background:#ccc;position:relative;transition:background .2s}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:30px;height:30px;border-radius:50%;background:#fff;transition:transform .2s}
+.toggle.on{background:var(--c8)}
+.toggle.on::after{transform:translateX(28px)}
+#closeSheet{
+  border:none;cursor:pointer;font:inherit;font-weight:900;color:#fff;background:var(--c6);
+  padding:14px;border-radius:18px;font-size:clamp(16px,3vmin,22px);box-shadow:0 6px 0 rgba(0,0,0,.2);
+}
+.gate{font-size:clamp(13px,2.3vmin,17px);color:#777;font-weight:700;text-align:center}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
+#cheer{
+  position:fixed;left:50%;top:34%;transform:translate(-50%,-50%) scale(0);z-index:55;
+  font-weight:900;font-size:clamp(34px,9vmin,90px);color:#fff;pointer-events:none;
+  text-shadow:0 6px 0 rgba(0,0,0,.22),0 0 30px rgba(255,255,255,.7);white-space:nowrap;
+}
+#cheer.go{animation:cheer 1.25s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes cheer{0%{transform:translate(-50%,-50%) scale(0) rotate(-12deg)}
+  25%{transform:translate(-50%,-50%) scale(1.15) rotate(3deg)}
+  70%{transform:translate(-50%,-50%) scale(1) rotate(0)}
+  100%{transform:translate(-50%,-90%) scale(.9);opacity:0}}
+</style>
+</head>
+<body>
+<div id="bubbles" aria-hidden="true"></div>
+
+<div id="app">
+
+  <!-- ============ HOME ============ -->
+  <section id="home" class="screen on">
+    <div id="logo" aria-label="Toddler Tap and Learn Alphabet"></div>
+    <div class="menu">
+      <button class="big b1" data-go="letters"><span class="emo">🔤</span><span>Tap the Letters</span></button>
+      <button class="big b2" data-go="find"><span class="emo">🔎</span><span>Find the Letter</span></button>
+      <button class="big b3" data-go="pop"><span class="emo">🎈</span><span>Pop the Balloons</span></button>
+      <button class="big b4" data-go="sing"><span class="emo">🎵</span><span>Sing the ABCs</span></button>
+    </div>
+    <p id="hint">Grown-ups: press and hold the ⚙️ gear for settings. Tap ⛶ for full screen.</p>
+    <div class="topbar" style="width:min(560px,92vw);justify-content:center">
+      <button class="round" id="gear" title="Settings (press and hold)">⚙️</button>
+      <button class="round" id="full" title="Full screen">⛶</button>
+    </div>
+  </section>
+
+  <!-- ============ LETTERS ============ -->
+  <section id="letters" class="screen">
+    <div class="topbar">
+      <button class="round back" title="Back">🏠</button>
+      <div class="title">Tap a Letter!</div>
+      <div id="starsL" class="starbox">⭐ <span class="sc">0</span></div>
+    </div>
+    <div id="grid"></div>
+  </section>
+
+  <!-- ============ FIND IT ============ -->
+  <section id="find" class="screen">
+    <div class="topbar">
+      <button class="round back" title="Back">🏠</button>
+      <div class="title">Find the Letter</div>
+      <div id="starsF" class="starbox">⭐ <span class="sc">0</span></div>
+    </div>
+    <div id="findWrap">
+      <div id="ask" role="button">🔊 <span id="askText">Find A</span></div>
+      <div id="choices"></div>
+    </div>
+  </section>
+
+  <!-- ============ BALLOONS ============ -->
+  <section id="pop" class="screen">
+    <div class="topbar">
+      <button class="round back" title="Back">🏠</button>
+      <div class="title">Pop the Balloons!</div>
+      <div id="starsP" class="starbox">⭐ <span class="sc">0</span></div>
+    </div>
+    <div id="sky"></div>
+  </section>
+
+</div>
+
+<!-- big letter card -->
+<div id="card"><div id="cardInner">
+  <div id="cardLetter">A</div>
+  <div id="cardWord"><span class="e">🍎</span><span id="cardWordText">is for Apple</span></div>
+</div></div>
+
+<div id="cheer"></div>
+<canvas id="fx"></canvas>
+
+<!-- settings -->
+<div id="sheet"><div id="sheetCard">
+  <h2>⚙️ Grown-Up Settings</h2>
+  <div class="row"><span>Letter style</span>
+    <div class="seg" id="caseSeg">
+      <button data-case="upper">A B C</button>
+      <button data-case="lower">a b c</button>
+      <button data-case="both">Aa Bb</button>
+    </div>
+  </div>
+  <div class="row"><span>🗣️ Talking voice</span><button class="toggle" id="tVoice"></button></div>
+  <div class="row"><span>🔔 Sound effects</span><button class="toggle" id="tSfx"></button></div>
+  <div class="row"><span>🎵 Gentle music</span><button class="toggle" id="tMusic"></button></div>
+  <div class="row"><span>⭐ Stars earned</span><b id="starTotal">0</b></div>
+  <div class="row"><span>Reset stars</span><button class="round" id="resetStars" style="width:48px;height:48px;font-size:22px">🔄</button></div>
+  <p class="gate">Tip: turn on <b>Guided Access</b> (iPad) or <b>Screen Pinning</b> (Android) so little fingers stay in the game.</p>
+  <button id="closeSheet">Done — back to playing!</button>
+</div></div>
+
+<script>
+/* ===============================================================
+   Toddler Tap & Learn Alphabet
+   One file, no network, no data collection. Works from a USB stick.
+   =============================================================== */
+(function(){
+"use strict";
+
+/* ---------------- data ---------------- */
+var WORDS = {
+  A:["Apple","🍎"], B:["Ball","⚽"], C:["Cat","🐱"], D:["Dog","🐶"], E:["Elephant","🐘"],
+  F:["Fish","🐟"], G:["Grapes","🍇"], H:["Hat","👒"], I:["Ice cream","🍦"], J:["Juice","🧃"],
+  K:["Kite","🪁"], L:["Lion","🦁"], M:["Moon","🌙"], N:["Nest","🪹"], O:["Orange","🍊"],
+  P:["Pig","🐷"], Q:["Queen","👑"], R:["Rainbow","🌈"], S:["Sun","☀️"], T:["Tree","🌳"],
+  U:["Umbrella","☂️"], V:["Van","🚐"], W:["Whale","🐳"], X:["Xylophone","🎼"], Y:["Yo-yo","🪀"],
+  Z:["Zebra","🦓"]
+};
+var LETTERS = Object.keys(WORDS);
+var COLORS = ["#ff4d6d","#ff8b3d","#ffd23f","#5ddb6b","#39c5f3","#7b2ff7","#ff5fd2","#00c9a7","#ff6b6b","#3ad29f"];
+var CHEERS = ["Yay!","Great job!","Woohoo!","Awesome!","You did it!","Super!","Hooray!","Nice one!","Wow!","Amazing!"];
+var color = function(i){ return COLORS[i % COLORS.length]; };
+
+/* ---------------- settings (saved locally) ---------------- */
+var S = { case:"upper", voice:true, sfx:true, music:false, stars:0 };
+try{
+  var saved = JSON.parse(localStorage.getItem("ttla") || "null");
+  if(saved) for(var k in S) if(k in saved) S[k] = saved[k];
+}catch(e){}
+function save(){ try{ localStorage.setItem("ttla", JSON.stringify(S)); }catch(e){} }
+
+function shown(L){
+  if(S.case === "lower") return L.toLowerCase();
+  if(S.case === "both")  return L + L.toLowerCase();
+  return L;
+}
+
+/* ---------------- audio ---------------- */
+var ac = null, musicGain = null, musicTimer = null;
+function audio(){
+  if(!ac){
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if(!AC) return null;
+    ac = new AC();
+  }
+  if(ac.state === "suspended") ac.resume();
+  return ac;
+}
+function tone(freq, dur, type, vol, delay){
+  if(!S.sfx) return;
+  var c = audio(); if(!c) return;
+  var t0 = c.currentTime + (delay || 0);
+  var o = c.createOscillator(), g = c.createGain();
+  o.type = type || "sine"; o.frequency.setValueAtTime(freq, t0);
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(vol || 0.25, t0 + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + (dur || 0.25));
+  o.connect(g); g.connect(c.destination);
+  o.start(t0); o.stop(t0 + (dur || 0.25) + 0.05);
+}
+function sfxPop(){ // balloon / tile pop
+  if(!S.sfx) return;
+  var c = audio(); if(!c) return;
+  var t0 = c.currentTime;
+  var o = c.createOscillator(), g = c.createGain();
+  o.type = "triangle";
+  o.frequency.setValueAtTime(900, t0);
+  o.frequency.exponentialRampToValueAtTime(180, t0 + 0.14);
+  g.gain.setValueAtTime(0.35, t0);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.16);
+  o.connect(g); g.connect(c.destination); o.start(t0); o.stop(t0 + 0.2);
+}
+function sfxWin(){ [523,659,784,1047].forEach(function(f,i){ tone(f,0.3,"triangle",0.22,i*0.09); }); }
+function sfxBig(){ [523,659,784,1047,1319].forEach(function(f,i){ tone(f,0.45,"sine",0.25,i*0.1); }); }
+function sfxOops(){ tone(300,0.16,"sine",0.16,0); tone(220,0.22,"sine",0.16,0.14); }
+
+/* gentle background arpeggio */
+var SCALE = [523.25,587.33,659.25,783.99,880.00,1046.50];
+function musicOn(){
+  var c = audio(); if(!c || musicTimer) return;
+  musicGain = c.createGain(); musicGain.gain.value = 0.05; musicGain.connect(c.destination);
+  var step = 0;
+  musicTimer = setInterval(function(){
+    if(!ac || ac.state !== "running") return;
+    var f = SCALE[step % SCALE.length] / (step % 12 < 6 ? 2 : 1);
+    var t0 = ac.currentTime;
+    var o = ac.createOscillator(), g = ac.createGain();
+    o.type = "sine"; o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(0.5, t0 + 0.05);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.1);
+    o.connect(g); g.connect(musicGain); o.start(t0); o.stop(t0 + 1.2);
+    step++;
+  }, 620);
+}
+function musicOff(){
+  if(musicTimer){ clearInterval(musicTimer); musicTimer = null; }
+  if(musicGain){ try{ musicGain.disconnect(); }catch(e){} musicGain = null; }
+}
+
+/* ---------------- speech ---------------- */
+var voice = null;
+function pickVoice(){
+  if(!window.speechSynthesis) return;
+  var vs = speechSynthesis.getVoices() || [];
+  if(!vs.length) return;
+  var pref = ["samantha","karen","google us english","zira","female","victoria","moira","tessa"];
+  for(var p = 0; p < pref.length; p++){
+    for(var i = 0; i < vs.length; i++){
+      if((vs[i].name || "").toLowerCase().indexOf(pref[p]) > -1 && /^en/i.test(vs[i].lang)){ voice = vs[i]; return; }
+    }
+  }
+  for(var j = 0; j < vs.length; j++) if(/^en/i.test(vs[j].lang)){ voice = vs[j]; return; }
+  voice = vs[0];
+}
+if(window.speechSynthesis){
+  pickVoice();
+  speechSynthesis.onvoiceschanged = pickVoice;
+}
+function say(text, rate){
+  if(!S.voice || !window.speechSynthesis) return;
+  try{
+    speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.rate = rate || 0.85; u.pitch = 1.25; u.volume = 1;
+    if(voice) u.voice = voice;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+function sayLetter(L){ say(L + ". " + L + " is for " + WORDS[L][0] + ".", 0.8); }
+
+/* ---------------- confetti / particles ---------------- */
+var fx = document.getElementById("fx"), ctx = fx.getContext("2d"), parts = [], raf = null;
+function sizeFx(){
+  var d = Math.min(window.devicePixelRatio || 1, 2);
+  fx.width = innerWidth * d; fx.height = innerHeight * d;
+  fx.style.width = innerWidth + "px"; fx.style.height = innerHeight + "px";
+  ctx.setTransform(d, 0, 0, d, 0, 0);
+}
+sizeFx();
+addEventListener("resize", sizeFx);
+
+function burst(x, y, n, power){
+  n = n || 26; power = power || 9;
+  for(var i = 0; i < n; i++){
+    var a = Math.random() * Math.PI * 2, sp = (0.4 + Math.random()) * power;
+    parts.push({
+      x:x, y:y, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp - 3,
+      g:0.32 + Math.random()*0.2, life:1,
+      s:6 + Math.random()*10, c:color(Math.floor(Math.random()*COLORS.length)),
+      r:Math.random()*6, vr:(Math.random()-0.5)*0.4,
+      shape:Math.random() < 0.35 ? "circle" : "rect"
+    });
+  }
+  if(!raf) raf = requestAnimationFrame(tick);
+}
+function rain(n){
+  n = n || 90;
+  for(var i = 0; i < n; i++){
+    parts.push({
+      x:Math.random()*innerWidth, y:-20 - Math.random()*innerHeight*0.5,
+      vx:(Math.random()-0.5)*3, vy:2 + Math.random()*4, g:0.06, life:1,
+      s:8 + Math.random()*12, c:color(Math.floor(Math.random()*COLORS.length)),
+      r:Math.random()*6, vr:(Math.random()-0.5)*0.3,
+      shape:Math.random() < 0.35 ? "circle" : "rect"
+    });
+  }
+  if(!raf) raf = requestAnimationFrame(tick);
+}
+function tick(){
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  for(var i = parts.length - 1; i >= 0; i--){
+    var p = parts[i];
+    p.x += p.vx; p.y += p.vy; p.vy += p.g; p.vx *= 0.995; p.r += p.vr;
+    if(p.y > innerHeight + 60) p.life = 0; else p.life -= 0.004;
+    if(p.life <= 0){ parts.splice(i, 1); continue; }
+    ctx.save();
+    ctx.translate(p.x, p.y); ctx.rotate(p.r);
+    ctx.globalAlpha = Math.max(0, Math.min(1, p.life));
+    ctx.fillStyle = p.c;
+    if(p.shape === "circle"){ ctx.beginPath(); ctx.arc(0, 0, p.s/2, 0, 6.283); ctx.fill(); }
+    else ctx.fillRect(-p.s/2, -p.s/4, p.s, p.s/2);
+    ctx.restore();
+  }
+  if(parts.length) raf = requestAnimationFrame(tick);
+  else { raf = null; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+}
+
+/* ---------------- stars & cheering ---------------- */
+var cheerEl = document.getElementById("cheer");
+function showCheer(text){
+  cheerEl.textContent = text;
+  cheerEl.classList.remove("go");
+  void cheerEl.offsetWidth;
+  cheerEl.classList.add("go");
+}
+function paintStars(){
+  var n = document.querySelectorAll(".sc");
+  for(var i = 0; i < n.length; i++) n[i].textContent = S.stars;
+  var tot = document.getElementById("starTotal");
+  if(tot) tot.textContent = S.stars;
+}
+function addStar(x, y){
+  S.stars++; save(); paintStars();
+  var boxes = document.querySelectorAll(".starbox");
+  for(var i = 0; i < boxes.length; i++){
+    boxes[i].classList.remove("pop-in"); void boxes[i].offsetWidth; boxes[i].classList.add("pop-in");
+  }
+  if(S.stars % 10 === 0){         // every 10 stars = party time
+    rain(120); sfxBig();
+    showCheer("⭐ " + S.stars + " Stars! ⭐");
+    say("Wow! " + S.stars + " stars! You are amazing!", 0.9);
+  }
+}
+
+/* ---------------- navigation ---------------- */
+var screens = { home:1, letters:1, find:1, pop:1 };
+var current = "home";
+function go(name){
+  audio(); // unlock audio on any navigation tap
+  if(name === "sing"){ show("letters"); setTimeout(singAll, 350); return; }
+  show(name);
+  if(name === "find") nextRound();
+  if(name === "pop") startPop(); else stopPop();
+  if(name !== "letters") stopSing();
+}
+function show(name){
+  for(var k in screens) document.getElementById(k).classList.toggle("on", k === name);
+  current = name;
+  if(name === "letters") layoutGrid();   // grid has no size until its screen is visible
+}
+document.addEventListener("click", function(e){
+  var b = e.target.closest("[data-go]");
+  if(b){ go(b.getAttribute("data-go")); return; }
+  if(e.target.closest(".back")){ go("home"); }
+});
+
+/* ---------------- big letter card ---------------- */
+var card = document.getElementById("card"), cardInner = document.getElementById("cardInner"),
+    cardLetter = document.getElementById("cardLetter"), cardWordText = document.getElementById("cardWordText"),
+    cardEmoji = document.querySelector("#cardWord .e");
+var cardTimer = null;
+function showCard(L, c){
+  cardLetter.textContent = shown(L);
+  cardEmoji.textContent = WORDS[L][1];
+  cardWordText.textContent = "is for " + WORDS[L][0];
+  cardInner.style.background = "linear-gradient(150deg," + c + ", " + shade(c, -28) + ")";
+  card.classList.add("on");
+  void cardInner.offsetWidth;
+  cardInner.style.animation = "none"; void cardInner.offsetWidth; cardInner.style.animation = "";
+  clearTimeout(cardTimer);
+  cardTimer = setTimeout(hideCard, 2200);
+}
+function hideCard(){ card.classList.remove("on"); }
+card.addEventListener("pointerdown", function(){ clearTimeout(cardTimer); hideCard(); });
+
+function shade(hex, amt){
+  var n = parseInt(hex.slice(1), 16);
+  var r = Math.max(0, Math.min(255, (n >> 16) + amt));
+  var g = Math.max(0, Math.min(255, ((n >> 8) & 255) + amt));
+  var b = Math.max(0, Math.min(255, (n & 255) + amt));
+  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+/* ---------------- letters grid ---------------- */
+var grid = document.getElementById("grid");
+function buildGrid(){
+  grid.innerHTML = "";
+  LETTERS.forEach(function(L, i){
+    var b = document.createElement("button");
+    b.className = "tile";
+    b.dataset.letter = L;
+    b.style.background = "linear-gradient(150deg," + color(i) + "," + shade(color(i), -30) + ")";
+    b.textContent = shown(L);
+    b.addEventListener("pointerdown", function(ev){
+      ev.preventDefault();
+      tapLetter(L, color(i), ev.clientX, ev.clientY, b);
+    });
+    grid.appendChild(b);
+  });
+}
+/* Pick the column count that makes the 26 tiles as big as possible in the
+   space we actually have — phones end up 4-wide, tablets 6-9 wide, and the
+   board fills the screen instead of leaving a lonely last row. */
+function layoutGrid(){
+  var box = grid.getBoundingClientRect();
+  var gap = parseFloat(getComputedStyle(grid).gap) || 10;
+  var w = box.width - 8, h = box.height - 8;
+  if(w < 40 || h < 40) return;
+  var best = 0, bestCols = 5;
+  for(var cols = 3; cols <= 13; cols++){
+    var rows = Math.ceil(LETTERS.length / cols);
+    var size = Math.min((w - gap * (cols - 1)) / cols, (h - gap * (rows - 1)) / rows);
+    if(size > best){ best = size; bestCols = cols; }
+  }
+  best = Math.min(best, 170);                     // don't get comically huge on a TV
+  grid.style.gridTemplateColumns = "repeat(" + bestCols + "," + best + "px)";
+  grid.style.setProperty("--tileFont", (best * (S.case === "both" ? 0.38 : 0.56)) + "px");
+  grid.style.setProperty("--tileRadius", (best * 0.2) + "px");
+}
+var layoutPending = null;
+function relayout(){
+  clearTimeout(layoutPending);
+  layoutPending = setTimeout(layoutGrid, 60);
+}
+addEventListener("resize", relayout);
+addEventListener("orientationchange", relayout);
+
+function tapLetter(L, c, x, y, el){
+  audio(); sfxPop();
+  tone(400 + LETTERS.indexOf(L) * 22, 0.3, "sine", 0.18, 0.03);
+  burst(x, y, 22, 8);
+  if(el && !el.classList.contains("done")){ el.classList.add("done"); addStar(); }
+  showCard(L, c);
+  sayLetter(L);
+}
+
+/* sing the ABCs — walks the grid A→Z */
+var singTimer = null, singIdx = 0;
+function singAll(){
+  stopSing();
+  singIdx = 0;
+  showCheer("🎵 Let's sing! 🎵");
+  step();
+  function step(){
+    if(singIdx >= LETTERS.length){
+      stopSing(); rain(110); sfxBig();
+      showCheer("🎉 A to Z! 🎉");
+      say("Now I know my A B Cs! Next time won't you sing with me!", 0.9);
+      return;
+    }
+    var L = LETTERS[singIdx];
+    var tile = grid.querySelector('[data-letter="' + L + '"]');
+    if(tile){
+      tile.classList.remove("sing"); void tile.offsetWidth; tile.classList.add("sing");
+      tile.scrollIntoView({block:"nearest", behavior:"smooth"});
+      var r = tile.getBoundingClientRect();
+      burst(r.left + r.width/2, r.top + r.height/2, 8, 5);
+    }
+    tone(392 + singIdx * 14, 0.22, "triangle", 0.16);
+    say(L, 0.95);
+    singIdx++;
+    singTimer = setTimeout(step, 900);
+  }
+}
+function stopSing(){ if(singTimer){ clearTimeout(singTimer); singTimer = null; } }
+grid.addEventListener("pointerdown", stopSing);
+
+/* ---------------- find the letter ---------------- */
+var choicesEl = document.getElementById("choices"),
+    askText = document.getElementById("askText"),
+    askEl = document.getElementById("ask");
+var target = "A", streak = 0, locked = false;
+
+function nextRound(){
+  locked = false;
+  var n = streak >= 6 ? 4 : 3;             // gets a touch harder after a good run
+  var pool = LETTERS.slice();
+  var picks = [];
+  for(var i = 0; i < n; i++) picks.push(pool.splice(Math.floor(Math.random()*pool.length), 1)[0]);
+  target = picks[Math.floor(Math.random()*picks.length)];
+  askText.textContent = "Find " + shown(target);
+  choicesEl.innerHTML = "";
+  picks.forEach(function(L, i){
+    var b = document.createElement("button");
+    b.className = "choice";
+    b.textContent = shown(L);
+    b.style.background = "linear-gradient(150deg," + color(i + 3) + "," + shade(color(i + 3), -30) + ")";
+    b.addEventListener("pointerdown", function(ev){
+      ev.preventDefault();
+      guess(L, b, ev.clientX, ev.clientY);
+    });
+    choicesEl.appendChild(b);
+  });
+  setTimeout(askPrompt, 250);
+}
+function askPrompt(){ say("Can you find the letter " + target + "?", 0.85); }
+askEl.addEventListener("pointerdown", function(ev){ ev.preventDefault(); audio(); askPrompt(); });
+
+function guess(L, el, x, y){
+  if(locked) return;
+  audio();
+  if(L === target){
+    locked = true; streak++;
+    el.classList.add("right");
+    sfxWin(); burst(x, y, 34, 11); addStar();
+    var cheer = CHEERS[Math.floor(Math.random()*CHEERS.length)];
+    showCheer(cheer);
+    say(cheer + " " + target + " is for " + WORDS[target][0] + "!", 0.85);
+    setTimeout(function(){ if(current === "find") nextRound(); }, 2100);
+  }else{
+    streak = 0;
+    el.classList.remove("wrong"); void el.offsetWidth; el.classList.add("wrong");
+    sfxOops();
+    say("That is " + L + ". Try again! Find " + target + ".", 0.85);
+  }
+}
+
+/* ---------------- balloon popping ---------------- */
+var sky = document.getElementById("sky"), popTimer = null;
+function startPop(){
+  stopPop();
+  for(var i = 0; i < 3; i++) setTimeout(spawn, i * 500);
+  popTimer = setInterval(function(){
+    if(sky.childElementCount < 9) spawn();
+  }, 950);
+}
+function stopPop(){
+  if(popTimer){ clearInterval(popTimer); popTimer = null; }
+  sky.innerHTML = "";
+}
+var LANES = 5, lastLane = -1;
+function pickLane(){
+  // keep balloons out of each other's way: never reuse the lane we just used,
+  // and prefer a lane whose last balloon has had time to climb.
+  var now = Date.now(), free = [], best = 0, bestAge = -1;
+  for(var i = 0; i < LANES; i++){
+    if(i === lastLane) continue;
+    var age = now - (laneTime[i] || 0);
+    if(age > 2600) free.push(i);
+    if(age > bestAge){ bestAge = age; best = i; }
+  }
+  if(free.length) best = free[Math.floor(Math.random() * free.length)];
+  laneTime[best] = now; lastLane = best;
+  return best;
+}
+var laneTime = [];
+function spawn(){
+  if(current !== "pop") return;
+  var L = LETTERS[Math.floor(Math.random()*LETTERS.length)];
+  var ci = Math.floor(Math.random()*COLORS.length);
+  var c = color(ci);
+  var w = 13 + Math.random()*5;                    // vw units
+  var lane = pickLane();
+  var laneW = 100 / LANES;
+  var b = document.createElement("div");
+  b.className = "balloon";
+  b.style.setProperty("--w", "min(" + w + "vw, " + (w * 1.4) + "vh)");
+  b.style.setProperty("--bg", c);
+  b.style.setProperty("--bg2", shade(c, -60));
+  b.style.setProperty("--dur", (7.5 + Math.random()*5) + "s");
+  var left = lane * laneW + Math.random() * Math.max(0, laneW - w * 0.9);
+  b.style.left = Math.min(left, 100 - w - 1) + "%";
+  b.innerHTML = '<div class="body">' + shown(L) + '</div><div class="string"></div>';
+  b.addEventListener("pointerdown", function(ev){
+    ev.preventDefault();
+    if(b.dataset.gone) return;
+    b.dataset.gone = "1";
+    sfxPop();
+    burst(ev.clientX, ev.clientY, 26, 9);
+    addStar();
+    say(L + "! " + L + " is for " + WORDS[L][0] + ".", 0.9);
+    b.remove();
+  });
+  b.addEventListener("animationend", function(){ b.remove(); });
+  sky.appendChild(b);
+}
+
+/* ---------------- settings sheet (grown-up gate: press & hold) ---------------- */
+var sheet = document.getElementById("sheet"), gear = document.getElementById("gear");
+var holdTimer = null, holdStart = 0;
+function beginHold(){
+  holdStart = Date.now();
+  gear.style.transition = "transform 1.5s linear";
+  gear.style.transform = "rotate(540deg)";
+  holdTimer = setTimeout(function(){
+    gear.style.transform = ""; gear.style.transition = "";
+    openSheet();
+  }, 1500);
+}
+function endHold(){
+  clearTimeout(holdTimer); holdTimer = null;
+  gear.style.transition = "transform .2s"; gear.style.transform = "";
+  if(Date.now() - holdStart < 1400) say("Grown ups, hold the gear button.", 1);
+}
+gear.addEventListener("pointerdown", function(e){ e.preventDefault(); audio(); beginHold(); });
+["pointerup","pointerleave","pointercancel"].forEach(function(ev){ gear.addEventListener(ev, endHold); });
+
+function openSheet(){ paintSettings(); sheet.classList.add("on"); }
+document.getElementById("closeSheet").addEventListener("click", function(){ sheet.classList.remove("on"); });
+
+function paintSettings(){
+  var segs = document.querySelectorAll("#caseSeg button");
+  for(var i = 0; i < segs.length; i++) segs[i].classList.toggle("sel", segs[i].dataset.case === S.case);
+  document.getElementById("tVoice").classList.toggle("on", S.voice);
+  document.getElementById("tSfx").classList.toggle("on", S.sfx);
+  document.getElementById("tMusic").classList.toggle("on", S.music);
+  paintStars();
+}
+document.getElementById("caseSeg").addEventListener("click", function(e){
+  var b = e.target.closest("button"); if(!b) return;
+  S.case = b.dataset.case; save(); paintSettings(); buildGrid(); layoutGrid();
+  if(current === "find") nextRound();
+});
+function bindToggle(id, key, after){
+  document.getElementById(id).addEventListener("click", function(){
+    S[key] = !S[key]; save(); paintSettings(); if(after) after();
+  });
+}
+bindToggle("tVoice", "voice", function(){ if(!S.voice && window.speechSynthesis) speechSynthesis.cancel(); });
+bindToggle("tSfx", "sfx");
+bindToggle("tMusic", "music", function(){ S.music ? musicOn() : musicOff(); });
+document.getElementById("resetStars").addEventListener("click", function(){
+  S.stars = 0; save(); paintStars();
+  var t = grid.querySelectorAll(".tile.done");
+  for(var i = 0; i < t.length; i++) t[i].classList.remove("done");
+});
+
+/* full screen */
+document.getElementById("full").addEventListener("click", function(){
+  var d = document.documentElement;
+  if(!document.fullscreenElement){
+    (d.requestFullscreen || d.webkitRequestFullscreen || function(){}).call(d);
+  }else{
+    (document.exitFullscreen || document.webkitExitFullscreen || function(){}).call(document);
+  }
+});
+
+/* ---------------- decorative bubbles ---------------- */
+(function bubbles(){
+  var wrap = document.getElementById("bubbles");
+  for(var i = 0; i < 14; i++){
+    var d = document.createElement("div");
+    var size = 30 + Math.random() * 90;
+    d.className = "bub";
+    d.style.width = d.style.height = size + "px";
+    d.style.left = (Math.random() * 100) + "%";
+    d.style.setProperty("--bc", color(Math.floor(Math.random() * COLORS.length)));
+    d.style.animationDuration = (14 + Math.random() * 18) + "s";
+    d.style.animationDelay = (-Math.random() * 25) + "s";
+    wrap.appendChild(d);
+  }
+})();
+
+/* ---------------- animated logo ---------------- */
+(function logo(){
+  var el = document.getElementById("logo"), text = "ABC 123";
+  var html = "";
+  for(var i = 0; i < text.length; i++){
+    var ch = text[i] === " " ? "&nbsp;" : text[i];
+    html += '<span style="color:' + color(i) + ';animation-delay:' + (i * 0.12) + 's">' + ch + "</span>";
+  }
+  el.innerHTML = html + '<div style="font-size:.42em;color:#fff;margin-top:.1em">Tap &amp; Learn!</div>';
+})();
+
+/* ---------------- housekeeping ---------------- */
+// stop runaway timers/speech when the app is hidden (child locks the tablet, etc.)
+document.addEventListener("visibilitychange", function(){
+  if(document.hidden){
+    stopSing(); stopPop(); musicOff();
+    if(window.speechSynthesis) speechSynthesis.cancel();
+  }else{
+    if(S.music) musicOn();
+    if(current === "pop") startPop();
+  }
+});
+// block pinch-zoom & double-tap zoom so taps never scale the page
+document.addEventListener("gesturestart", function(e){ e.preventDefault(); });
+var lastTouch = 0;
+document.addEventListener("touchend", function(e){
+  var now = Date.now();
+  if(now - lastTouch < 320) e.preventDefault();
+  lastTouch = now;
+}, {passive:false});
+// keep context menu away from long presses on tiles
+document.addEventListener("contextmenu", function(e){ e.preventDefault(); });
+// first tap anywhere unlocks audio on iOS
+document.addEventListener("pointerdown", function once(){
+  audio(); if(S.music) musicOn();
+  document.removeEventListener("pointerdown", once);
+});
+
+buildGrid();
+paintStars();
+})();
+</script>
+</body>
+</html>
