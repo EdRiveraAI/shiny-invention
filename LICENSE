@@ -1,21 +1,53 @@
-MIT License
+Copyright (c) 2026 [YOUR NAME OR BUSINESS NAME]. All rights reserved.
 
-Copyright (c) 2026 Toddler Tap & Learn Alphabet contributors
+Toddler Tap & Learn Alphabet
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+REPLACE THE BRACKETED NAME ABOVE with the person or business that will sell
+this product. That name is the copyright holder and should match the name you
+sell under.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This software is proprietary. It is not open source and it is not free
+software. No permission is granted to copy, modify, distribute, sublicense,
+publish, host, or sell it, except under the end user terms below or under a
+separate written agreement with the copyright holder.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+
+END USER LICENSE
+
+By downloading or using this software you agree to the following.
+
+WHAT YOU MAY DO
+  - Use it for personal, non-commercial purposes within your own household.
+  - Install it on any number of devices that you or your family own.
+  - Keep your own backup copies.
+
+WHAT YOU MAY NOT DO
+  - Redistribute, share, resell, rent, lend, or give away copies, whether or
+    not you charge for them.
+  - Publish or host it on a website, an app store, a file sharing service, or
+    any other public location.
+  - Bundle it with another product, or include it in a paid or free collection.
+  - Remove or alter this license, the copyright notice, or any attribution.
+  - Use it in a school, daycare, clinic, library, or other institutional or
+    commercial setting without a separate license from the copyright holder.
+
+Institutional and classroom licenses are available from the copyright holder.
+
+NO WARRANTY
+This software is provided "as is", without warranty of any kind, express or
+implied, including but not limited to the warranties of merchantability,
+fitness for a particular purpose, and noninfringement. To the maximum extent
+permitted by law, the copyright holder is not liable for any claim, damages,
+or other liability arising from the software or its use.
+
+THIRD PARTY NOTES
+  - The alphabet song melody ("Ah! vous dirai-je, maman", published 1761) is in
+    the public domain. No melody rights are needed or claimed.
+  - The game draws its pictures with Unicode emoji characters. It does not
+    embed or redistribute any emoji artwork; each device renders emoji using
+    the font already installed on it.
+  - The game contains no third party code, libraries, fonts, or media files.
+
+This is a starting point, not legal advice. If you sell in a jurisdiction with
+specific consumer or children's software requirements, have a lawyer review
+these terms before you launch.

@@ -118,4 +118,6 @@ service worker installs.
 
 ## License
 
-MIT — use it, change it, share it with other parents.
+Proprietary — see `LICENSE`. Buyers get personal use within their own
+household; redistribution and resale are not permitted. Set the copyright
+holder name in `LICENSE` before selling.
