@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ABC Fun Factory — Preschool Alphabet Worksheet Generator</title>
+<meta name="description" content="Make fun, colorful A–Z alphabet worksheets for preschoolers. Pick a design, a theme and a letter, then print.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Baloo+2:wght@600;800&family=Comic+Neue:wght@700&family=Fredoka:wght@500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔤</text></svg>">
+</head>
+<body>
+
+<header class="app-bar">
+  <div class="brand">
+    <span class="brand-mark">🔤</span>
+    <div>
+      <h1>ABC Fun Factory</h1>
+      <p>Preschool A–Z worksheet generator</p>
+    </div>
+  </div>
+  <div class="app-actions">
+    <button id="btnShuffle" class="btn btn-ghost" type="button">🎲 Shuffle</button>
+    <button id="btnPrint" class="btn btn-primary" type="button">🖨️ Print / Save PDF</button>
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- ============ CONTROLS ============ -->
+  <aside class="panel" id="panel">
+    <form id="controls" autocomplete="off">
+
+      <section class="group">
+        <h2 class="group-title">1. Pick your letters</h2>
+        <div class="letter-grid" id="letterGrid"></div>
+        <div class="quick-row">
+          <button class="chip-btn" type="button" data-pick="all">All A–Z</button>
+          <button class="chip-btn" type="button" data-pick="vowels">Vowels</button>
+          <button class="chip-btn" type="button" data-pick="consonants">Consonants</button>
+          <button class="chip-btn" type="button" data-pick="first10">A–J</button>
+          <button class="chip-btn" type="button" data-pick="none">Clear</button>
+        </div>
+        <p class="hint" id="letterCount">1 letter selected</p>
+      </section>
+
+      <section class="group">
+        <h2 class="group-title">2. Choose the design</h2>
+
+        <label class="field">
+          <span class="field-label">Worksheet style</span>
+          <select id="type" name="type"></select>
+          <span class="field-hint" id="typeBlurb"></span>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Color theme</span>
+          <select id="theme" name="theme"></select>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Letter case</span>
+          <select id="letterCase" name="letterCase">
+            <option value="both">Both — Aa</option>
+            <option value="upper">Uppercase only — A</option>
+            <option value="lower">Lowercase only — a</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Letter font</span>
+          <select id="font" name="font"></select>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Tracing style</span>
+          <select id="traceStyle" name="traceStyle">
+            <option value="dotted">Dotted letters</option>
+            <option value="dashed">Dashed letters</option>
+            <option value="outline">Hollow outline</option>
+            <option value="gray">Light gray letters</option>
+            <option value="arrows">Stroke order arrows</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Writing guide lines</span>
+          <select id="lines" name="lines">
+            <option value="threeline">Three-line handwriting</option>
+            <option value="threeline-desc">Three-line + descender</option>
+            <option value="baseline">Single baseline</option>
+            <option value="boxes">Letter boxes</option>
+            <option value="none">No lines</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Page border</span>
+          <select id="border" name="border"></select>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Practice rows</span>
+          <select id="rows" name="rows">
+            <option value="2">2 rows — easy</option>
+            <option value="4" selected>4 rows — standard</option>
+            <option value="6">6 rows — lots of practice</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Paper size</span>
+          <select id="paper" name="paper">
+            <option value="letter">US Letter (8.5 × 11 in)</option>
+            <option value="a4">A4 (210 × 297 mm)</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="group">
+        <h2 class="group-title">3. Finishing touches</h2>
+        <label class="field">
+          <span class="field-label">Page title <em>(optional)</em></span>
+          <input type="text" id="title" maxlength="46" placeholder="Letter Aa">
+        </label>
+        <label class="field">
+          <span class="field-label">Footer message</span>
+          <input type="text" id="footerText" maxlength="46" placeholder="Great job, super learner!">
+        </label>
+        <div class="switches">
+          <label class="switch"><input type="checkbox" id="color" checked><span>Full color</span></label>
+          <label class="switch"><input type="checkbox" id="nameLine" checked><span>Name &amp; date line</span></label>
+          <label class="switch"><input type="checkbox" id="footer" checked><span>Footer message</span></label>
+          <label class="switch"><input type="checkbox" id="pictures" checked><span>Picture words</span></label>
+        </div>
+        <p class="hint">Turn off <b>Full color</b> for an ink-saving black &amp; white copy.</p>
+      </section>
+    </form>
+  </aside>
+
+  <!-- ============ PREVIEW ============ -->
+  <section class="stage">
+    <div class="stage-bar">
+      <span id="stageInfo" class="stage-info">1 page</span>
+      <div class="zoom">
+        <button class="chip-btn" type="button" id="zoomOut">－</button>
+        <span id="zoomLabel">Fit</span>
+        <button class="chip-btn" type="button" id="zoomIn">＋</button>
+      </div>
+    </div>
+    <div class="sheets" id="sheets"></div>
+  </section>
+</main>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/render.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
