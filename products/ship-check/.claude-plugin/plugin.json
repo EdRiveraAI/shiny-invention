@@ -1,0 +1,10 @@
+{
+  "name": "ship-check",
+  "version": "1.0.0",
+  "description": "Production-readiness and security audit: scored report with prioritized, file-specific fixes.",
+  "author": {
+    "name": "Your Name"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "keywords": ["security", "audit", "production", "launch", "checklist"]
+}
