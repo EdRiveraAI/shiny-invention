@@ -1,0 +1,273 @@
+<section class="chapter m8" id="ch8">
+  <div class="opener">
+    <div class="ch-map"><!--@map:8--></div>
+    <div class="ch-kicker">Chapter 8 &#8226; Model 8 of 8</div>
+    <div class="ch-num">8</div>
+    <h1 data-short="Open-Source-Core Products">Open-Source-Core Products</h1>
+    <div class="ch-tagline">When code is cheap to write, give it away and sell everything around it.</div>
+    <div class="ch-rule"></div>
+    <div class="ch-objectives">
+      <h5>Learning objectives</h5>
+      <ul>
+        <li>Explain why giving code away can be a winning business strategy</li>
+        <li>Describe the revenue &ldquo;below the waterline&rdquo;: hosting, paid tiers, support, community</li>
+        <li>Choose a license that protects your business</li>
+        <li>Build a repository, a hosted cloud, and a community</li>
+        <li>Launch, monetize, and avoid giving away every reason to pay</li>
+      </ul>
+    </div>
+  </div>
+
+  <figure class="glance-fig">
+    <div class="glance">
+      <div class="g-top"><div><div class="g-type">Type 8 of 8</div><div class="g-title">Open-source-core products</div>
+        <div class="g-sub">When code is cheap to write, give it away and sell everything around it.</div></div><!--@map:8--></div>
+      <div class="g-hero"><!--@svg:hero8--></div>
+      <div class="g-cards">
+        <div class="g-card gc-why"><b>Why now</b>Code is cheap. Trust, community, and distribution aren&rsquo;t.</div>
+        <div class="g-card gc-ex"><b>Real-world example</b>An open-source app backend, open-source product analytics, open-source scheduling: open code, paid cloud.</div>
+        <div class="g-card gc-proof"><b>Proof it works</b>The framework&rsquo;s originator makes the full case for open source in a separate talk.</div>
+        <div class="g-card gc-who"><b>Who builds it</b>Builders happy to work in public and grow a community.</div>
+        <div class="g-card gc-earn"><b>How it earns</b>Hosted cloud, paid tiers, support, sponsorship.</div>
+        <div class="g-card gc-trap"><b>The trap</b>Giving it all away with no reason to pay.</div>
+        <div class="g-card gc-week"><b>This week</b>Publish a project in a public code repository. Offer a hosted version.</div>
+        <div class="g-card gc-cam"><b>In one line</b>This is where the money is.</div>
+      </div>
+    </div>
+    <figcaption><b>Figure 8.1</b>Open-source-core products at a glance. The free code is the visible tip of the iceberg. Hosting, paid tiers, support, and community sit below the waterline, and that&rsquo;s where the business makes its money.</figcaption>
+  </figure>
+
+  <p class="lead dropcap">Open-source software is software whose code is published for anyone to see, download, run, and modify, free. At first glance that sounds like a terrible business. Why give away your product? This chapter&rsquo;s answer is that AI has made code cheap. Anyone can now generate an app&rsquo;s code quickly, so the code itself is worth less every month.</p>
+
+  <p>What&rsquo;s still hard to get is <b>trust</b>, <b>a community</b>, and <b>distribution</b>, meaning people actually finding and using your product. Giving the code away is the fastest way to earn all three. An <dfn data-ix="Open-source core">open-source-core</dfn> business then makes its money from everything around the code.</p>
+
+  <div class="box keyterms"><div class="box-label">Key terms</div>
+    <dl>
+      <dt>Open source</dt><dd>Software whose code is publicly available under a license that lets others use, study, modify, and share it.</dd>
+      <dt>Self-hosting</dt><dd>Running software on your own servers instead of paying a provider to run it.</dd>
+      <dt>Hosted cloud</dt><dd>The vendor runs the software for you, handling setup, updates, backups, and uptime.</dd>
+      <dt>Open core</dt><dd>A free core product plus paid features for businesses.</dd>
+      <dt>License</dt><dd>The legal terms that define what others may do with your code.</dd>
+      <dt>Contributor license agreement (CLA)</dt><dd>An agreement that gives a project the rights it needs to code submitted by outside contributors.</dd>
+    </dl>
+  </div>
+
+  <h2 id="ch8-explained">The Model Explained</h2>
+  <h3>The iceberg</h3>
+  <p><b>Above the waterline, &ldquo;what people see&rdquo;:</b> the free public code. <b>Below it, &ldquo;where the money is&rdquo;:</b></p>
+  <ul>
+    <li><b>Hosting:</b> most people don&rsquo;t want to install, run, update, secure, and back up software themselves, so they pay you to run it.</li>
+    <li><b>Paid tiers:</b> features businesses need, such as team permissions, single sign-on, audit logs, advanced analytics, and higher limits.</li>
+    <li><b>Support:</b> guaranteed help, fast response times, setup assistance, custom work.</li>
+    <li><b>Community:</b> sponsorships, events, partner marketplaces, certifications, and the goodwill that drives sales.</li>
+  </ul>
+  <p>The free code brings <i>users</i>. What&rsquo;s below the waterline turns some of them into <i>customers</i>.</p>
+
+  <h3>The eight facts, unpacked</h3>
+  <p><b>Why now.</b> If anyone can recreate your code with AI, hiding it protects you less than it used to. Publishing it earns developers&rsquo; trust (they can inspect it), community contributions, and visibility.</p>
+  <p><b>Real-world examples.</b> An open-source alternative to a big-tech app backend that most people pay to use as a hosted cloud, now a multi-billion-dollar company. An open-source product-analytics platform with public code and a paid cloud. An open-source scheduling tool, free to self-host, with paid hosted and enterprise versions. The common pattern is open code and a paid cloud.</p>
+  <p><b>Who builds it.</b> Builders happy to work in public: sharing progress, answering questions in public issue trackers and chat, accepting outside contributions, and treating users as collaborators.</p>
+  <p><b>How it earns.</b> Hosted cloud (the biggest earner for most), paid tiers, support contracts, and sponsorship.</p>
+  <p><b>The trap.</b> Giving it all away with no reason to pay. Many popular open-source projects earn almost nothing because everything valuable is free and easy to self-host. Design the reason to pay from day one.</p>
+
+  <h2 id="ch8-why">Why It Works, and Why It&rsquo;s Growing</h2>
+  <ol>
+    <li><b>Trust:</b> businesses can inspect the code for security and quality, so there&rsquo;s no black box.</li>
+    <li><b>No lock-in fear:</b> customers know they can self-host if your company disappears, which makes them <i>more</i> willing to buy your cloud.</li>
+    <li><b>Free distribution:</b> repository stars, developer news sites, self-hosting forums, and word of mouth replace expensive marketing.</li>
+    <li><b>Free help and feedback:</b> the community reports bugs, suggests features, writes integrations, and translates.</li>
+    <li><b>An instantly understood pitch:</b> &ldquo;Like [expensive product], but open source and cheaper.&rdquo; Every pricey software category is a target.</li>
+    <li><b>Agents and developers lean toward open tools:</b> popular open-source projects are well represented in what AI coding assistants know, so they tend to get recommended and used.</li>
+  </ol>
+
+  <figure>
+    <!--@chart:ch8_funnel-->
+    <figcaption><b>Figure 8.2</b>An open-source funnel over a first year (illustrative). Only a small share of people who see the code become paying customers. That&rsquo;s normal, because free users are the marketing.</figcaption>
+  </figure>
+
+  <h2 id="ch8-money">Ways to Make Money Below the Waterline</h2>
+  <table>
+    <caption>Table 8.1 &#8226; Open-source revenue models</caption>
+    <thead><tr><th style="width:22%">Model</th><th style="width:48%">How it works</th><th>Typical example</th></tr></thead>
+    <tbody>
+      <tr><td>Hosted cloud</td><td>You run it: no servers, updates, or backups for the customer. Often 70&#8211;90% of revenue.</td><td>A database backend&rsquo;s cloud service</td></tr>
+      <tr><td><dfn data-ix="Open core">Open core</dfn></td><td>Free core; paid business features (single sign-on, roles, audit logs, compliance, reporting).</td><td>Enterprise editions of developer platforms</td></tr>
+      <tr><td>Usage tiers</td><td>Free up to a limit, then pay as you grow.</td><td>Free monthly analytics events</td></tr>
+      <tr><td>Support and SLAs</td><td>Guaranteed response times, dedicated help, priority fixes.</td><td>The original open-source business model</td></tr>
+      <tr><td>Setup and consulting</td><td>Install, customize, or migrate for customers.</td><td>Common early revenue</td></tr>
+      <tr><td>Sponsorship</td><td>Individuals and companies fund development.</td><td>Code-platform sponsorships, open collectives</td></tr>
+      <tr><td>Marketplace and add-ons</td><td>Paid plugins, templates, themes, integrations.</td><td>Website-platform ecosystems</td></tr>
+      <tr><td>Dual licensing</td><td>Companies pay for a commercial license to avoid open-source obligations.</td><td>Developer frameworks and databases</td></tr>
+      <tr><td>Training and certification</td><td>Courses and certified-partner programs.</td><td>Larger projects</td></tr>
+    </tbody>
+  </table>
+  <figure>
+    <!--@chart:ch8_mix-->
+    <figcaption><b>Figure 8.3</b>Where an open-source-core company&rsquo;s revenue typically comes from (illustrative). Most revenue comes from customers who would rather pay you to run the software than run it themselves.</figcaption>
+  </figure>
+  <p><b>Best starting combination:</b> free self-hosted version, plus a paid hosted cloud, plus paid business features, with a support add-on.</p>
+
+  <h2 id="ch8-license">Choosing a License</h2>
+  <p>The <dfn data-ix="License (open source)">license</dfn> decides what others may legally do with your code. Licenses fall along a spectrum from maximum adoption to maximum protection.</p>
+  <figure>
+    <!--@svg:license_spectrum-->
+    <figcaption><b>Figure 8.4</b>The license spectrum. Permissive licenses (such as MIT or Apache 2.0) maximize adoption; strong copyleft (such as AGPLv3) discourages others from reselling your work as a service; source-available or &ldquo;fair source&rdquo; licenses (such as FSL or BSL) prohibit competing services outright, often converting to open source after a few years.</figcaption>
+  </figure>
+  <table>
+    <caption>Table 8.2 &#8226; Common license choices</caption>
+    <thead><tr><th style="width:24%">License</th><th style="width:46%">What it means</th><th>Good for</th></tr></thead>
+    <tbody>
+      <tr><td>MIT / Apache 2.0</td><td>Anyone can do almost anything, including selling a competing cloud service.</td><td>Maximum adoption; libraries and developer tools</td></tr>
+      <tr><td>AGPLv3</td><td>Anyone running a modified version as a web service must publish their changes.</td><td>Apps where you want to protect your cloud business</td></tr>
+      <tr><td>FSL / BSL / similar source-available</td><td>Code is visible and usable, but competing services are prohibited; often becomes open source after 2&#8211;4 years.</td><td>Strongest protection (purists don&rsquo;t call these &ldquo;open source&rdquo;)</td></tr>
+      <tr><td>Open-core split</td><td>Main code under MIT or AGPL; an enterprise folder under a commercial license.</td><td>Clean separation of free and paid features</td></tr>
+    </tbody>
+  </table>
+  <div class="box plain"><div class="box-label">Rule of thumb</div>
+    <p>For a full application you&rsquo;ll sell as a cloud product, consider AGPL or a fair-source license, plus a separate commercial license for enterprise features. For a small library, use MIT. Have a lawyer look at your choice before launch, and use a contributor license agreement so outside contributions don&rsquo;t complicate your licensing later.</p>
+  </div>
+
+  <div class="case m8">
+    <div class="case-head">Case study<b>&ldquo;StudioOS,&rdquo; an open-source booking platform for fitness studios</b></div>
+    <div class="case-body">
+      <p><b>The target.</b> Boutique fitness studios (yoga, Pilates, climbing, martial arts) often pay $150&#8211;$500+ a month for booking software and complain about price and lock-in.</p>
+      <p><b>Above the waterline (free):</b> class schedules, member booking, waitlists, basic memberships, email reminders. A tech-savvy owner can self-host it with one container command.</p>
+      <p><b>Below the waterline (paid):</b> StudioOS Cloud at $49&#8211;$149 a month per studio (no servers, automatic updates and backups); Pro features (integrated payments with a small transaction fee, multi-location, a branded mobile app, an AI front-desk assistant, advanced reporting); a $500 migration service; support plans for franchises; equipment-brand sponsorships and a paid integrations marketplace.</p>
+      <p><b>Why customers pay:</b> studio owners don&rsquo;t want to run servers. The open code earns trust (&ldquo;you&rsquo;ll never be locked in&rdquo;), and the cloud is the convenience they buy.</p>
+      <p><b>Stacking:</b> StudioOS could add an ambient agent (Model 6) for the studio&rsquo;s member chat, or collect consented, anonymized pricing and attendance trends across studios (Model 7).</p>
+    </div>
+  </div>
+
+  <h2 id="ch8-plan">Step-by-Step Plan</h2>
+  <div class="phases">
+    <div class="phase"><div class="ph-when">Week 1</div><div class="ph-what"><b>Phase 0 &#8212; Pick the project</b> and design the reason to pay.</div></div>
+    <div class="phase"><div class="ph-when">Weeks 1&#8211;6</div><div class="ph-what"><b>Phase 1 &#8212; Build the free core</b> with one-command install.</div></div>
+    <div class="phase"><div class="ph-when">Weeks 4&#8211;10</div><div class="ph-what"><b>Phase 2 &#8212; Build the hosted cloud.</b></div></div>
+    <div class="phase"><div class="ph-when">Weeks 6&#8211;10</div><div class="ph-what"><b>Phase 3 &#8212; Docs and community.</b></div></div>
+    <div class="phase"><div class="ph-when">Weeks 8&#8211;12</div><div class="ph-what"><b>Phase 4 &#8212; Launch.</b></div></div>
+    <div class="phase" style="padding-bottom:0"><div class="ph-when">Months 3&#8211;12+</div><div class="ph-what"><b>Phase 5 &#8212; Monetize and grow.</b></div></div>
+  </div>
+
+  <h3>Phase 0: Pick the project</h3>
+  <ol>
+    <li><b>Choose a target:</b> an open-source alternative to an expensive product people complain about; a tool you built for yourself that others in your field need; or a niche tool that doesn&rsquo;t exist yet (combine with Models 2 or 5).</li>
+    <li><b>Check demand:</b> search software-alternatives directories for existing open-source options and gaps; search self-hosting and open-source forums for &ldquo;is there an open-source alternative to&hellip;&rdquo;; read review-site complaints about the incumbent&rsquo;s price and lock-in.</li>
+    <li><b>Design the reason to pay before writing code.</b> Write down what&rsquo;s free (enough to be genuinely useful), what&rsquo;s paid (convenience, business features, compliance, support), and why a business would pay rather than self-host (setup time, maintenance, security, updates, backups, uptime).</li>
+  </ol>
+
+  <h3>Phase 1: Build the free core</h3>
+  <p>Write it with an AI coding assistant on a modern web framework and a popular open-source database. Package it in <b>containers</b> with a single compose file for a one-command install, and later provide charts for large-company container orchestration. Offer <b>one-click deploy buttons</b> for popular app-hosting platforms and self-hosting dashboards. Host the code in a <b>public repository</b> with issues, discussions, and automated testing. Add <b>dependency and security scanning</b> and a <code>SECURITY.md</code> file, and automate releases and changelogs.</p>
+  <div class="box note"><div class="box-label">What a great open-source repository needs</div>
+    <ul class="checklist">
+      <li>A README that explains in ten seconds what it is and who it&rsquo;s for, with a screenshot and a &ldquo;quick start in two minutes&rdquo;</li>
+      <li>One-command install</li>
+      <li>A clear LICENSE file</li>
+      <li>CONTRIBUTING guidelines, a code of conduct, and issue templates</li>
+      <li>&ldquo;Good first issue&rdquo; labels to welcome newcomers</li>
+      <li>A visible link: &ldquo;Don&rsquo;t want to self-host? Try our hosted cloud free.&rdquo;</li>
+    </ul>
+  </div>
+
+  <h3>Phase 2: Build the hosted cloud</h3>
+  <p>This is the main revenue engine. Use app-hosting platforms for simplicity, or major cloud providers and budget server hosts at scale; managed databases with automated backups; an authentication service (enterprise single sign-on is itself a great paid feature); a payment processor, plus a usage-billing or open-source-focused billing platform if you meter usage; license-key management for paid self-hosted features; and uptime monitoring, error tracking, and product analytics. <b>Rule:</b> the cloud must be noticeably easier than self-hosting, with instant sign-up, no setup, automatic updates, backups, and support.</p>
+
+  <h3>Phase 3: Docs and community</h3>
+  <p>Publish a documentation site (with an <code>llms.txt</code> file so AI assistants can learn your tool), a community chat server or forum, a public roadmap with feature voting, an email newsletter you own, sponsorship pages, and star-history tracking. Work in public: share weekly progress, publish a changelog, answer early questions quickly, and credit contributors.</p>
+
+  <h3>Phase 4: Launch</h3>
+  <ol>
+    <li><b>Developer news sites,</b> with a &ldquo;Show&rdquo; post: &ldquo;[Product], an open-source alternative to [category leader].&rdquo; This is often the single biggest launch channel.</li>
+    <li><b>Self-hosting and open-source forums</b>, plus niche forums for your users.</li>
+    <li><b>Product-launch sites</b> for broader tech reach.</li>
+    <li><b>Directories:</b> software-alternatives sites, curated &ldquo;awesome&rdquo; lists, and container image registries.</li>
+    <li><b>Video:</b> &ldquo;Here&rsquo;s the free code anyone can run, and here&rsquo;s the cloud version where it just works.&rdquo; Self-hosting video creators love reviewing new tools.</li>
+    <li><b>Comparison pages</b> (&ldquo;[Product] vs. [incumbent]&rdquo;) for search traffic.</li>
+  </ol>
+
+  <h3>Phase 5: Monetize and grow</h3>
+  <ol>
+    <li><b>Track the funnel:</b> stars &#8594; installs (via opt-in telemetry) &#8594; cloud sign-ups &#8594; paying customers.</li>
+    <li><b>Companies self-hosting the free version</b> are your best leads for support and enterprise features.</li>
+    <li><b>Add business features progressively:</b> single sign-on, roles, audit logs, compliance certification, SLAs.</li>
+    <li><b>Price in tiers:</b> self-hosted $0; cloud starter and pro $19&#8211;$149/month; business $200&#8211;$1,000/month; enterprise $10,000&#8211;$100,000+ a year.</li>
+    <li><b>Keep the free version genuinely good.</b> Taking features away is the fastest way to lose community trust; add paid value on top instead.</li>
+    <li><b>Optional funding:</b> some investors specialize in open-source companies, but many open-source businesses are profitably bootstrapped.</li>
+  </ol>
+
+  <h2 id="ch8-risks">Risks and How to Handle Them</h2>
+  <table>
+    <thead><tr><th style="width:32%">Risk</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td>No reason to pay (the trap)</td><td>Design paid value up front: convenience, business features, support, compliance.</td></tr>
+      <tr><td>A large cloud provider resells your code</td><td>AGPL or a fair-source license for apps; enterprise features under a commercial license.</td></tr>
+      <tr><td>Maintainer burnout</td><td>Clear contribution guidelines, issue templates, community moderators, saying no often, prioritizing paying customers.</td></tr>
+      <tr><td>Popular but not profitable</td><td>Watch cloud conversion early; talk to companies using the free version.</td></tr>
+      <tr><td>Security vulnerabilities</td><td>Dependency scanning, a reporting process, prompt patches.</td></tr>
+      <tr><td>License confusion</td><td>Choose on day one, use a CLA, get a short legal review.</td></tr>
+      <tr><td>Too technical</td><td>Partner with a developer co-founder, or start with a smaller tool built with an AI coding assistant.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="ch8-budget">Starter Budget</h2>
+  <table>
+    <thead><tr><th style="width:55%">Item</th><th>Approximate monthly cost</th></tr></thead>
+    <tbody>
+      <tr><td>Public code hosting</td><td>Free</td></tr>
+      <tr><td>AI coding assistant</td><td>$20&#8211;$200</td></tr>
+      <tr><td>Cloud hosting for the hosted version</td><td>$20&#8211;$100 early</td></tr>
+      <tr><td>Managed database</td><td>$0&#8211;$25</td></tr>
+      <tr><td>Documentation site, community chat</td><td>$0</td></tr>
+      <tr><td>Domain and website</td><td>~$10&#8211;$20</td></tr>
+      <tr><td>Legal review of license (one time)</td><td>~$300&#8211;$1,500</td></tr>
+      <tr><td><b>Total</b></td><td><b>About $50&#8211;$350 a month</b>. The code and community cost time more than money.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="ch8-checklist">Your Seven-Day Checklist</h2>
+  <ul class="checklist">
+    <li><span class="day">Day 1</span>List five expensive tools people in your world complain about, or one you built for yourself.</li>
+    <li><span class="day">Day 2</span>Check alternatives directories for gaps.</li>
+    <li><span class="day">Day 3</span>Draw your iceberg: free above the line, paid below.</li>
+    <li><span class="day">Day 4</span>Choose a license (AGPL or fair source for an app, MIT for a library).</li>
+    <li><span class="day">Day 5</span>Build a minimal version with an AI coding assistant, with a great README and one-command install.</li>
+    <li><span class="day">Day 6</span>Publish it with a &ldquo;hosted version coming soon&rdquo; waitlist.</li>
+    <li><span class="day">Day 7</span>Post it to one community and collect feedback.</li>
+  </ul>
+
+  <div class="takeaways"><div class="box-label">Chapter summary</div>
+    <ul>
+      <li>When code is cheap, giving it away buys trust, community, and distribution.</li>
+      <li>The money is below the waterline: hosted cloud, paid business features, support, and community.</li>
+      <li>Choose your license deliberately; AGPL or fair-source licenses protect a cloud business.</li>
+      <li>Make the cloud dramatically easier than self-hosting, and keep the free version genuinely good.</li>
+      <li>Design the reason to pay before you write the first line of code.</li>
+    </ul>
+  </div>
+
+  <div class="review" id="ch8-review">
+    <h2>Review Questions</h2>
+    <ol class="q">
+      <li>For most open-source-core companies, what is the largest revenue source?
+        <ul class="choices"><li>A. Donations</li><li>B. The hosted cloud version</li><li>C. Selling the source code</li><li>D. Advertising</li></ul></li>
+      <li>Which license most strongly discourages a competitor from reselling your app as a service while remaining open source?
+        <ul class="choices"><li>A. MIT</li><li>B. Apache 2.0</li><li>C. AGPLv3</li><li>D. Public domain</li></ul></li>
+      <li>What is the trap for this model?
+        <ul class="choices"><li>A. Writing documentation</li><li>B. Giving everything away with no reason to pay</li><li>C. Accepting contributions</li><li>D. Launching on developer news sites</li></ul></li>
+      <li>Why does open code make customers <i>more</i> willing to buy a cloud subscription?</li>
+      <li>List the four things below the waterline.</li>
+      <li>What should a great README include?</li>
+      <li>Why is taking features away from the free version risky?</li>
+      <li>Describe the &ldquo;open-source alternative to X&rdquo; pitch and why it works.</li>
+    </ol>
+  </div>
+
+  <div class="worksheet">
+    <div class="ws-head">Apply it &#8226; Worksheet 8</div>
+    <div class="ws-title">Draw your iceberg</div>
+    <div class="prompt">The project (an alternative to what, or a tool for whom):</div><div class="lines"><div></div></div>
+    <div class="prompt">Above the waterline (free features):</div><div class="lines"><div></div><div></div></div>
+    <div class="prompt">Below the waterline (paid: cloud, features, support, community):</div><div class="lines"><div></div><div></div></div>
+    <div class="prompt">Why a business would pay instead of self-hosting:</div><div class="lines"><div></div></div>
+    <div class="prompt">My license choice, and why:</div><div class="lines"><div></div></div>
+  </div>
+</section>

@@ -1,0 +1,393 @@
+/* ==========================================================================
+   The AI Business Blueprint — book stylesheet (WeasyPrint)
+   Trim: 7 x 10 in. Body: Source Serif 4. Display: Fraunces. Sans: Inter.
+   ========================================================================== */
+
+@font-face { font-family: "Book Serif"; font-weight: 400; font-style: normal; src: url(assets/fonts/source-serif-4-latin-400-normal.ttf); }
+@font-face { font-family: "Book Serif"; font-weight: 400; font-style: italic; src: url(assets/fonts/source-serif-4-latin-400-italic.ttf); }
+@font-face { font-family: "Book Serif"; font-weight: 600; font-style: normal; src: url(assets/fonts/source-serif-4-latin-600-normal.ttf); }
+@font-face { font-family: "Book Serif"; font-weight: 600; font-style: italic; src: url(assets/fonts/source-serif-4-latin-600-italic.ttf); }
+@font-face { font-family: "Book Serif"; font-weight: 700; font-style: normal; src: url(assets/fonts/source-serif-4-latin-700-normal.ttf); }
+@font-face { font-family: "Book Serif"; font-weight: 700; font-style: italic; src: url(assets/fonts/source-serif-4-latin-700-italic.ttf); }
+@font-face { font-family: "Display"; font-weight: 300; src: url(assets/fonts/fraunces-latin-300-normal.ttf); }
+@font-face { font-family: "Display"; font-weight: 400; src: url(assets/fonts/fraunces-latin-400-normal.ttf); }
+@font-face { font-family: "Display"; font-weight: 400; font-style: italic; src: url(assets/fonts/fraunces-latin-400-italic.ttf); }
+@font-face { font-family: "Display"; font-weight: 500; src: url(assets/fonts/fraunces-latin-500-normal.ttf); }
+@font-face { font-family: "Display"; font-weight: 600; src: url(assets/fonts/fraunces-latin-600-normal.ttf); }
+@font-face { font-family: "Display"; font-weight: 600; font-style: italic; src: url(assets/fonts/fraunces-latin-600-italic.ttf); }
+@font-face { font-family: "Display"; font-weight: 700; src: url(assets/fonts/fraunces-latin-700-normal.ttf); }
+@font-face { font-family: "Display"; font-weight: 800; src: url(assets/fonts/fraunces-latin-800-normal.ttf); }
+@font-face { font-family: "Display"; font-weight: 900; src: url(assets/fonts/fraunces-latin-900-normal.ttf); }
+
+:root {
+  --ink: #1d2433;
+  --ink-soft: #4a5263;
+  --muted: #7a8090;
+  --rule: #d9d4ca;
+  --paper: #ffffff;
+  --sand: #f6f1e8;
+  --sand-deep: #ece4d4;
+  --navy: #16213a;
+  --gold: #c9973b;
+  --c: #16213a;          /* chapter accent, overridden per model */
+  --c-tint: #eef0f5;
+}
+.m1 { --c: #c8553d; --c-tint: #fbefea; }
+.m2 { --c: #3a66a8; --c-tint: #ebf1f9; }
+.m3 { --c: #1f8178; --c-tint: #e7f4f2; }
+.m4 { --c: #74589a; --c-tint: #f1ecf7; }
+.m5 { --c: #b98424; --c-tint: #f9f2e3; }
+.m6 { --c: #b5426f; --c-tint: #f9ebf1; }
+.m7 { --c: #4d7a37; --c-tint: #eef5ea; }
+.m8 { --c: #4a5a70; --c-tint: #edf0f4; }
+.m0 { --c: #16213a; --c-tint: #eef0f5; }
+
+/* ---------- Pages ---------- */
+@page {
+  size: 7in 10in;
+  margin: 0.85in 0.7in 0.9in 0.9in;
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-center { content: none; }
+}
+@page :left {
+  margin-left: 0.7in; margin-right: 0.9in;
+  @top-left {
+    content: counter(page) "\2003\2003" string(booktitle);
+    font: 500 7.2pt "Inter"; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8f9c;
+    vertical-align: bottom; padding-bottom: 0.18in;
+  }
+}
+@page :right {
+  margin-left: 0.9in; margin-right: 0.7in;
+  @top-right {
+    content: string(chaptitle) "\2003\2003" counter(page);
+    font: 500 7.2pt "Inter"; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8f9c;
+    vertical-align: bottom; padding-bottom: 0.18in;
+  }
+}
+@page :blank {
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-center { content: none; }
+}
+/* Chapter and part openers: no running heads, drop folio */
+@page opener {
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-center { content: counter(page); font: 500 7.5pt "Inter"; color: #8a8f9c; letter-spacing: .1em; }
+}
+@page part {
+  margin: 0;
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-center { content: none; }
+}
+@page cover { margin: 0; }
+
+/* Front matter document: roman folios, no running heads */
+@page front {
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-center { content: counter(page, lower-roman); font: 500 7.5pt "Inter"; color: #8a8f9c; letter-spacing: .1em; }
+}
+@page frontbare {
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-center { content: none; }
+}
+
+html { font-family: "Book Serif", Georgia, serif; font-size: 10.4pt; line-height: 1.5; color: var(--ink); }
+body { margin: 0; }
+.booktitle-marker { string-set: booktitle "The AI Business Blueprint"; height: 0; }
+
+/* ---------- Text ---------- */
+p { margin: 0 0 0.62em; text-align: justify; hyphens: auto; orphans: 2; widows: 2; }
+.lead { font-size: 12.2pt; line-height: 1.5; color: var(--ink-soft); text-align: left; hyphens: manual; }
+.dropcap .dc {
+  font-family: "Display"; font-weight: 600; color: var(--c);
+  float: left; font-size: 3.7em; line-height: 0.78; padding: 0.06em 0.09em 0 0; margin-top: 0.05em;
+}
+strong { font-weight: 700; }
+em { font-style: italic; }
+a { color: inherit; text-decoration: none; }
+ul, ol { margin: 0.2em 0 0.8em; padding-left: 1.35em; }
+li { margin-bottom: 0.28em; text-align: left; }
+li > p { margin: 0; }
+ul li::marker { color: var(--c); }
+ol li::marker { color: var(--c); font-family: "Inter"; font-weight: 600; font-size: 0.85em; }
+blockquote { margin: 1em 0; padding: 0 0 0 1.1em; border-left: 2.5pt solid var(--c); font-style: italic; color: var(--ink-soft); }
+code, .mono { font-family: "JetBrains Mono", monospace; font-size: 0.82em; background: #f2f0eb; padding: 0.05em 0.3em; border-radius: 2pt; }
+pre {
+  font-family: "JetBrains Mono", monospace; font-size: 7.6pt; line-height: 1.45;
+  background: #1f2433; color: #e6e8ee; padding: 0.16in 0.2in; border-radius: 4pt;
+  white-space: pre-wrap; margin: 0.9em 0 1.1em; break-inside: avoid;
+}
+pre .c { color: #9aa3b5; }
+pre .k { color: #f0c27a; }
+
+h1, h2, h3, h4 { hyphens: manual; text-align: left; }
+h2 {
+  font-family: "Display"; font-weight: 600; font-size: 17pt; line-height: 1.18; color: var(--ink);
+  margin: 1.35em 0 0.5em; break-after: avoid; bookmark-level: 2;
+}
+h2::before {
+  content: ""; display: block; width: 0.42in; height: 2.4pt; background: var(--c); margin-bottom: 0.11in;
+}
+h3 {
+  font-family: "Inter"; font-weight: 700; font-size: 10.6pt; line-height: 1.3; color: var(--ink);
+  margin: 1.2em 0 0.4em; break-after: avoid; bookmark-level: 3;
+}
+h4 {
+  font-family: "Inter"; font-weight: 700; font-size: 7.6pt; letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--c); margin: 1.1em 0 0.35em; break-after: avoid; bookmark-level: none;
+}
+h2 + p, h3 + p, h4 + p { margin-top: 0; }
+
+/* ---------- Part opener (full-bleed) ---------- */
+.part {
+  page: part; break-before: right; break-after: page; height: 10in; position: relative;
+  background: var(--navy); color: #fff; overflow: hidden;
+}
+.part .part-inner { position: absolute; left: 0.9in; right: 0.8in; top: 3.0in; }
+.part .part-num { font: 600 8.5pt "Inter"; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); }
+.part h1 {
+  font-family: "Display"; font-weight: 500; font-size: 40pt; line-height: 1.04; margin: 0.18in 0 0.22in; color: #fff;
+  bookmark-level: 1; string-set: chaptitle content();
+}
+.part .part-desc { font-size: 11.5pt; line-height: 1.55; color: #c9cfdc; max-width: 4.6in; text-align: left; }
+.part .part-list { margin-top: 0.35in; font: 500 8.6pt "Inter"; color: #e8ebf2; letter-spacing: 0.02em; line-height: 2; }
+.part .part-list span { color: var(--gold); font-weight: 700; margin-right: 0.6em; }
+.part svg.part-art { position: absolute; right: -0.4in; bottom: -0.3in; }
+
+/* ---------- Chapter opener ---------- */
+.chapter { break-before: right; }
+.opener { page: opener; height: 8.15in; position: relative; break-after: page; }
+.opener .ch-kicker {
+  font: 700 7.8pt "Inter"; letter-spacing: 0.3em; text-transform: uppercase; color: var(--c);
+  margin-top: 0.15in;
+}
+.opener .ch-num {
+  font-family: "Display"; font-weight: 300; font-size: 118pt; line-height: 0.9; color: var(--c);
+  margin: 0.12in 0 0.05in -0.05in;
+}
+.opener h1 {
+  font-family: "Display"; font-weight: 600; font-size: 33pt; line-height: 1.05; margin: 0.1in 0 0.2in; color: var(--ink);
+  bookmark-level: 1; string-set: chaptitle attr(data-short);
+}
+.opener .ch-tagline {
+  font-family: "Display"; font-style: italic; font-weight: 400; font-size: 15pt; line-height: 1.35; color: var(--ink-soft);
+  max-width: 4.4in; text-align: left;
+}
+.opener .ch-rule { width: 0.7in; height: 3pt; background: var(--c); margin: 0.32in 0 0.28in; }
+.opener .ch-objectives { font-size: 9.6pt; line-height: 1.5; max-width: 4.9in; }
+.opener .ch-objectives h5 {
+  font: 700 7.5pt "Inter"; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.08in;
+}
+.opener .ch-objectives ul { margin: 0; padding-left: 1.1em; }
+.opener .ch-objectives li { margin-bottom: 0.2em; }
+.opener .ch-map { position: absolute; right: 0; top: 0.1in; }
+
+/* ---------- Boxes & callouts ---------- */
+.box {
+  margin: 1.05em 0 1.2em; padding: 0.15in 0.19in 0.1in; border-radius: 3pt; break-inside: avoid;
+  background: var(--sand); text-align: left;
+}
+.box p { text-align: left; hyphens: manual; }
+.box p:last-child, .box ul:last-child, .box ol:last-child { margin-bottom: 0.25em; }
+.box .box-label {
+  font: 700 7.2pt "Inter"; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c); margin-bottom: 0.07in;
+}
+.box.plain { background: var(--c-tint); border-left: 3pt solid var(--c); border-radius: 0 3pt 3pt 0; }
+.box.trap { background: #fbeceb; border-left: 3pt solid #b8433a; border-radius: 0 3pt 3pt 0; }
+.box.trap .box-label { color: #b8433a; }
+.box.try { background: #e9f4f1; border-left: 3pt solid #1f8178; border-radius: 0 3pt 3pt 0; }
+.box.try .box-label { color: #1f8178; }
+.box.note { background: #f3f3f1; border-left: 3pt solid #8a8f9c; border-radius: 0 3pt 3pt 0; }
+.box.note .box-label { color: #5d6270; }
+.box.keyterms { background: #fff; border: 0.8pt solid var(--rule); }
+.box.keyterms dl { margin: 0; font-size: 9.2pt; line-height: 1.42; }
+.box.keyterms dt { font: 700 8.6pt "Inter"; color: var(--ink); margin-top: 0.45em; }
+.box.keyterms dt:first-child { margin-top: 0; }
+.box.keyterms dd { margin: 0.05em 0 0; color: var(--ink-soft); }
+
+.pullquote {
+  margin: 1.3em 0.2in; padding: 0.14in 0; border-top: 1pt solid var(--c); border-bottom: 1pt solid var(--c);
+  font-family: "Display"; font-style: italic; font-size: 15pt; line-height: 1.32; color: var(--c); text-align: center;
+  break-inside: avoid;
+}
+
+/* Case study */
+.case { margin: 1.3em 0; border: 0.9pt solid var(--c); border-radius: 4pt; break-inside: auto; }
+.case .case-head {
+  background: var(--c); color: #fff; padding: 0.1in 0.19in; font: 700 7.4pt "Inter"; letter-spacing: 0.2em; text-transform: uppercase;
+  border-radius: 3pt 3pt 0 0;
+}
+.case .case-head b { display: block; font-family: "Display"; font-size: 14pt; letter-spacing: 0; text-transform: none; font-weight: 600; margin-top: 0.03in; }
+.case .case-body { padding: 0.14in 0.19in 0.06in; }
+.case .case-body p { text-align: left; hyphens: manual; }
+
+/* ---------- Tables ---------- */
+table {
+  width: 100%; border-collapse: collapse; margin: 0.9em 0 1.25em; font-family: "Inter"; font-size: 7.9pt; line-height: 1.38;
+  color: var(--ink);
+}
+thead { display: table-header-group; }
+th {
+  background: var(--navy); color: #fff; font-weight: 600; text-align: left; padding: 0.065in 0.08in; vertical-align: bottom;
+  font-size: 7.5pt; letter-spacing: 0.02em;
+}
+.chapter th { background: var(--c); }
+td { padding: 0.06in 0.08in; border-bottom: 0.5pt solid #e1ddd5; vertical-align: top; text-align: left; hyphens: manual; }
+tbody tr:nth-child(even) td { background: #faf8f4; }
+td:first-child { font-weight: 600; }
+table.plain-first td:first-child { font-weight: 400; }
+tr { break-inside: avoid; }
+table caption, .tcap {
+  caption-side: top; text-align: left; font: 700 7.4pt "Inter"; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+  padding-bottom: 0.06in;
+}
+
+/* ---------- Figures ---------- */
+figure { margin: 1.2em 0 1.35em; break-inside: avoid; text-align: center; }
+figure img, figure svg { max-width: 100%; }
+figure.wide img { width: 100%; }
+figcaption {
+  font: 400 7.9pt/1.45 "Inter"; color: var(--ink-soft); text-align: left; margin-top: 0.1in; padding-top: 0.06in;
+  border-top: 0.5pt solid var(--rule);
+}
+figcaption b { color: var(--c); font-weight: 700; letter-spacing: 0.04em; margin-right: 0.35em; }
+
+/* "At a glance" spread — recreated model card */
+.glance { text-align: left; margin: 0 0 0.2em; break-inside: avoid; border: 0.8pt solid var(--rule); border-radius: 5pt; padding: 0.17in; background: #fbfaf7; }
+.glance .g-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.glance .g-type { font: 700 7pt "Inter"; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c); }
+.glance .g-title { font-family: "Display"; font-weight: 700; font-size: 22pt; line-height: 1.05; margin: 0.03in 0 0.04in; text-align: left; }
+.glance .g-sub { font: 400 9pt "Inter"; color: var(--ink-soft); margin: 0 0 0.12in; text-align: left; }
+.glance .g-hero { background: #fff; border: 0.6pt solid #e4e0d8; border-radius: 4pt; padding: 0.08in; margin-bottom: 0.12in; text-align: center; }
+.glance .g-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.07in; }
+.glance .g-card { border-radius: 4pt; padding: 0.085in 0.11in; font: 400 8.1pt/1.4 "Inter"; color: #23293a; text-align: left; }
+.glance .g-card b { display: block; font-weight: 700; font-size: 7.5pt; letter-spacing: 0.04em; margin-bottom: 0.02in; }
+.gc-why { background: #f8e7b7; } .gc-ex { background: #cfe2f6; } .gc-proof { background: #cfeccb; } .gc-who { background: #c9efe9; }
+.gc-earn { background: #f7dcc0; } .gc-trap { background: #f3c9c1; } .gc-week { background: #ddd2f3; } .gc-cam { background: #e6e6e3; }
+
+/* ---------- Study-guide components ---------- */
+.review { margin-top: 1.4em; }
+.review ol.q { padding-left: 1.5em; }
+.review ol.q > li { margin-bottom: 0.65em; break-inside: avoid; }
+.review .choices { list-style: none; padding-left: 0.1em; margin: 0.25em 0 0; font-size: 9.6pt; }
+.review .choices li { margin-bottom: 0.08em; }
+.lines { margin: 0.2em 0 0.6em; }
+.lines div { border-bottom: 0.6pt solid #cfc9bd; height: 0.29in; }
+.worksheet {
+  border: 0.9pt solid var(--c); border-radius: 4pt; padding: 0.17in 0.2in 0.12in; margin: 1.1em 0; break-inside: avoid;
+}
+.worksheet .ws-head { font: 700 7.4pt "Inter"; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c); margin-bottom: 0.04in; }
+.worksheet .ws-title { font-family: "Display"; font-weight: 600; font-size: 14pt; margin-bottom: 0.08in; }
+.worksheet .prompt { font: 600 8.6pt "Inter"; color: var(--ink); margin-top: 0.12in; }
+.checklist { list-style: none; padding-left: 0; }
+.checklist li { padding-left: 1.55em; position: relative; margin-bottom: 0.38em; }
+.checklist li::before {
+  content: ""; position: absolute; left: 0; top: 0.18em; width: 0.68em; height: 0.68em; border: 0.9pt solid var(--c); border-radius: 1.5pt;
+}
+.checklist .day { font: 700 7.3pt "Inter"; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c); margin-right: 0.4em; }
+
+.takeaways { background: var(--navy); color: #eef0f5; border-radius: 4pt; padding: 0.18in 0.22in 0.1in; margin: 1.3em 0; break-inside: avoid; }
+.takeaways .box-label { font: 700 7.3pt "Inter"; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.08in; }
+.takeaways ul { padding-left: 1.1em; }
+.takeaways li { font-size: 9.7pt; }
+.takeaways ul li::marker { color: var(--gold); }
+
+.section-break { text-align: center; color: var(--c); font-size: 11pt; letter-spacing: 0.6em; margin: 1.1em 0; }
+
+/* Stat tiles */
+.stats { display: flex; gap: 0.1in; margin: 1em 0 1.2em; break-inside: avoid; }
+.stat { flex: 1; border-top: 2.5pt solid var(--c); background: var(--c-tint); padding: 0.1in 0.12in 0.09in; }
+.stat .n { font-family: "Display"; font-weight: 600; font-size: 21pt; line-height: 1; color: var(--c); }
+.stat .l { font: 500 7.4pt/1.35 "Inter"; color: var(--ink-soft); margin-top: 0.05in; text-align: left; }
+
+/* Phase timeline (HTML) */
+.phases { margin: 1em 0 1.2em; break-inside: avoid; }
+.phase { display: flex; border-left: 2pt solid var(--c); padding: 0 0 0.12in 0.16in; position: relative; }
+.phase::before { content: ""; position: absolute; left: -0.06in; top: 0.02in; width: 0.1in; height: 0.1in; border-radius: 50%; background: var(--c); }
+.phase .ph-when { width: 0.95in; flex: none; font: 700 7.4pt "Inter"; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c); padding-top: 0.01in; }
+.phase .ph-what { font: 400 8.6pt/1.4 "Inter"; text-align: left; }
+.phase .ph-what b { font-weight: 700; }
+
+/* ---------- Front matter ---------- */
+.front { page: front; }
+.frontbare { page: frontbare; }
+.halftitle { height: 8.2in; break-after: page; padding-top: 2.4in; text-align: center; }
+.halftitle .ht { font-family: "Display"; font-weight: 500; font-size: 22pt; letter-spacing: 0.01em; }
+.titlepage { height: 8.2in; break-before: right; break-after: page; position: relative; text-align: left; }
+.titlepage .tp-kicker { font: 700 8pt "Inter"; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); margin-top: 1.2in; }
+.titlepage .tp-title { font-family: "Display"; font-weight: 600; font-size: 42pt; line-height: 1.0; margin: 0.18in 0 0.25in; color: var(--navy); }
+.titlepage .tp-sub { font-family: "Display"; font-style: italic; font-size: 15pt; line-height: 1.35; color: var(--ink-soft); max-width: 4.6in; }
+.titlepage .tp-rule { width: 0.8in; height: 3pt; background: var(--gold); margin: 0.4in 0; }
+.titlepage .tp-author { font: 600 10pt "Inter"; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); }
+.titlepage .tp-imprint { position: absolute; bottom: 0; left: 0; font: 600 7.5pt "Inter"; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+.copyright { break-before: left; font-size: 7.9pt; line-height: 1.55; color: var(--ink-soft); padding-top: 3.6in; break-after: page; }
+.copyright p { text-align: left; margin-bottom: 0.75em; hyphens: manual; }
+.dedication { break-before: right; break-after: page; text-align: center; padding-top: 2.6in; font-family: "Display"; font-style: italic; font-size: 13pt; color: var(--ink-soft); }
+.front-chapter { break-before: page; }
+.front-chapter h1 {
+  font-family: "Display"; font-weight: 600; font-size: 28pt; margin: 0.3in 0 0.28in; color: var(--navy); bookmark-level: 1;
+}
+.front-chapter h1::after { content: ""; display: block; width: 0.6in; height: 3pt; background: var(--gold); margin-top: 0.2in; }
+
+/* Table of contents */
+.toc { font-family: "Inter"; }
+.toc .toc-part { font: 700 7.4pt "Inter"; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin: 0.26in 0 0.06in; }
+.toc .toc-row { display: flex; align-items: baseline; font-size: 9.4pt; line-height: 1.35; margin: 0.05in 0; }
+.toc .toc-row .t-num { width: 0.32in; flex: none; font-weight: 700; color: var(--muted); font-size: 8.4pt; }
+.toc .toc-row .t-title { flex: none; font-weight: 600; color: var(--ink); max-width: 4.3in; }
+.toc .toc-row .t-dots { flex: 1; border-bottom: 0.8pt dotted #b9b4a9; margin: 0 0.08in; transform: translateY(-0.04in); }
+.toc .toc-row .t-page { flex: none; font-weight: 600; color: var(--ink); font-size: 8.8pt; }
+.toc .toc-sub { display: flex; align-items: baseline; font-size: 7.8pt; line-height: 1.3; color: var(--ink-soft); margin: 0.01in 0 0.01in 0.32in; }
+.toc .toc-sub .t-title { flex: none; max-width: 4.1in; }
+.toc .toc-sub .t-dots { flex: 1; border-bottom: 0.6pt dotted #d0ccc2; margin: 0 0.08in; transform: translateY(-0.04in); }
+.toc .toc-sub .t-page { flex: none; font-size: 7.8pt; }
+
+/* ---------- Back matter ---------- */
+.backmatter h1 {
+  font-family: "Display"; font-weight: 600; font-size: 28pt; margin: 0.3in 0 0.3in; color: var(--navy); bookmark-level: 1;
+  string-set: chaptitle content();
+}
+.backmatter h1::after { content: ""; display: block; width: 0.6in; height: 3pt; background: var(--gold); margin-top: 0.18in; }
+.backmatter { break-before: right; }
+.glossary dl { margin: 0; columns: 2; column-gap: 0.3in; font-size: 8.9pt; line-height: 1.42; }
+.glossary dt { font: 700 8.4pt "Inter"; color: var(--navy); margin-top: 0.55em; break-after: avoid; }
+.glossary dd { margin: 0.05em 0 0; text-align: left; hyphens: auto; break-before: avoid; }
+.answers { columns: 2; column-gap: 0.3in; font-size: 8.6pt; line-height: 1.45; }
+.answers h3 { font-size: 9pt; margin-top: 0.8em; column-span: none; }
+.answers ol { padding-left: 1.4em; }
+.answers li { margin-bottom: 0.3em; }
+.index { columns: 2; column-gap: 0.35in; font: 400 8.2pt/1.5 "Inter"; }
+.index .ix-letter { font-family: "Display"; font-weight: 700; font-size: 12pt; color: var(--gold); margin: 0.12in 0 0.02in; break-after: avoid; }
+.index .ix { text-align: left; }
+.index .ix a::after { content: ", " target-counter(attr(href), page); color: var(--ink-soft); }
+.xref::after { content: " (page " target-counter(attr(href), page) ")"; }
+
+.center { text-align: center; }
+.small { font-size: 8.5pt; }
+.nobreak { break-inside: avoid; }
+.pagebreak { break-before: page; }
+.spacer { height: 0.2in; }
+.two-col { columns: 2; column-gap: 0.28in; }
+.two-col li { break-inside: avoid; }
+
+/* ---------- Cover ---------- */
+.cover { page: cover; width: 7in; height: 10in; position: relative; overflow: hidden; background: #121a2e; }
+.cover svg.cover-art { position: absolute; left: 0; top: 0; }
+.cover .cv-kicker { position: absolute; left: 0.62in; top: 0.62in; font: 700 7.6pt "Inter"; letter-spacing: 0.34em; text-transform: uppercase; color: #d9ad5a; }
+.cover .cv-title {
+  position: absolute; left: 0.58in; right: 0.4in; top: 5.72in; font-family: "Display"; font-weight: 600; font-size: 49pt; line-height: 0.98;
+  color: #fff; letter-spacing: -0.01em;
+}
+.cover .cv-title i { font-style: italic; font-weight: 400; color: #e8c37c; }
+.cover .cv-sub { position: absolute; left: 0.62in; right: 1.0in; top: 7.3in; font-family: "Display"; font-style: italic; font-size: 14.5pt; line-height: 1.32; color: #cfd5e2; }
+.cover .cv-bar { position: absolute; left: 0.62in; right: 0.62in; bottom: 0.62in; border-top: 0.8pt solid rgba(255,255,255,.25); padding-top: 0.13in; display: flex; justify-content: space-between; font: 600 7pt "Inter"; letter-spacing: 0.2em; text-transform: uppercase; color: #9ea8bd; }
+.cover .cv-author { position: absolute; left: 0.62in; bottom: 1.05in; font: 600 10.5pt "Inter"; letter-spacing: 0.26em; text-transform: uppercase; color: #fff; }
+
+figure.glance-fig { margin: 0 0 0.6em; break-before: page; break-after: page; }
+figure.glance-fig figcaption { margin-top: 0.08in; }

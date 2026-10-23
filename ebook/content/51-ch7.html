@@ -1,0 +1,277 @@
+<section class="chapter m7" id="ch7">
+  <div class="opener">
+    <div class="ch-map"><!--@map:7--></div>
+    <div class="ch-kicker">Chapter 7 &#8226; Model 7 of 8</div>
+    <div class="ch-num">7</div>
+    <h1 data-short="Proprietary Data Products">Proprietary Data Products</h1>
+    <div class="ch-tagline">Anyone can copy your app. Nobody can copy your data.</div>
+    <div class="ch-rule"></div>
+    <div class="ch-objectives">
+      <h5>Learning objectives</h5>
+      <ul>
+        <li>Explain the data flywheel and why data is a durable moat</li>
+        <li>Judge whether a dataset is valuable, using six qualities</li>
+        <li>Solve the cold-start problem with proven collection strategies</li>
+        <li>Collect data legally and ethically, with consent and anonymization</li>
+        <li>Package one dataset into several products for different buyers</li>
+      </ul>
+    </div>
+  </div>
+
+  <figure class="glance-fig">
+    <div class="glance">
+      <div class="g-top"><div><div class="g-type">Type 7 of 8</div><div class="g-title">Proprietary data products</div>
+        <div class="g-sub">Anyone can copy your app. Nobody can copy your data.</div></div><!--@map:7--></div>
+      <div class="g-hero"><!--@svg:hero7--></div>
+      <div class="g-cards">
+        <div class="g-card gc-why"><b>Why now</b>Models and code are commodities. Fresh niche data is scarce.</div>
+        <div class="g-card gc-ex"><b>Real-world example</b>Fitness-app route heatmaps, crowd-sourced traffic from navigation apps, anonymous salary-sharing sites.</div>
+        <div class="g-card gc-proof"><b>Proof it works</b>Not built yet. The idea: ride logs from the roller-coaster app become a dataset.</div>
+        <div class="g-card gc-who"><b>Who builds it</b>Builders in a community whose data nobody captures.</div>
+        <div class="g-card gc-earn"><b>How it earns</b>Free app. Paid insights, reports, or API access.</div>
+        <div class="g-card gc-trap"><b>The trap</b>Collecting without consent, or building a dataset nobody needs.</div>
+        <div class="g-card gc-week"><b>This week</b>Name a question your niche can&rsquo;t answer. Collect that data.</div>
+        <div class="g-card gc-cam"><b>In one line</b>The data is the product.</div>
+      </div>
+    </div>
+    <figcaption><b>Figure 7.1</b>Proprietary data products at a glance. Use creates unique data, the data improves the product, a better product attracts more users, and the loop speeds up. Separately, buyers and AI agents pay to query the data.</figcaption>
+  </figure>
+
+  <p class="lead dropcap">With AI, anyone can rebuild your app&rsquo;s features in a weekend. What they can&rsquo;t rebuild is the unique information your users have given you over months or years: their activities, prices, experiences, reviews, and results. That body of data is proprietary, meaning only you have it, and it can become your most valuable and most defensible asset.</p>
+
+  <p>In a <dfn data-ix="Proprietary data">proprietary data product</dfn>, you build a useful app whose real business is the unique data it collects, then sell insights from that data to people and AI agents who need answers nobody else can provide.</p>
+
+  <div class="box keyterms"><div class="box-label">Key terms</div>
+    <dl>
+      <dt>Proprietary data</dt><dd>Information only you possess, gathered through your own product or relationships.</dd>
+      <dt>Data flywheel</dt><dd>A self-reinforcing loop in which usage creates data, data improves the product, and a better product attracts more users.</dd>
+      <dt>Cold start</dt><dd>The early problem that no one contributes until there&rsquo;s data, and there&rsquo;s no data until people contribute.</dd>
+      <dt>Give-to-get</dt><dd>Users contribute their own data to unlock everyone else&rsquo;s.</dd>
+      <dt>Aggregation and anonymization</dt><dd>Combining data into group statistics and removing identifying details, so no individual can be singled out.</dd>
+      <dt>Re-identification</dt><dd>Working out who a person is from supposedly anonymous data.</dd>
+    </dl>
+  </div>
+
+  <h2 id="ch7-explained">The Model Explained</h2>
+  <h3>The data flywheel</h3>
+  <p>A flywheel is a heavy wheel that&rsquo;s hard to start spinning but, once moving, keeps itself going and speeds up. The <dfn data-ix="Data flywheel">data flywheel</dfn> works the same way:</p>
+  <ol>
+    <li><b>People use the app</b> because it&rsquo;s useful to them: logging runs, rating rides, reporting prices.</li>
+    <li><b>Unique data</b> accumulates as a side effect.</li>
+    <li><b>The product gets better:</b> smarter recommendations, accurate averages, live maps.</li>
+    <li><b>More people join,</b> because the product now beats the alternatives.</li>
+    <li><b>Back to step 1</b>, with even more data, and the cycle accelerates.</li>
+  </ol>
+  <p>The side arrow, <b>Unique data &#8594; &ldquo;Buyers and agents pay to query it,&rdquo;</b> shows a second revenue path. Separately from the app, businesses, researchers, and increasingly AI agents pay to ask questions of your data, usually through an API. This connects directly to Model 3: your data can be the source behind a headless tool.</p>
+
+  <h3>The eight facts, unpacked</h3>
+  <p><b>Why now.</b> Models are trained on the public internet, so they know nothing about what happened last week in your niche or about things nobody ever wrote down. Whoever owns that data holds what AI can&rsquo;t generate.</p>
+  <p><b>Real-world examples.</b> A fitness-tracking app turned millions of logged runs and rides into heatmaps, and sells aggregated data to city planners designing bike lanes. A crowd-sourced navigation app collected live traffic speeds simply because drivers used it, and that data made it worth about a billion dollars to an acquirer. An anonymous salary-sharing site built a salary database no employer would publish by asking people to share theirs in order to see others&rsquo;.</p>
+  <p><b>Proof it works.</b> The framework&rsquo;s originator admits they haven&rsquo;t built one yet. Their idea is that ride logs from their coaster app could become a dataset of popular rides, real wait times, closures, and ratings by park. Most data products start exactly this way, as a side effect of a useful app.</p>
+  <p><b>Who builds it.</b> Builders inside a community whose data nobody captures, where important information lives only in people&rsquo;s heads, group chats, or spreadsheets.</p>
+  <p><b>How it earns.</b> A free app maximizes contributors. Revenue comes from paid insights inside the app, reports sold to businesses, and API access for businesses and agents.</p>
+  <p><b>The trap.</b> Two traps, in fact. (1) <b>Collecting without consent</b> is unethical, often illegal, and destroys trust. (2) <b>A dataset nobody needs</b> is worthless, no matter how large it is.</p>
+
+  <div class="pullquote">Start from a valuable question, then design the collection. Never the other way around.</div>
+
+  <h3>How it connects to the other models</h3>
+  <p>Data often sits <i>underneath</i> other models. A taste-led app (Model 5) collects it; a headless API (Model 3) sells access to it; it makes a vertical harness (Model 2) smarter than its rivals; and a service business (Model 1) generates it as a by-product, such as real prices from thousands of jobs.</p>
+
+  <h2 id="ch7-value">What Makes Data Valuable</h2>
+  <table>
+    <caption>Table 7.1 &#8226; Six qualities of valuable data</caption>
+    <thead><tr><th style="width:22%">Quality</th><th style="width:40%">Meaning</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>Answers a money question</td><td>Someone makes a financial decision based on it</td><td>&ldquo;What should I pay?&rdquo; &ldquo;Where should we build?&rdquo;</td></tr>
+      <tr><td>Hard to get elsewhere</td><td>Not public, not easily scraped</td><td>Real salaries; actual contractor quotes</td></tr>
+      <tr><td>Fresh</td><td>Updated constantly; old data loses value</td><td>Today&rsquo;s traffic; this week&rsquo;s prices</td></tr>
+      <tr><td>Granular</td><td>Specific enough to act on</td><td>By zip code, model, and date</td></tr>
+      <tr><td>Trustworthy</td><td>Verified, enough data points, little fraud</td><td>Receipts uploaded, not just claims</td></tr>
+      <tr><td>Legally clean</td><td>Collected with consent and clear rights</td><td>Users agreed in plain language</td></tr>
+    </tbody>
+  </table>
+  <figure>
+    <!--@chart:ch7_confidence-->
+    <figcaption><b>Figure 7.2</b>Why more data is worth more (illustrative). The uncertainty of a local average shrinks as verified contributions grow. Below a minimum count, results are too unreliable, and too identifying, to publish.</figcaption>
+  </figure>
+
+  <table>
+    <caption>Table 7.2 &#8226; Questions niches can&rsquo;t answer yet</caption>
+    <thead><tr><th style="width:18%">Niche</th><th style="width:44%">Unanswered question</th><th>Who&rsquo;d pay</th></tr></thead>
+    <tbody>
+      <tr><td>Home services</td><td>What does a roof, HVAC system, or kitchen remodel actually cost in my area?</td><td>Homeowners, contractors, insurers, lenders, agents</td></tr>
+      <tr><td>Restaurants</td><td>What are nearby restaurants paying suppliers, or paying in rent?</td><td>Owners, suppliers, investors</td></tr>
+      <tr><td>Small business</td><td>What do businesses like mine pay for software, insurance, payment processing?</td><td>Owners, vendors, brokers</td></tr>
+      <tr><td>Freelancers</td><td>What do freelancers in my field really charge per project?</td><td>Freelancers, agencies, clients</td></tr>
+      <tr><td>Theme parks</td><td>Real wait times, ride downtime, and crowd levels by day</td><td>Visitors, travel agents, operators, planning apps</td></tr>
+      <tr><td>Used goods</td><td>What do used cameras, golf clubs, or instruments really sell for?</td><td>Buyers, sellers, resellers, insurers</td></tr>
+      <tr><td>Local services</td><td>How long is the wait at this office, clinic, or vet?</td><td>Residents, cities</td></tr>
+      <tr><td>Healthcare (regulated)</td><td>What did my procedure actually cost with my insurance?</td><td>Patients, employers, benefits brokers</td></tr>
+      <tr><td>Rentals</td><td>What do tenants really pay, and how responsive is this landlord?</td><td>Renters, managers, investors</td></tr>
+      <tr><td>Weddings and events</td><td>What do venues, photographers, and caterers actually charge?</td><td>Couples, vendors, planners</td></tr>
+    </tbody>
+  </table>
+
+  <div class="case m7">
+    <div class="case-head">Case study<b>&ldquo;FairQuote&rdquo; for home-improvement prices</b></div>
+    <div class="case-body">
+      <p><b>The question nobody can answer:</b> what does a roof replacement really cost in Tampa? Online estimates are vague ranges, and contractors don&rsquo;t publish prices.</p>
+      <p><b>How to collect it (give-to-get):</b> homeowners upload a contractor quote or invoice to see what others paid for the same job nearby. AI reads the document and extracts job type, size, materials, price, zip code, and date. Personal details are stripped out automatically.</p>
+      <p><b>The flywheel:</b> more quotes make local prices more accurate, so more homeowners check prices before hiring, so more quotes come in.</p>
+      <p><b>The money:</b> free basic ranges for contributors; a $9.99 &ldquo;Fair Price Report&rdquo; for one job in one zip code; a contractor subscription at $49&#8211;$199 a month (&ldquo;How do my prices compare?&rdquo;); API and licensing deals with insurers, lenders, real-estate platforms, and AI home assistants; and an annual &ldquo;State of Home Prices&rdquo; report that earns press coverage.</p>
+      <p><b>The moat:</b> after two years and 50,000 verified quotes, no competitor can catch up quickly.</p>
+    </div>
+  </div>
+
+  <h2 id="ch7-plan">Step-by-Step Plan</h2>
+  <div class="phases">
+    <div class="phase"><div class="ph-when">Week 1</div><div class="ph-what"><b>Phase 0 &#8212; Find the valuable question</b> and validate it with five business buyers.</div></div>
+    <div class="phase"><div class="ph-when">Weeks 1&#8211;3</div><div class="ph-what"><b>Phase 1 &#8212; Design the collection engine</b> and solve the cold start.</div></div>
+    <div class="phase"><div class="ph-when">Before collecting</div><div class="ph-what"><b>Phase 2 &#8212; Consent, privacy, and legal.</b></div></div>
+    <div class="phase"><div class="ph-when">Weeks 3&#8211;6</div><div class="ph-what"><b>Phase 3 &#8212; Store, clean, and verify.</b></div></div>
+    <div class="phase"><div class="ph-when">Weeks 6&#8211;10</div><div class="ph-what"><b>Phase 4 &#8212; Turn data into products.</b></div></div>
+    <div class="phase" style="padding-bottom:0"><div class="ph-when">Months 3&#8211;12+</div><div class="ph-what"><b>Phase 5 &#8212; Grow the flywheel.</b></div></div>
+  </div>
+
+  <h3>Phase 0: Find the valuable question</h3>
+  <ol>
+    <li>List ten questions people in your niche ask that have no good answer: &ldquo;Does anyone know how much&hellip;,&rdquo; &ldquo;Is it normal that&hellip;,&rdquo; &ldquo;What&rsquo;s the best time to&hellip;&rdquo;</li>
+    <li>For each, ask: who makes a <b>money decision</b> with this answer? Would <b>businesses</b> pay? Can I collect it <b>legally, with consent</b>? Can people contribute in <b>under sixty seconds</b>? Does it need to be <b>fresh</b>? (Fresh is better, because it keeps you needed.)</li>
+    <li>Pick one question with at least three types of buyers.</li>
+    <li><b>Validate with buyers early.</b> Ask five businesses: &ldquo;If I had verified data on X by zip code, would you pay? How much? In what format?&rdquo;</li>
+  </ol>
+
+  <h3>Phase 1: Design the collection engine</h3>
+  <p>The hardest problem in data businesses is the <dfn data-ix="Cold start">cold start</dfn>. These strategies solve it:</p>
+  <table>
+    <caption>Table 7.3 &#8226; Solving the cold start</caption>
+    <thead><tr><th style="width:26%">Strategy</th><th style="width:44%">How it works</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>Single-player utility</td><td>Useful to one person even with zero other users</td><td>Logging your own run is useful alone</td></tr>
+      <tr><td><dfn data-ix="Give-to-get">Give-to-get</dfn></td><td>Contribute data to unlock others&rsquo; data</td><td>Share your salary to see salaries</td></tr>
+      <tr><td>Passive collection</td><td>Data is a by-product of normal use (with consent)</td><td>Navigation reports traffic speed</td></tr>
+      <tr><td>Seed with public data</td><td>Start with cleaned-up public records, then add user data</td><td>Permits, public price filings</td></tr>
+      <tr><td>Pay or reward contributors</td><td>Gift cards, credits, free premium</td><td>$5 per verified receipt</td></tr>
+      <tr><td>Partner for bulk data</td><td>Businesses share data in exchange for free insights</td><td>Contractors share pricing for benchmarks</td></tr>
+    </tbody>
+  </table>
+  <p><b>Make contributing effortless:</b> a photo upload with AI extraction, one-tap logging, or automatic capture. Every extra field cuts contributions. Tools by category: AI app builders or simple online forms to start; AI vision models or specialized receipt- and document-reading services for extraction; location services (with consent); public open-data portals and, where permitted, web-data extraction services for seeding; digital gift-card platforms for rewards; and survey panels to seed early responses.</p>
+
+  <h3>Phase 2: Consent, privacy, and legal</h3>
+  <p>This is the first half of the trap, so treat it as non-negotiable.</p>
+  <ol>
+    <li><b>Plain-language consent:</b> tell contributors exactly what you collect, how it&rsquo;s used, and that aggregated, anonymized insights may be sold. No hidden fine print.</li>
+    <li><b>Anonymize and aggregate:</b> sell patterns, not people. Strip identifiers, and never show results based on just one or two data points. A common rule is to publish averages only when a group has five to ten or more contributors.</li>
+    <li><b>Watch for <dfn data-ix="Re-identification">re-identification</dfn>.</b> One fitness app&rsquo;s public heatmap once revealed the locations of secret military facilities. Location data needs special care: blur start and end points and suppress sparse areas.</li>
+    <li><b>Know the laws.</b> In the U.S., California&rsquo;s privacy law and a growing list of state laws give people rights, including opting out of the &ldquo;sale&rdquo; of their data; health data carries extra rules (HIPAA and state health-data laws). In the EU and UK, GDPR requires a lawful basis such as explicit consent, and a right to deletion. For children, COPPA applies in the U.S., so avoid collecting from children.</li>
+    <li><b>Have a lawyer review</b> your terms and privacy policy before launch. It&rsquo;s worth a few hundred to a couple of thousand dollars.</li>
+  </ol>
+  <p>Tool categories: privacy-policy and consent-banner generators; privacy-request management platforms as you grow; and open-source differential-privacy libraries for advanced, privacy-preserving statistics.</p>
+
+  <h3>Phase 3: Store, clean, and verify</h3>
+  <p>Raw data is messy, and clean, trustworthy data is what people pay for. Use a hosted relational database to start and a cloud data warehouse as you grow; data-transformation tools to clean and model; data-pipeline tools to pull from multiple sources; AI to standardize categories (&ldquo;roof replacement&rdquo; = &ldquo;re-roof&rdquo; = &ldquo;new roof&rdquo;), extract fields, and flag oddities; automated data-quality testing; fraud and duplicate detection (duplicate receipts, impossible values, suspicious bursts); and notebook or BI tools to explore. <b>Trust signals</b> to build in: &ldquo;verified by receipt&rdquo; badges, a sample size beside every number (&ldquo;based on 47 quotes&rdquo;), last-updated dates, and outlier removal.</p>
+
+  <h3>Phase 4: Turn data into products</h3>
+  <table>
+    <caption>Table 7.4 &#8226; One dataset, many products</caption>
+    <thead><tr><th style="width:24%">Product</th><th style="width:24%">Buyer</th><th>Pricing</th></tr></thead>
+    <tbody>
+      <tr><td>Free app with basic insights</td><td>Contributors, consumers</td><td>Free; keeps the flywheel spinning</td></tr>
+      <tr><td>Premium insights in the app</td><td>Power users</td><td>$5&#8211;$15/month or $5&#8211;$30 per report</td></tr>
+      <tr><td>Reports</td><td>Businesses, press, investors</td><td>$99&#8211;$5,000 per report; an annual &ldquo;State of&hellip;&rdquo; report as marketing</td></tr>
+      <tr><td>Dashboards</td><td>Businesses wanting ongoing access</td><td>$99&#8211;$2,000+/month</td></tr>
+      <tr><td>API access</td><td>Software companies, AI agents</td><td>Per query ($0.01&#8211;$1+) or subscription tiers</td></tr>
+      <tr><td>MCP server</td><td>AI assistants and agents</td><td>Usage-based (see Chapter 3)</td></tr>
+      <tr><td>Bulk data licensing</td><td>Large companies, researchers, insurers, funds</td><td>$10,000&#8211;$500,000+ a year; cloud data marketplaces can list your data</td></tr>
+    </tbody>
+  </table>
+  <p><b>&ldquo;Agents pay to query it&rdquo;</b> is the newest and fastest-growing buyer. When someone asks their AI, &ldquo;Is $14,000 a fair price for a roof in Tampa?&rdquo;, the agent could call your API for the answer. Make your data agent-friendly: clear docs, JSON output, and an MCP server.</p>
+
+  <h3>Phase 5: Grow the flywheel</h3>
+  <ol>
+    <li><b>Seed the first 500&#8211;1,000 data points</b> yourself with rewards, partners, public data, and your community.</li>
+    <li><b>Launch in one area first</b> (one city, one park, one category) so the data is dense and useful, then expand. Thin data everywhere is useless.</li>
+    <li><b>Publish free insights as marketing:</b> &ldquo;The real cost of a roof in Florida, 2026&rdquo; earns press, search traffic, and contributors. Use chart-publishing tools for shareable graphics.</li>
+    <li><b>Close the loop:</b> show contributors their impact (&ldquo;Your quote helped 212 neighbors&rdquo;).</li>
+    <li><b>Approach business buyers</b> once coverage is real, with sample reports as the hook.</li>
+    <li><b>Track flywheel metrics:</b> contributions per week, returning contributors, coverage, and revenue per data point.</li>
+  </ol>
+
+  <h2 id="ch7-risks">Risks and How to Handle Them</h2>
+  <table>
+    <thead><tr><th style="width:32%">Risk</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td>Collecting without consent (trap)</td><td>Plain-language consent, anonymization, aggregation thresholds, legal review; never sell individual-level personal data.</td></tr>
+      <tr><td>A dataset nobody needs (trap)</td><td>Start from a money question and validate with five buyers before building.</td></tr>
+      <tr><td>Cold start</td><td>Single-player utility, give-to-get, seed data, rewards, one launch area.</td></tr>
+      <tr><td>Bad or fake data</td><td>Receipt verification, fraud rules, outlier removal, visible sample sizes.</td></tr>
+      <tr><td>Re-identification</td><td>Minimum group sizes, blurred locations, no rare combinations published.</td></tr>
+      <tr><td>Scraping or IP issues</td><td>Respect terms and robots.txt; prefer contributed and licensed data; get legal advice for gray areas.</td></tr>
+      <tr><td>Slow to monetize</td><td>Sell reports early while the API and licensing grow.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="ch7-budget">Starter Budget</h2>
+  <table>
+    <thead><tr><th style="width:55%">Item</th><th>Approximate monthly cost</th></tr></thead>
+    <tbody>
+      <tr><td>App builder or AI coding assistant</td><td>$20&#8211;$200</td></tr>
+      <tr><td>Hosted database</td><td>$0&#8211;$25</td></tr>
+      <tr><td>AI model API (extraction, cleaning, reports)</td><td>$20&#8211;$200</td></tr>
+      <tr><td>Document-reading service (optional)</td><td>$0&#8211;$100</td></tr>
+      <tr><td>Contributor rewards to seed data</td><td>$0&#8211;$500 (optional but powerful)</td></tr>
+      <tr><td>Privacy tools</td><td>$10&#8211;$30</td></tr>
+      <tr><td>Dashboards (free tiers)</td><td>$0&#8211;$50</td></tr>
+      <tr><td>Legal review (one time)</td><td>~$500&#8211;$2,500</td></tr>
+      <tr><td><b>Total</b></td><td><b>About $50&#8211;$1,000 a month</b>, depending mostly on how hard you seed data</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="ch7-checklist">Your Seven-Day Checklist</h2>
+  <ul class="checklist">
+    <li><span class="day">Day 1</span>List ten questions your niche can&rsquo;t answer.</li>
+    <li><span class="day">Day 2</span>Score each one: money decision? Multiple buyers? Consent possible? Easy to contribute?</li>
+    <li><span class="day">Day 3</span>Pick one question and name three buyer types.</li>
+    <li><span class="day">Day 4</span>Talk to three to five potential business buyers.</li>
+    <li><span class="day">Day 5</span>Design the collection method: single-player value, give-to-get, or rewards.</li>
+    <li><span class="day">Day 6</span>Draft your plain-language consent statement.</li>
+    <li><span class="day">Day 7</span>Launch a simple online form or prototype and collect your first fifty data points.</li>
+  </ul>
+
+  <div class="takeaways"><div class="box-label">Chapter summary</div>
+    <ul>
+      <li>Code and models are commodities; fresh, niche, proprietary data is scarce and hard to copy.</li>
+      <li>The data flywheel (use &#8594; data &#8594; better product &#8594; more users) accelerates over time.</li>
+      <li>Valuable data answers money questions, is hard to get, fresh, granular, trustworthy, and legally clean.</li>
+      <li>Solve the cold start with single-player value, give-to-get, seeding, and one dense launch area.</li>
+      <li>Consent and anonymization come first; then package the same data as reports, dashboards, APIs, and licenses.</li>
+    </ul>
+  </div>
+
+  <div class="review" id="ch7-review">
+    <h2>Review Questions</h2>
+    <ol class="q">
+      <li>What is the &ldquo;cold start&rdquo; problem?
+        <ul class="choices"><li>A. Servers that run slowly at first</li><li>B. Nobody contributes until there&rsquo;s data, and there&rsquo;s no data until people contribute</li><li>C. Launching in winter</li><li>D. Investors losing interest</li></ul></li>
+      <li>Which practice best protects contributors&rsquo; privacy?
+        <ul class="choices"><li>A. Publishing every individual record</li><li>B. Showing averages only when a group has enough contributors</li><li>C. Selling raw location traces</li><li>D. Hiding the privacy policy</li></ul></li>
+      <li>Which is one of the two traps in this model?
+        <ul class="choices"><li>A. Charging for reports</li><li>B. Building a dataset nobody needs</li><li>C. Using an API</li><li>D. Launching in one city</li></ul></li>
+      <li>Draw or describe the data flywheel in four steps.</li>
+      <li>List the six qualities of valuable data.</li>
+      <li>Explain give-to-get with an example of your own.</li>
+      <li>Why should you launch in one area before expanding?</li>
+      <li>Name four products you could build from one dataset.</li>
+    </ol>
+  </div>
+
+  <div class="worksheet">
+    <div class="ws-head">Apply it &#8226; Worksheet 7</div>
+    <div class="ws-title">Design your data product</div>
+    <div class="prompt">The question my niche can&rsquo;t answer:</div><div class="lines"><div></div></div>
+    <div class="prompt">Three buyer types, and the money decision each makes:</div><div class="lines"><div></div><div></div></div>
+    <div class="prompt">How I&rsquo;ll collect it (and solve the cold start):</div><div class="lines"><div></div><div></div></div>
+    <div class="prompt">My plain-language consent statement:</div><div class="lines"><div></div><div></div></div>
+    <div class="prompt">My launch area, and the minimum count before publishing results:</div><div class="lines"><div></div></div>
+  </div>
+</section>

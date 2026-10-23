@@ -1,0 +1,286 @@
+<section class="chapter m3" id="ch3">
+  <div class="opener">
+    <div class="ch-map"><!--@map:3--></div>
+    <div class="ch-kicker">Chapter 3 &#8226; Model 3 of 8</div>
+    <div class="ch-num">3</div>
+    <h1 data-short="Headless AI Software">Headless AI Software</h1>
+    <div class="ch-tagline">Your next million users won&rsquo;t have eyes.</div>
+    <div class="ch-rule"></div>
+    <div class="ch-objectives">
+      <h5>Learning objectives</h5>
+      <ul>
+        <li>Explain &ldquo;headless&rdquo; software and why agents are its customers</li>
+        <li>Describe the three &ldquo;doors&rdquo; agents use: CLI, API, and MCP</li>
+        <li>Turn an AI weakness into a product idea, and test it against the trap</li>
+        <li>Design an agent-friendly tool, its documentation, and its pricing</li>
+        <li>Distribute a tool where developers and agents will find it</li>
+      </ul>
+    </div>
+  </div>
+
+  <figure class="glance-fig">
+    <div class="glance">
+      <div class="g-top"><div><div class="g-type">Type 3 of 8</div><div class="g-title">Headless AI software</div>
+        <div class="g-sub">Your next million users won&rsquo;t have eyes.</div></div><!--@map:3--></div>
+      <div class="g-hero"><!--@svg:hero3--></div>
+      <div class="g-cards">
+        <div class="g-card gc-why"><b>Why now</b>Agents are becoming software&rsquo;s heaviest users. They need tools, not interfaces.</div>
+        <div class="g-card gc-ex"><b>Real-world example</b>Web-data services that turn pages into clean text, search engines built for AI, cloud browsers agents can drive, and developer email-sending services.</div>
+        <div class="g-card gc-proof"><b>Proof it works</b>A one-command tool that checks a software build against the project&rsquo;s written design rules.</div>
+        <div class="g-card gc-who"><b>Who builds it</b>Builders with a data source or one hard, narrow skill.</div>
+        <div class="g-card gc-earn"><b>How it earns</b>Usage-based pricing, credits, or an open-source core.</div>
+        <div class="g-card gc-trap"><b>The trap</b>Building what the big AI labs will bundle for free next quarter.</div>
+        <div class="g-card gc-week"><b>This week</b>Find a task AI does badly. Wrap the fix as a one-command tool.</div>
+        <div class="g-card gc-cam"><b>In one line</b>No screen. The docs are the interface.</div>
+      </div>
+    </div>
+    <figcaption><b>Figure 3.1</b>Headless AI software at a glance. An agent reaches your tool through a command line, an API, or an MCP connection and gets a result back. There&rsquo;s no screen; your documentation and output format are the user experience.</figcaption>
+  </figure>
+
+  <p class="lead dropcap">Until now, almost all software was built for people: screens, buttons, menus, dashboards. That&rsquo;s changing fast. AI agents, such as coding assistants and automated research and operations bots, now use software constantly, and they don&rsquo;t need a screen. They don&rsquo;t click. They read instructions and send commands.</p>
+
+  <p><dfn data-ix="Headless software">Headless</dfn> means software with no visual interface: all brain, no face. In this model you build tools that <i>AI agents use</i> to get work done, rather than apps that humans look at. Your customers are developers and businesses, but the day-to-day user is their agent.</p>
+
+  <div class="box keyterms"><div class="box-label">Key terms</div>
+    <dl>
+      <dt>Headless</dt><dd>Software without a graphical user interface, used by other programs through commands or requests.</dd>
+      <dt>CLI (command-line interface)</dt><dd>A program you run by typing a command in a terminal.</dd>
+      <dt>API (application programming interface)</dt><dd>A web address that accepts requests in a defined format and returns data.</dd>
+      <dt>MCP (Model Context Protocol)</dt><dd>An open standard that lets any compatible AI agent discover and use a tool automatically.</dd>
+      <dt>JSON</dt><dd>A simple, structured text format for data that programs (and agents) read easily.</dd>
+      <dt>Usage-based pricing</dt><dd>Customers pay per call, page, search, or other unit they consume.</dd>
+    </dl>
+  </div>
+
+  <h2 id="ch3-explained">The Model Explained</h2>
+  <h3>The three doors</h3>
+  <p>The top row of the diagram reads <b>Agent &#8594; CLI · API · MCP &#8594; Result</b>. An agent needs to do something it can&rsquo;t do well on its own, such as search the web, send an email, or check a file, so it calls your tool through one of three &ldquo;doors&rdquo; and gets a result back.</p>
+  <figure>
+    <!--@svg:three_doors-->
+    <figcaption><b>Figure 3.2</b>The three doors agents use. Most successful headless products offer all three: a command-line tool for local use, an API for software integration, and an <dfn data-ix="MCP (Model Context Protocol)">MCP server</dfn> so any compatible agent can plug in.</figcaption>
+  </figure>
+  <p>The bottom row crosses out <b>Screen / UI</b> and replaces it with <b>&ldquo;The docs and output are the UI.&rdquo;</b> An agent learns how to use your tool by reading your documentation, and it understands the result by reading your output. So your docs and your output format <i>are</i> the product experience. They must be clear, structured, and predictable, because a confused agent simply picks a different tool.</p>
+
+  <h3>The eight facts, unpacked</h3>
+  <p><b>Why now.</b> Agents are becoming software&rsquo;s heaviest users. One developer working with an AI coding agent may trigger hundreds of tool calls a day, and an automated pipeline can trigger thousands.</p>
+  <figure>
+    <!--@chart:ch3_volume-->
+    <figcaption><b>Figure 3.3</b>Daily requests from a person versus an agent (illustrative, log scale). Volume is why pay-per-use pricing on agent traffic can grow quickly.</figcaption>
+  </figure>
+  <p><b>Real-world examples.</b> Some of the fastest-growing developer companies are headless: a service that turns any website into clean text an AI can read, a search engine designed for AI rather than people, a platform that runs cloud web browsers agents can control, and a simple email-sending service developers call with one command. None of them is mainly known for a dashboard.</p>
+  <p><b>Proof it works.</b> One builder created a command-line tool that checks whether a software build matches the rules in the project&rsquo;s design-guidelines file (its colors, fonts, and spacing). AI coding agents often drift from a design system. The agent runs the tool, receives a list of violations, and fixes them.</p>
+  <p><b>Who builds it.</b> Builders with <b>a data source</b> (unique data others can&rsquo;t easily get) or <b>one hard, narrow skill</b> (one thing done extremely well).</p>
+  <p><b>How it earns.</b> <dfn data-ix="Usage-based pricing">Usage-based pricing</dfn> (pay per call, page, or search), <b>credits</b> (buy a pack and spend it down), or an <b>open-source core</b> (a free version that spreads widely, with a paid hosted or pro version; see Chapter 8).</p>
+  <p><b>The trap.</b> Building something the big AI labs will give away next quarter. When major assistants added built-in web search, many simple search wrappers lost their reason to exist. Don&rsquo;t build generic features. Build things that need special data or deep niche expertise.</p>
+
+  <div class="pullquote">If a lab could add it as a checkbox, don&rsquo;t build it. If it needs your data or your expertise, it&rsquo;s yours to own.</div>
+
+  <h2 id="ch3-why">Why This Is a Real Opportunity</h2>
+  <ul>
+    <li><b>Volume.</b> A person might search twenty times a day; an agent might search two thousand.</li>
+    <li><b>No design or sales burden.</b> No beautiful app, onboarding flow, or sales team. Developers find you, try one command, and wire you in.</li>
+    <li><b>Agents choose tools by reading docs,</b> so a tiny tool with excellent documentation can compete with big companies.</li>
+    <li><b>Distribution is new and open.</b> Agent tool directories, plugin marketplaces, and skill catalogs are young. Early, good tools get discovered.</li>
+    <li><b>Small, sharp products win.</b> One command that does one thing perfectly can be a viable business.</li>
+  </ul>
+
+  <h3>How the models compare so far</h3>
+  <table>
+    <thead><tr><th style="width:17%"></th><th>Model 1: Services</th><th>Model 2: Harness</th><th>Model 3: Headless</th></tr></thead>
+    <tbody>
+      <tr><td>Customer</td><td>Businesses</td><td>Niche professionals</td><td>Agents and the developers who run them</td></tr>
+      <tr><td>You sell</td><td>Finished work</td><td>An app with an interface</td><td>A tool with no interface</td></tr>
+      <tr><td>Interface</td><td>Email, calls, deliverables</td><td>Screens and workflows</td><td>Docs, commands, output</td></tr>
+      <tr><td>Pricing</td><td>Retainers</td><td>Subscriptions</td><td>Pay per use</td></tr>
+      <tr><td>Technical skill</td><td>Low</td><td>Medium</td><td>Higher</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="ch3-ideas">Turning AI Weaknesses into Products</h2>
+  <p>Agents are bad at certain things, and each weakness is a product opportunity.</p>
+  <table>
+    <caption>Table 3.1 &#8226; Where agents struggle, and what to build</caption>
+    <thead><tr><th style="width:30%">What agents do badly</th><th>Headless tool idea</th></tr></thead>
+    <tbody>
+      <tr><td>Getting fresh or hidden data</td><td>An API for niche data: county property records, building permits, court filings, product recalls, government contracts, local business licenses, state regulations.</td></tr>
+      <tr><td>Following a standard precisely</td><td>Checkers: accessibility checker, brand-guideline checker, legal-citation validator, structured-data validator, regulated-advertising language checker.</td></tr>
+      <tr><td>Exact calculations with complex rules</td><td>Sales-tax rate by address, payroll-tax calculator, shipping-rate calculator, insurance premium rules, medical billing-code validation.</td></tr>
+      <tr><td>Reading messy files</td><td>Converters: scanned PDFs to clean tables, engineering drawings to data, supply-chain data formats to JSON, bank statements to transactions.</td></tr>
+      <tr><td>Acting in the real world</td><td>Send faxes (still common in healthcare and law), mail physical letters, place phone calls, file forms on government portals.</td></tr>
+      <tr><td>Verifying output</td><td>Fact-checkers, link checkers, &ldquo;does this code match the spec&rdquo; checkers, visual-difference tools.</td></tr>
+      <tr><td>Remembering and organizing</td><td>Memory stores and knowledge bases scoped to a project or company.</td></tr>
+    </tbody>
+  </table>
+  <p>The best ideas combine <b>your niche expertise</b> with <b>an AI weakness</b>. If you know insurance, construction, healthcare billing, real estate, or accounting rules deeply, you can build a checker or data tool for that field that the labs will never bother to make.</p>
+
+  <div class="case m3">
+    <div class="case-head">Case study<b>&ldquo;PermitCheck&rdquo; for construction agents</b></div>
+    <div class="case-body">
+      <p><b>The weakness.</b> Ask a general assistant whether a backyard deck needs a permit in a particular city and what the setback rules are, and it will guess, often wrongly or out of date.</p>
+      <p><b>The tool.</b> A command-line tool, API, and MCP server. One command such as <code>permitcheck lookup --city "Austin, TX" --project deck --height 30in</code> returns structured JSON: whether a permit is required, the specific rules, source links, and a last-updated date.</p>
+      <p><b>The moat.</b> You collected, and keep updating, the rules for the 500 largest U.S. cities. That&rsquo;s a data source, and the labs won&rsquo;t build it.</p>
+      <p><b>The customers.</b> Contractor software companies, construction-estimating agents, and real-estate AI tools, paying perhaps $0.05 to $0.50 per lookup.</p>
+    </div>
+  </div>
+
+  <h2 id="ch3-plan">Step-by-Step Plan</h2>
+  <div class="phases">
+    <div class="phase"><div class="ph-when">Week 1</div><div class="ph-what"><b>Phase 0 &#8212; Find your idea.</b> Keep a week-long failure log of agent mistakes.</div></div>
+    <div class="phase"><div class="ph-when">Weeks 1&#8211;3</div><div class="ph-what"><b>Phase 1 &#8212; Build the one-command version.</b> Start with a CLI.</div></div>
+    <div class="phase"><div class="ph-when">Weeks 3&#8211;5</div><div class="ph-what"><b>Phase 2 &#8212; Add the API and MCP doors.</b></div></div>
+    <div class="phase"><div class="ph-when">Week 5</div><div class="ph-what"><b>Phase 3 &#8212; Write docs for robots and humans.</b></div></div>
+    <div class="phase"><div class="ph-when">Weeks 5&#8211;6</div><div class="ph-what"><b>Phase 4 &#8212; Pricing and billing.</b></div></div>
+    <div class="phase"><div class="ph-when">Weeks 6&#8211;10</div><div class="ph-what"><b>Phase 5 &#8212; Distribution.</b></div></div>
+    <div class="phase" style="padding-bottom:0"><div class="ph-when">Months 3&#8211;12</div><div class="ph-what"><b>Phase 6 &#8212; Grow and defend.</b></div></div>
+  </div>
+
+  <h3>Phase 0: Find your idea</h3>
+  <ol>
+    <li><b>Use AI agents heavily for a week</b> on real work in a field you know: a coding agent, an assistant with tools, an agent mode.</li>
+    <li><b>Keep a failure log</b> with columns for the task, what went wrong, how you fixed it manually, and how often it happens.</li>
+    <li><b>Look for patterns:</b> wrong data, outdated information, sloppy adherence to rules, unreadable file types, actions it can&rsquo;t take.</li>
+    <li><b>Apply the trap test:</b> &ldquo;Will a major AI lab build this into its model or app within six months?&rdquo; If yes (generic search, basic summarization, simple formatting), skip it. If it needs unique data or niche rules, keep it.</li>
+    <li><b>Check demand:</b> search public code repositories, developer forums, and agent-tool directories for people asking for this, and for tools you&rsquo;d compete with.</li>
+  </ol>
+
+  <h3>Phase 1: Build the one-command version</h3>
+  <p>Start with a <dfn data-ix="CLI (command-line interface)">CLI</dfn>. It&rsquo;s the simplest door, and coding agents use command-line tools natively. Write it with help from an AI coding assistant, in a popular language with a public package registry so users can install it with one command. Use a CLI framework for argument parsing. If your moat is data, use web-data extraction services or browser-automation platforms to collect public information (respecting each site&rsquo;s terms), a document-parsing service for PDFs, and a hosted database to store it.</p>
+  <div class="box note"><div class="box-label">Design rules for an agent-friendly tool</div>
+    <ul>
+      <li><b>One obvious command</b> for the main job: <code>toolname check</code>, <code>toolname lookup</code>.</li>
+      <li><b>Complete help text</b> with examples. Agents read <code>--help</code>.</li>
+      <li><b>A <code>--json</code> output option.</b> Agents parse structured data far better than pretty text.</li>
+      <li><b>Actionable error messages:</b> &ldquo;Missing --city. Example: --city 'Austin, TX'.&rdquo; An agent can then fix its own mistake.</li>
+      <li><b>Exit codes</b> (0 = pass, 1 = fail) so agents and pipelines can react.</li>
+      <li><b>No interactive prompts.</b> Agents can&rsquo;t answer &ldquo;Are you sure? (y/n).&rdquo;</li>
+      <li><b>Deterministic results:</b> the same input gives the same output.</li>
+    </ul>
+  </div>
+  <p>A good response looks like this:</p>
+<pre><span class="c">$ permitcheck lookup --city "Austin, TX" --project deck --height 30in --json</span>
+{
+  <span class="k">"permit_required"</span>: true,
+  <span class="k">"rules"</span>: ["Decks over 30 in. above grade require a building permit",
+            "Minimum 5 ft side setback"],
+  <span class="k">"sources"</span>: ["https://example.gov/codes/decks"],
+  <span class="k">"last_updated"</span>: "2026-10-01"
+}</pre>
+
+  <h3>Phase 2: Add the API and MCP doors</h3>
+  <p>Host a simple web <dfn data-ix="API (application programming interface)">API</dfn> on a serverless or app-hosting platform using a lightweight web framework. Build an MCP server with the official open-source MCP SDKs, offering both a local version (runs on the user&rsquo;s machine) and a remote, hosted version with login. Add an <b>API-key management service</b>, <b>rate limiting</b>, and <b>monitoring</b> (error tracking, logs, usage analytics).</p>
+  <div class="box plain"><div class="box-label">Plain English</div>
+    <p>An agent decides whether to use your MCP tool by reading its name and description. A tool named <code>check_design_compliance</code>, described as &ldquo;Checks HTML/CSS against the rules in DESIGN.md and returns each violation with file, line, and fix,&rdquo; gets used. A tool named <code>run</code>, described as &ldquo;runs the tool,&rdquo; doesn&rsquo;t.</p>
+  </div>
+
+  <h3>Phase 3: Write docs for robots (and humans)</h3>
+  <p>Your docs are your storefront. Use a <b>documentation-site generator</b>. Publish an <code>llms.txt</code> file, a plain-text summary of your docs written for AI agents, along with Markdown versions of every page. Publish an <b>OpenAPI specification</b> so tools can generate reference docs and client libraries automatically. Write a short <b>agent skill file</b> that teaches assistants when and how to use your tool, and an instructions snippet users can paste into their projects.</p>
+  <p><b>Test your docs on agents.</b> Give a coding agent <i>only</i> your docs and ask it to complete a task with your tool. If it struggles, rewrite the docs, not the agent prompt. This is your usability testing.</p>
+
+  <h3>Phase 4: Pricing and billing</h3>
+  <table>
+    <caption>Table 3.2 &#8226; Pricing models for headless tools</caption>
+    <thead><tr><th style="width:20%">Model</th><th style="width:38%">When to use</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>Usage-based</td><td>Every call costs you something (data, compute)</td><td>$0.01 per check; $1 per 1,000 lookups</td></tr>
+      <tr><td>Credits</td><td>Operations vary in cost</td><td>$20 buys 2,000 credits; simple lookup = 1, deep scan = 10</td></tr>
+      <tr><td>Open-source core</td><td>Adoption matters most</td><td>Free CLI; paid hosted API, team features, premium data</td></tr>
+      <tr><td>Free tier</td><td>Always, to remove friction</td><td>100&#8211;1,000 free calls a month</td></tr>
+    </tbody>
+  </table>
+  <figure>
+    <!--@chart:ch3_bill-->
+    <figcaption><b>Figure 3.4</b>A customer&rsquo;s monthly bill under pay-as-you-go pricing, with and without a spending cap (illustrative). Keep per-call prices low and predictable, and offer caps, because developers hate surprise bills.</figcaption>
+  </figure>
+  <p>For billing, use a <b>payment processor with metered (usage-based) billing</b> or a dedicated <b>usage-billing platform</b>; some billing platforms are designed specifically for developer tools and open-source projects.</p>
+
+  <h3>Phase 5: Distribution</h3>
+  <ol>
+    <li><b>Package registries</b> for your language, plus the main operating-system package managers, so installation takes one command.</li>
+    <li><b>MCP and agent-tool directories,</b> including the official MCP registry and community directories.</li>
+    <li><b>Plugin and skill marketplaces</b> for AI assistants and coding tools, and integration lists of popular agent frameworks.</li>
+    <li><b>A public code repository</b> with a strong README, a short terminal demo recording, and a &ldquo;quick start in thirty seconds&rdquo; section. Repository stars drive discovery.</li>
+    <li><b>Launch posts</b> on developer news sites, product-launch sites, and relevant forums and social networks.</li>
+    <li><b>Demos:</b> a thirty- to sixty-second recording showing an agent getting it wrong, then calling your tool and getting it right.</li>
+    <li><b>Partnerships</b> with agent platforms and with vertical harness builders (Model 2) in your niche.</li>
+  </ol>
+
+  <h3>Phase 6: Grow and defend</h3>
+  <p>Watch usage logs to see which commands agents use most and where they fail, and improve those first. Deepen your moat with more data coverage, fresher updates, and more niche rules. Add adjacent commands around the same core skill without sprawling. Offer an enterprise tier with higher limits, private deployment, an uptime guarantee, and a security certification. Every quarter, ask: <i>Did a lab just ship something that replaces me?</i> If one is getting close, move deeper into what they can&rsquo;t do.</p>
+
+  <h2 id="ch3-risks">Risks and How to Handle Them</h2>
+  <table>
+    <thead><tr><th style="width:32%">Risk</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td>Labs bundle it free (the trap)</td><td>Build on unique data or deep niche rules, not generic capability.</td></tr>
+      <tr><td>Too technical for you</td><td>Use an AI coding assistant, start with a CLI, or partner with a developer while you supply the niche knowledge and data.</td></tr>
+      <tr><td>Data licensing and legality</td><td>Check terms of service and robots.txt; prefer public records and open data; license data properly.</td></tr>
+      <tr><td>Security (agents running your code)</td><td>Least-privilege access, input validation, secret API keys, a published security policy.</td></tr>
+      <tr><td>Runaway infrastructure costs</td><td>Rate limits, caching, spending caps, and pricing above your per-call cost.</td></tr>
+      <tr><td>Being invisible</td><td>Invest in docs, directory listings, and demo content. Distribution matters as much as code.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="ch3-budget">Starter Budget</h2>
+  <table>
+    <thead><tr><th style="width:55%">Item</th><th>Approximate monthly cost</th></tr></thead>
+    <tbody>
+      <tr><td>AI coding assistant subscription</td><td>$20&#8211;$200</td></tr>
+      <tr><td>Hosting (serverless or app platform)</td><td>$0&#8211;$25</td></tr>
+      <tr><td>Hosted database</td><td>$0&#8211;$25</td></tr>
+      <tr><td>Documentation site</td><td>$0 (free tiers or open-source generators)</td></tr>
+      <tr><td>Data collection services, if needed</td><td>$0&#8211;$100</td></tr>
+      <tr><td>Billing</td><td>A percentage of revenue</td></tr>
+      <tr><td>Domain</td><td>~$1&#8211;$2</td></tr>
+      <tr><td><b>Total</b></td><td><b>About $25&#8211;$350 a month</b>, the cheapest model to start because there&rsquo;s no interface to design</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="ch3-checklist">Your Seven-Day Checklist</h2>
+  <ul class="checklist">
+    <li><span class="day">Day 1</span>Use an AI agent for real work in your field.</li>
+    <li><span class="day">Day 2</span>Log every failure: what went wrong and how you fixed it.</li>
+    <li><span class="day">Day 3</span>Pick the most frequent failure that needs unique data or niche rules.</li>
+    <li><span class="day">Day 4</span>Run the trap test: would a lab ship this free soon?</li>
+    <li><span class="day">Day 5</span>Write the one command you wish existed, with its help text and JSON output.</li>
+    <li><span class="day">Day 6</span>Build a rough version with an AI coding assistant.</li>
+    <li><span class="day">Day 7</span>Give an agent only your README and see whether it can use the tool correctly. Then fix the docs.</li>
+  </ul>
+
+  <div class="takeaways"><div class="box-label">Chapter summary</div>
+    <ul>
+      <li>Agents are becoming software&rsquo;s heaviest users, and they need tools, not screens.</li>
+      <li>Offer three doors (CLI, API, MCP). Your documentation and output format are the interface.</li>
+      <li>Find ideas in AI&rsquo;s weaknesses: fresh data, precise rules, exact calculations, messy files, real-world actions.</li>
+      <li>Avoid anything a lab could bundle as a free feature; build on data or niche expertise.</li>
+      <li>Price per use with a free tier and spending caps, and distribute through registries, directories, and demos.</li>
+    </ul>
+  </div>
+
+  <div class="review" id="ch3-review">
+    <h2>Review Questions</h2>
+    <ol class="q">
+      <li>In headless software, what replaces the screen as the user experience?
+        <ul class="choices"><li>A. A mobile app</li><li>B. The documentation and the output format</li><li>C. A sales team</li><li>D. Video tutorials</li></ul></li>
+      <li>Which product idea best passes the trap test?
+        <ul class="choices"><li>A. A general web-search wrapper</li><li>B. A basic text summarizer</li><li>C. A continuously updated database of building-permit rules for 500 cities</li><li>D. A grammar checker</li></ul></li>
+      <li>Why is a <code>--json</code> option important?
+        <ul class="choices"><li>A. It looks professional</li><li>B. Agents parse structured data more reliably than formatted text</li><li>C. It is required by law</li><li>D. It makes the tool faster</li></ul></li>
+      <li>Describe the CLI, API, and MCP &ldquo;doors&rdquo; in your own words, with an analogy for each.</li>
+      <li>Name four agent weaknesses that can become headless products.</li>
+      <li>How should you test whether your documentation works?</li>
+      <li>Why should usage-based pricing include spending caps?</li>
+      <li>What two kinds of builders does this model favor?</li>
+    </ol>
+  </div>
+
+  <div class="worksheet">
+    <div class="ws-head">Apply it &#8226; Worksheet 3</div>
+    <div class="ws-title">Spec your headless tool</div>
+    <div class="prompt">The agent failure I observed (task, what went wrong, how often):</div><div class="lines"><div></div><div></div></div>
+    <div class="prompt">The data source or narrow skill that makes my fix hard to copy:</div><div class="lines"><div></div></div>
+    <div class="prompt">My one command, exactly as an agent would type it:</div><div class="lines"><div></div></div>
+    <div class="prompt">The JSON fields it returns:</div><div class="lines"><div></div><div></div></div>
+    <div class="prompt">Trap test: why a major lab won&rsquo;t bundle this soon:</div><div class="lines"><div></div></div>
+    <div class="prompt">Pricing (free tier, unit price, cap):</div><div class="lines"><div></div></div>
+  </div>
+</section>
